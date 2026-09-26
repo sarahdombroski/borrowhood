@@ -12,7 +12,82 @@ datasource db {
   provider = "postgresql"
 }
 
-model Item { 
-  id  String  @id @default(uuid()) 
-  name  String 
+model User { 
+  id  Int  @id @default(autoincrement()) 
+  username  String  @unique
+  name  String?
+  password  String
+  photo_url String?
+  memberships Membership[]
+  items Item[]
+  reservations Reservation[]
+}
+
+model Group {
+  id  Int @id @default(autoincrement())
+  name  String
+  description String?
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+  memberships Membership[]
+  item_visibilities ItemVisibility[]
+}
+
+model Membership {
+  id  Int @id @default(autoincrement())
+  user_id Int
+  user  User  @relation(fields: [user_id], references: [id])
+  group_id  Int
+  group Group @relation(fields: [group_id], references: [id])
+  joined_at DateTime  @default(now())
+  role  Role  @default(MEMBER)
+  @@unique([user_id, group_id])
+}
+
+model Item {
+  id  Int @id @default(autoincrement())
+  owner_id  Int
+  owner User @relation(fields: [owner_id], references: [id])
+  name  String
+  description String?
+  photo_url String?
+  created_at  DateTime  @default(now())
+  item_visibilities ItemVisibility[]
+  reservations Reservation[]
+}
+
+model ItemVisibility {
+  id  Int @id @default(autoincrement())
+  item_id Int
+  item  Item  @relation(fields: [item_id], references: [id])
+  group_id  Int
+  group Group @relation(fields: [group_id], references: [id])
+  @@unique([item_id, group_id])
+}
+
+model Reservation {
+  id  Int @id @default(autoincrement())
+  item_id Int
+  item  Item  @relation(fields: [item_id], references: [id])
+  borrower_id Int
+  borrower User @relation(fields: [borrower_id], references: [id])
+  startDate DateTime
+  endDate DateTime
+  status  Status  @default(PENDING)
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+}
+
+enum Role {
+  MEMBER
+  ADMIN
+}
+
+enum Status {
+  PENDING
+  APPROVED
+  PICKED_UP
+  RETURNED
+  CANCELLED
+  DENIED
 }
