@@ -20,7 +20,9 @@ export default async function GroupPage({ params }: { params: Promise<{ groupId:
     <>
       <h1>{membership.group.name}</h1>
       <p>Your role: {membership.role}</p>
-      <p>Join code: {group?.joinCode}</p>
+      {membership.role == "ADMIN" &&
+        <p>Join code: {group?.joinCode}</p>
+      }
     </>
   );
 }
