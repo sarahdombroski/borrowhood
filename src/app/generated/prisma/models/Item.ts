@@ -28,17 +28,15 @@ export type AggregateItem = {
 
 export type ItemAvgAggregateOutputType = {
   id: number | null
-  ownerId: number | null
 }
 
 export type ItemSumAggregateOutputType = {
   id: number | null
-  ownerId: number | null
 }
 
 export type ItemMinAggregateOutputType = {
   id: number | null
-  ownerId: number | null
+  ownerId: string | null
   name: string | null
   description: string | null
   photoUrl: string | null
@@ -47,7 +45,7 @@ export type ItemMinAggregateOutputType = {
 
 export type ItemMaxAggregateOutputType = {
   id: number | null
-  ownerId: number | null
+  ownerId: string | null
   name: string | null
   description: string | null
   photoUrl: string | null
@@ -67,12 +65,10 @@ export type ItemCountAggregateOutputType = {
 
 export type ItemAvgAggregateInputType = {
   id?: true
-  ownerId?: true
 }
 
 export type ItemSumAggregateInputType = {
   id?: true
-  ownerId?: true
 }
 
 export type ItemMinAggregateInputType = {
@@ -191,7 +187,7 @@ export type ItemGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 
 export type ItemGroupByOutputType = {
   id: number
-  ownerId: number
+  ownerId: string
   name: string
   description: string | null
   photoUrl: string | null
@@ -223,7 +219,7 @@ export type ItemWhereInput = {
   OR?: Prisma.ItemWhereInput[]
   NOT?: Prisma.ItemWhereInput | Prisma.ItemWhereInput[]
   id?: Prisma.IntFilter<"Item"> | number
-  ownerId?: Prisma.IntFilter<"Item"> | number
+  ownerId?: Prisma.StringFilter<"Item"> | string
   name?: Prisma.StringFilter<"Item"> | string
   description?: Prisma.StringNullableFilter<"Item"> | string | null
   photoUrl?: Prisma.StringNullableFilter<"Item"> | string | null
@@ -250,7 +246,7 @@ export type ItemWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.ItemWhereInput | Prisma.ItemWhereInput[]
   OR?: Prisma.ItemWhereInput[]
   NOT?: Prisma.ItemWhereInput | Prisma.ItemWhereInput[]
-  ownerId?: Prisma.IntFilter<"Item"> | number
+  ownerId?: Prisma.StringFilter<"Item"> | string
   name?: Prisma.StringFilter<"Item"> | string
   description?: Prisma.StringNullableFilter<"Item"> | string | null
   photoUrl?: Prisma.StringNullableFilter<"Item"> | string | null
@@ -279,7 +275,7 @@ export type ItemScalarWhereWithAggregatesInput = {
   OR?: Prisma.ItemScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ItemScalarWhereWithAggregatesInput | Prisma.ItemScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Item"> | number
-  ownerId?: Prisma.IntWithAggregatesFilter<"Item"> | number
+  ownerId?: Prisma.StringWithAggregatesFilter<"Item"> | string
   name?: Prisma.StringWithAggregatesFilter<"Item"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"Item"> | string | null
   photoUrl?: Prisma.StringNullableWithAggregatesFilter<"Item"> | string | null
@@ -298,7 +294,7 @@ export type ItemCreateInput = {
 
 export type ItemUncheckedCreateInput = {
   id?: number
-  ownerId: number
+  ownerId: string
   name: string
   description?: string | null
   photoUrl?: string | null
@@ -319,7 +315,7 @@ export type ItemUpdateInput = {
 
 export type ItemUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  ownerId?: Prisma.IntFieldUpdateOperationsInput | number
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -330,7 +326,7 @@ export type ItemUncheckedUpdateInput = {
 
 export type ItemCreateManyInput = {
   id?: number
-  ownerId: number
+  ownerId: string
   name: string
   description?: string | null
   photoUrl?: string | null
@@ -346,7 +342,7 @@ export type ItemUpdateManyMutationInput = {
 
 export type ItemUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  ownerId?: Prisma.IntFieldUpdateOperationsInput | number
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -374,7 +370,6 @@ export type ItemCountOrderByAggregateInput = {
 
 export type ItemAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  ownerId?: Prisma.SortOrder
 }
 
 export type ItemMaxOrderByAggregateInput = {
@@ -397,7 +392,6 @@ export type ItemMinOrderByAggregateInput = {
 
 export type ItemSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  ownerId?: Prisma.SortOrder
 }
 
 export type ItemScalarRelationFilter = {
@@ -525,7 +519,7 @@ export type ItemScalarWhereInput = {
   OR?: Prisma.ItemScalarWhereInput[]
   NOT?: Prisma.ItemScalarWhereInput | Prisma.ItemScalarWhereInput[]
   id?: Prisma.IntFilter<"Item"> | number
-  ownerId?: Prisma.IntFilter<"Item"> | number
+  ownerId?: Prisma.StringFilter<"Item"> | string
   name?: Prisma.StringFilter<"Item"> | string
   description?: Prisma.StringNullableFilter<"Item"> | string | null
   photoUrl?: Prisma.StringNullableFilter<"Item"> | string | null
@@ -543,7 +537,7 @@ export type ItemCreateWithoutItemVisibilitiesInput = {
 
 export type ItemUncheckedCreateWithoutItemVisibilitiesInput = {
   id?: number
-  ownerId: number
+  ownerId: string
   name: string
   description?: string | null
   photoUrl?: string | null
@@ -578,7 +572,7 @@ export type ItemUpdateWithoutItemVisibilitiesInput = {
 
 export type ItemUncheckedUpdateWithoutItemVisibilitiesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  ownerId?: Prisma.IntFieldUpdateOperationsInput | number
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -597,7 +591,7 @@ export type ItemCreateWithoutReservationsInput = {
 
 export type ItemUncheckedCreateWithoutReservationsInput = {
   id?: number
-  ownerId: number
+  ownerId: string
   name: string
   description?: string | null
   photoUrl?: string | null
@@ -632,7 +626,7 @@ export type ItemUpdateWithoutReservationsInput = {
 
 export type ItemUncheckedUpdateWithoutReservationsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  ownerId?: Prisma.IntFieldUpdateOperationsInput | number
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -780,7 +774,7 @@ export type $ItemPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
-    ownerId: number
+    ownerId: string
     name: string
     description: string | null
     photoUrl: string | null
@@ -1212,7 +1206,7 @@ export interface Prisma__ItemClient<T, Null = never, ExtArgs extends runtime.Typ
  */
 export interface ItemFieldRefs {
   readonly id: Prisma.FieldRef<"Item", 'Int'>
-  readonly ownerId: Prisma.FieldRef<"Item", 'Int'>
+  readonly ownerId: Prisma.FieldRef<"Item", 'String'>
   readonly name: Prisma.FieldRef<"Item", 'String'>
   readonly description: Prisma.FieldRef<"Item", 'String'>
   readonly photoUrl: Prisma.FieldRef<"Item", 'String'>

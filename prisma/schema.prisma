@@ -5,7 +5,7 @@
 
 generator client {
   provider = "prisma-client"
-  output   = "../app/generated/prisma"
+  output   = "../src/app/generated/prisma"
 }
 
 datasource db {
@@ -13,13 +13,11 @@ datasource db {
 }
 
 model User {
-  id            Int           @id @default(autoincrement())
-  username      String        @unique
+  id            String        @id
   email         String        @unique
   emailVerified Boolean       @default(false)
   image         String?
-  name          String?
-  password      String
+  name          String
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
   memberships   Membership[]
@@ -44,7 +42,7 @@ model Group {
 
 model Membership {
   id       Int      @id @default(autoincrement())
-  userId   Int
+  userId   String
   user     User     @relation(fields: [userId], references: [id])
   groupId  Int
   group    Group    @relation(fields: [groupId], references: [id])
@@ -56,7 +54,7 @@ model Membership {
 
 model Item {
   id               Int              @id @default(autoincrement())
-  ownerId          Int
+  ownerId          String
   owner            User             @relation(fields: [ownerId], references: [id])
   name             String
   description      String?
@@ -80,7 +78,7 @@ model Reservation {
   id         Int      @id @default(autoincrement())
   itemId     Int
   item       Item     @relation(fields: [itemId], references: [id])
-  borrowerId Int
+  borrowerId String
   borrower   User     @relation(fields: [borrowerId], references: [id])
   startDate  DateTime
   endDate    DateTime
@@ -90,14 +88,14 @@ model Reservation {
 }
 
 model Session {
-  id        Int      @id @default(autoincrement())
+  id        String   @id
   expiresAt DateTime
   token     String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   ipAddress String?
   userAgent String?
-  userId    Int
+  userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
@@ -105,8 +103,8 @@ model Session {
 }
 
 model Account {
-  id                    Int       @id @default(autoincrement())
-  userId                Int
+  id                    String    @id
+  userId                String
   accountId             String
   providerId            String
   accessToken           String?
@@ -125,7 +123,7 @@ model Account {
 }
 
 model Verification {
-  id         Int      @id @default(autoincrement())
+  id         String   @id
   identifier String
   value      String
   expiresAt  DateTime

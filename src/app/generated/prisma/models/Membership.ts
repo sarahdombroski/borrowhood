@@ -28,19 +28,17 @@ export type AggregateMembership = {
 
 export type MembershipAvgAggregateOutputType = {
   id: number | null
-  userId: number | null
   groupId: number | null
 }
 
 export type MembershipSumAggregateOutputType = {
   id: number | null
-  userId: number | null
   groupId: number | null
 }
 
 export type MembershipMinAggregateOutputType = {
   id: number | null
-  userId: number | null
+  userId: string | null
   groupId: number | null
   joinedAt: Date | null
   role: $Enums.Role | null
@@ -48,7 +46,7 @@ export type MembershipMinAggregateOutputType = {
 
 export type MembershipMaxAggregateOutputType = {
   id: number | null
-  userId: number | null
+  userId: string | null
   groupId: number | null
   joinedAt: Date | null
   role: $Enums.Role | null
@@ -66,13 +64,11 @@ export type MembershipCountAggregateOutputType = {
 
 export type MembershipAvgAggregateInputType = {
   id?: true
-  userId?: true
   groupId?: true
 }
 
 export type MembershipSumAggregateInputType = {
   id?: true
-  userId?: true
   groupId?: true
 }
 
@@ -189,7 +185,7 @@ export type MembershipGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inter
 
 export type MembershipGroupByOutputType = {
   id: number
-  userId: number
+  userId: string
   groupId: number
   joinedAt: Date
   role: $Enums.Role
@@ -220,7 +216,7 @@ export type MembershipWhereInput = {
   OR?: Prisma.MembershipWhereInput[]
   NOT?: Prisma.MembershipWhereInput | Prisma.MembershipWhereInput[]
   id?: Prisma.IntFilter<"Membership"> | number
-  userId?: Prisma.IntFilter<"Membership"> | number
+  userId?: Prisma.StringFilter<"Membership"> | string
   groupId?: Prisma.IntFilter<"Membership"> | number
   joinedAt?: Prisma.DateTimeFilter<"Membership"> | Date | string
   role?: Prisma.EnumRoleFilter<"Membership"> | $Enums.Role
@@ -244,7 +240,7 @@ export type MembershipWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.MembershipWhereInput | Prisma.MembershipWhereInput[]
   OR?: Prisma.MembershipWhereInput[]
   NOT?: Prisma.MembershipWhereInput | Prisma.MembershipWhereInput[]
-  userId?: Prisma.IntFilter<"Membership"> | number
+  userId?: Prisma.StringFilter<"Membership"> | string
   groupId?: Prisma.IntFilter<"Membership"> | number
   joinedAt?: Prisma.DateTimeFilter<"Membership"> | Date | string
   role?: Prisma.EnumRoleFilter<"Membership"> | $Enums.Role
@@ -270,7 +266,7 @@ export type MembershipScalarWhereWithAggregatesInput = {
   OR?: Prisma.MembershipScalarWhereWithAggregatesInput[]
   NOT?: Prisma.MembershipScalarWhereWithAggregatesInput | Prisma.MembershipScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Membership"> | number
-  userId?: Prisma.IntWithAggregatesFilter<"Membership"> | number
+  userId?: Prisma.StringWithAggregatesFilter<"Membership"> | string
   groupId?: Prisma.IntWithAggregatesFilter<"Membership"> | number
   joinedAt?: Prisma.DateTimeWithAggregatesFilter<"Membership"> | Date | string
   role?: Prisma.EnumRoleWithAggregatesFilter<"Membership"> | $Enums.Role
@@ -285,7 +281,7 @@ export type MembershipCreateInput = {
 
 export type MembershipUncheckedCreateInput = {
   id?: number
-  userId: number
+  userId: string
   groupId: number
   joinedAt?: Date | string
   role?: $Enums.Role
@@ -300,7 +296,7 @@ export type MembershipUpdateInput = {
 
 export type MembershipUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   groupId?: Prisma.IntFieldUpdateOperationsInput | number
   joinedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
@@ -308,7 +304,7 @@ export type MembershipUncheckedUpdateInput = {
 
 export type MembershipCreateManyInput = {
   id?: number
-  userId: number
+  userId: string
   groupId: number
   joinedAt?: Date | string
   role?: $Enums.Role
@@ -321,7 +317,7 @@ export type MembershipUpdateManyMutationInput = {
 
 export type MembershipUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   groupId?: Prisma.IntFieldUpdateOperationsInput | number
   joinedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
@@ -338,7 +334,7 @@ export type MembershipOrderByRelationAggregateInput = {
 }
 
 export type MembershipUserIdGroupIdCompoundUniqueInput = {
-  userId: number
+  userId: string
   groupId: number
 }
 
@@ -352,7 +348,6 @@ export type MembershipCountOrderByAggregateInput = {
 
 export type MembershipAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
   groupId?: Prisma.SortOrder
 }
 
@@ -374,7 +369,6 @@ export type MembershipMinOrderByAggregateInput = {
 
 export type MembershipSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
   groupId?: Prisma.SortOrder
 }
 
@@ -510,7 +504,7 @@ export type MembershipScalarWhereInput = {
   OR?: Prisma.MembershipScalarWhereInput[]
   NOT?: Prisma.MembershipScalarWhereInput | Prisma.MembershipScalarWhereInput[]
   id?: Prisma.IntFilter<"Membership"> | number
-  userId?: Prisma.IntFilter<"Membership"> | number
+  userId?: Prisma.StringFilter<"Membership"> | string
   groupId?: Prisma.IntFilter<"Membership"> | number
   joinedAt?: Prisma.DateTimeFilter<"Membership"> | Date | string
   role?: Prisma.EnumRoleFilter<"Membership"> | $Enums.Role
@@ -524,7 +518,7 @@ export type MembershipCreateWithoutGroupInput = {
 
 export type MembershipUncheckedCreateWithoutGroupInput = {
   id?: number
-  userId: number
+  userId: string
   joinedAt?: Date | string
   role?: $Enums.Role
 }
@@ -584,7 +578,7 @@ export type MembershipUncheckedUpdateManyWithoutUserInput = {
 
 export type MembershipCreateManyGroupInput = {
   id?: number
-  userId: number
+  userId: string
   joinedAt?: Date | string
   role?: $Enums.Role
 }
@@ -597,14 +591,14 @@ export type MembershipUpdateWithoutGroupInput = {
 
 export type MembershipUncheckedUpdateWithoutGroupInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   joinedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
 }
 
 export type MembershipUncheckedUpdateManyWithoutGroupInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   joinedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
 }
@@ -671,7 +665,7 @@ export type $MembershipPayload<ExtArgs extends runtime.Types.Extensions.Internal
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
-    userId: number
+    userId: string
     groupId: number
     joinedAt: Date
     role: $Enums.Role
@@ -1101,7 +1095,7 @@ export interface Prisma__MembershipClient<T, Null = never, ExtArgs extends runti
  */
 export interface MembershipFieldRefs {
   readonly id: Prisma.FieldRef<"Membership", 'Int'>
-  readonly userId: Prisma.FieldRef<"Membership", 'Int'>
+  readonly userId: Prisma.FieldRef<"Membership", 'String'>
   readonly groupId: Prisma.FieldRef<"Membership", 'Int'>
   readonly joinedAt: Prisma.FieldRef<"Membership", 'DateTime'>
   readonly role: Prisma.FieldRef<"Membership", 'Role'>

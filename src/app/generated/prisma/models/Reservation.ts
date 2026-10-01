@@ -29,19 +29,17 @@ export type AggregateReservation = {
 export type ReservationAvgAggregateOutputType = {
   id: number | null
   itemId: number | null
-  borrowerId: number | null
 }
 
 export type ReservationSumAggregateOutputType = {
   id: number | null
   itemId: number | null
-  borrowerId: number | null
 }
 
 export type ReservationMinAggregateOutputType = {
   id: number | null
   itemId: number | null
-  borrowerId: number | null
+  borrowerId: string | null
   startDate: Date | null
   endDate: Date | null
   status: $Enums.Status | null
@@ -52,7 +50,7 @@ export type ReservationMinAggregateOutputType = {
 export type ReservationMaxAggregateOutputType = {
   id: number | null
   itemId: number | null
-  borrowerId: number | null
+  borrowerId: string | null
   startDate: Date | null
   endDate: Date | null
   status: $Enums.Status | null
@@ -76,13 +74,11 @@ export type ReservationCountAggregateOutputType = {
 export type ReservationAvgAggregateInputType = {
   id?: true
   itemId?: true
-  borrowerId?: true
 }
 
 export type ReservationSumAggregateInputType = {
   id?: true
   itemId?: true
-  borrowerId?: true
 }
 
 export type ReservationMinAggregateInputType = {
@@ -208,7 +204,7 @@ export type ReservationGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
 export type ReservationGroupByOutputType = {
   id: number
   itemId: number
-  borrowerId: number
+  borrowerId: string
   startDate: Date
   endDate: Date
   status: $Enums.Status
@@ -242,7 +238,7 @@ export type ReservationWhereInput = {
   NOT?: Prisma.ReservationWhereInput | Prisma.ReservationWhereInput[]
   id?: Prisma.IntFilter<"Reservation"> | number
   itemId?: Prisma.IntFilter<"Reservation"> | number
-  borrowerId?: Prisma.IntFilter<"Reservation"> | number
+  borrowerId?: Prisma.StringFilter<"Reservation"> | string
   startDate?: Prisma.DateTimeFilter<"Reservation"> | Date | string
   endDate?: Prisma.DateTimeFilter<"Reservation"> | Date | string
   status?: Prisma.EnumStatusFilter<"Reservation"> | $Enums.Status
@@ -271,7 +267,7 @@ export type ReservationWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.ReservationWhereInput[]
   NOT?: Prisma.ReservationWhereInput | Prisma.ReservationWhereInput[]
   itemId?: Prisma.IntFilter<"Reservation"> | number
-  borrowerId?: Prisma.IntFilter<"Reservation"> | number
+  borrowerId?: Prisma.StringFilter<"Reservation"> | string
   startDate?: Prisma.DateTimeFilter<"Reservation"> | Date | string
   endDate?: Prisma.DateTimeFilter<"Reservation"> | Date | string
   status?: Prisma.EnumStatusFilter<"Reservation"> | $Enums.Status
@@ -303,7 +299,7 @@ export type ReservationScalarWhereWithAggregatesInput = {
   NOT?: Prisma.ReservationScalarWhereWithAggregatesInput | Prisma.ReservationScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Reservation"> | number
   itemId?: Prisma.IntWithAggregatesFilter<"Reservation"> | number
-  borrowerId?: Prisma.IntWithAggregatesFilter<"Reservation"> | number
+  borrowerId?: Prisma.StringWithAggregatesFilter<"Reservation"> | string
   startDate?: Prisma.DateTimeWithAggregatesFilter<"Reservation"> | Date | string
   endDate?: Prisma.DateTimeWithAggregatesFilter<"Reservation"> | Date | string
   status?: Prisma.EnumStatusWithAggregatesFilter<"Reservation"> | $Enums.Status
@@ -324,7 +320,7 @@ export type ReservationCreateInput = {
 export type ReservationUncheckedCreateInput = {
   id?: number
   itemId: number
-  borrowerId: number
+  borrowerId: string
   startDate: Date | string
   endDate: Date | string
   status?: $Enums.Status
@@ -345,7 +341,7 @@ export type ReservationUpdateInput = {
 export type ReservationUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   itemId?: Prisma.IntFieldUpdateOperationsInput | number
-  borrowerId?: Prisma.IntFieldUpdateOperationsInput | number
+  borrowerId?: Prisma.StringFieldUpdateOperationsInput | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
@@ -356,7 +352,7 @@ export type ReservationUncheckedUpdateInput = {
 export type ReservationCreateManyInput = {
   id?: number
   itemId: number
-  borrowerId: number
+  borrowerId: string
   startDate: Date | string
   endDate: Date | string
   status?: $Enums.Status
@@ -375,7 +371,7 @@ export type ReservationUpdateManyMutationInput = {
 export type ReservationUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   itemId?: Prisma.IntFieldUpdateOperationsInput | number
-  borrowerId?: Prisma.IntFieldUpdateOperationsInput | number
+  borrowerId?: Prisma.StringFieldUpdateOperationsInput | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
@@ -407,7 +403,6 @@ export type ReservationCountOrderByAggregateInput = {
 export type ReservationAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   itemId?: Prisma.SortOrder
-  borrowerId?: Prisma.SortOrder
 }
 
 export type ReservationMaxOrderByAggregateInput = {
@@ -435,7 +430,6 @@ export type ReservationMinOrderByAggregateInput = {
 export type ReservationSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   itemId?: Prisma.SortOrder
-  borrowerId?: Prisma.SortOrder
 }
 
 export type ReservationCreateNestedManyWithoutBorrowerInput = {
@@ -577,7 +571,7 @@ export type ReservationScalarWhereInput = {
   NOT?: Prisma.ReservationScalarWhereInput | Prisma.ReservationScalarWhereInput[]
   id?: Prisma.IntFilter<"Reservation"> | number
   itemId?: Prisma.IntFilter<"Reservation"> | number
-  borrowerId?: Prisma.IntFilter<"Reservation"> | number
+  borrowerId?: Prisma.StringFilter<"Reservation"> | string
   startDate?: Prisma.DateTimeFilter<"Reservation"> | Date | string
   endDate?: Prisma.DateTimeFilter<"Reservation"> | Date | string
   status?: Prisma.EnumStatusFilter<"Reservation"> | $Enums.Status
@@ -596,7 +590,7 @@ export type ReservationCreateWithoutItemInput = {
 
 export type ReservationUncheckedCreateWithoutItemInput = {
   id?: number
-  borrowerId: number
+  borrowerId: string
   startDate: Date | string
   endDate: Date | string
   status?: $Enums.Status
@@ -671,7 +665,7 @@ export type ReservationUncheckedUpdateManyWithoutBorrowerInput = {
 
 export type ReservationCreateManyItemInput = {
   id?: number
-  borrowerId: number
+  borrowerId: string
   startDate: Date | string
   endDate: Date | string
   status?: $Enums.Status
@@ -690,7 +684,7 @@ export type ReservationUpdateWithoutItemInput = {
 
 export type ReservationUncheckedUpdateWithoutItemInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  borrowerId?: Prisma.IntFieldUpdateOperationsInput | number
+  borrowerId?: Prisma.StringFieldUpdateOperationsInput | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
@@ -700,7 +694,7 @@ export type ReservationUncheckedUpdateWithoutItemInput = {
 
 export type ReservationUncheckedUpdateManyWithoutItemInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  borrowerId?: Prisma.IntFieldUpdateOperationsInput | number
+  borrowerId?: Prisma.StringFieldUpdateOperationsInput | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
@@ -783,7 +777,7 @@ export type $ReservationPayload<ExtArgs extends runtime.Types.Extensions.Interna
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     itemId: number
-    borrowerId: number
+    borrowerId: string
     startDate: Date
     endDate: Date
     status: $Enums.Status
@@ -1216,7 +1210,7 @@ export interface Prisma__ReservationClient<T, Null = never, ExtArgs extends runt
 export interface ReservationFieldRefs {
   readonly id: Prisma.FieldRef<"Reservation", 'Int'>
   readonly itemId: Prisma.FieldRef<"Reservation", 'Int'>
-  readonly borrowerId: Prisma.FieldRef<"Reservation", 'Int'>
+  readonly borrowerId: Prisma.FieldRef<"Reservation", 'String'>
   readonly startDate: Prisma.FieldRef<"Reservation", 'DateTime'>
   readonly endDate: Prisma.FieldRef<"Reservation", 'DateTime'>
   readonly status: Prisma.FieldRef<"Reservation", 'Status'>
