@@ -1,5 +1,5 @@
 import { getCurrentUser } from "@/lib/session";
-import { createGroup } from "./actions";
+import { createGroup, joinGroup } from "./actions";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 
@@ -17,6 +17,11 @@ export default async function Groups() {
       <form action={createGroup}>
         <input name="name" placeholder="Group name" required />
         <button type="submit">Create group</button>
+      </form>
+      <h2>Join a group:</h2>
+      <form action={joinGroup}>
+        <input name="joinCode" placeholder="Join code" required />
+        <button type="submit">Join group</button>
       </form>
       <h2>My groups:</h2>
       <ul>

@@ -29,5 +29,32 @@ export async function createGroup(formData: FormData) {
     return g;
   });
 
-  // redirect(`/groups/${group.id}`);
+  redirect(`/groups/${group.id}`);
+}
+
+export async function joinGroup(formData: FormData) {
+  const user = await getCurrentUser();
+  if (!user) redirect("/login");
+
+  const code = String(formData.get("joinCode") ?? "").trim();
+  if (code.length != 6) {
+    throw new Error("Group join code must be 6 characters");
+  }
+
+  const group = await prisma.group.findFirst({
+    where: { joinCode: code }
+  });
+
+  if (!group) throw new Error("Join code doesn't link to a group");
+
+  await prisma.$transaction(async (tx) => {
+    await tx.membership.create({ 
+      data: { 
+        role: "MEMBER", 
+        groupId: Number(group.id), 
+        userId: user.id 
+    }})
+  });
+
+  redirect(`/groups/${group.id}`);
 }
