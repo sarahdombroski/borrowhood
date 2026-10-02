@@ -58,3 +58,16 @@ export async function joinGroup(formData: FormData) {
 
   redirect(`/groups/${group.id}`);
 }
+
+export async function leaveGroup(groupId: number) {
+  const user = await getCurrentUser();
+  if (!user) return;
+
+  await prisma.$transaction(async (tx) => {
+    await tx.membership.delete({
+      where: { userId_groupId: { userId: user.id, groupId } }
+    })
+  });
+
+  redirect(`/groups`);
+}
