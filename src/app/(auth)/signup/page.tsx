@@ -20,8 +20,10 @@ export default function Signup() {
   }
 
   return (
-    <main>
-      <form onSubmit={onSubmit}>
+    <>
+      <img src="borrowhood.png" alt="borrowhood logo" className="max-w-sm m-auto" />
+      <form onSubmit={onSubmit} className="border-2 border-black rounded-lg p-2 m-4 flex flex-col gap-3">
+        <p>Enter your information to sign up:</p>
         <input name="name" placeholder="Name" required />
         <input name="email" type="email" placeholder="Email" required />
         <input name="password" type="password" placeholder="Password" required />
@@ -30,6 +32,6 @@ export default function Signup() {
           <p>{error}</p>
         }
       </form>      
-    </main>
+    </>
   );
 }
