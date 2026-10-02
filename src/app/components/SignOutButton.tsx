@@ -16,5 +16,5 @@ export default function SignOutButton() {
     });
   }
 
-  return <button onClick={onClick}>Sign out</button>;
+  return <button onClick={onClick} className="text-xl font-semibold">Sign out</button>;
 }
