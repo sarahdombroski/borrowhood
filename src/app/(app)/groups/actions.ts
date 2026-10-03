@@ -63,9 +63,21 @@ export async function leaveGroup(groupId: number) {
   const user = await getCurrentUser();
   if (!user) return;
 
+  const membership = await prisma.membership.findFirst({
+    where: {userId: user.id, groupId: Number(groupId)},
+    include: { group: true }
+  });
+  if (membership?.role == "ADMIN") {
+    // TODO: implement a better handler for this when you add in toast messages
+    console.log("Cannot leave, you are the admin :(");
+    return;
+  }
+
   await prisma.$transaction(async (tx) => {
     await tx.membership.delete({
       where: { userId_groupId: { userId: user.id, groupId } }
+
+      // TODO: handle what happens to the user's items when they leave a group
     })
   });
 
