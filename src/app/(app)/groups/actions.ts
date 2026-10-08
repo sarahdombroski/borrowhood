@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { canRemoveOwnerFromGroup } from "@/lib/queries/groups";
 import { getCurrentUser } from "@/lib/session";
 import { redirect } from "next/navigation";
 
@@ -67,7 +68,7 @@ export async function leaveGroup(groupId: number) {
     where: {userId: user.id, groupId: Number(groupId)},
     include: { group: true }
   });
-  if (membership?.role == "ADMIN") {
+  if ((membership?.role == "ADMIN") && (await canRemoveOwnerFromGroup(groupId) === false)) {
     // TODO: implement a better handler for this when you add in toast messages
     console.log("Cannot leave, you are the admin :(");
     return;

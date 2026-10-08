@@ -39,8 +39,13 @@ export type ItemMinAggregateOutputType = {
   ownerId: string | null
   name: string | null
   description: string | null
+  conditionNotes: string | null
+  replacementValue: string | null
   photoUrl: string | null
   createdAt: Date | null
+  isArchived: boolean | null
+  archivedAt: Date | null
+  category: string | null
 }
 
 export type ItemMaxAggregateOutputType = {
@@ -48,8 +53,13 @@ export type ItemMaxAggregateOutputType = {
   ownerId: string | null
   name: string | null
   description: string | null
+  conditionNotes: string | null
+  replacementValue: string | null
   photoUrl: string | null
   createdAt: Date | null
+  isArchived: boolean | null
+  archivedAt: Date | null
+  category: string | null
 }
 
 export type ItemCountAggregateOutputType = {
@@ -57,8 +67,13 @@ export type ItemCountAggregateOutputType = {
   ownerId: number
   name: number
   description: number
+  conditionNotes: number
+  replacementValue: number
   photoUrl: number
   createdAt: number
+  isArchived: number
+  archivedAt: number
+  category: number
   _all: number
 }
 
@@ -76,8 +91,13 @@ export type ItemMinAggregateInputType = {
   ownerId?: true
   name?: true
   description?: true
+  conditionNotes?: true
+  replacementValue?: true
   photoUrl?: true
   createdAt?: true
+  isArchived?: true
+  archivedAt?: true
+  category?: true
 }
 
 export type ItemMaxAggregateInputType = {
@@ -85,8 +105,13 @@ export type ItemMaxAggregateInputType = {
   ownerId?: true
   name?: true
   description?: true
+  conditionNotes?: true
+  replacementValue?: true
   photoUrl?: true
   createdAt?: true
+  isArchived?: true
+  archivedAt?: true
+  category?: true
 }
 
 export type ItemCountAggregateInputType = {
@@ -94,8 +119,13 @@ export type ItemCountAggregateInputType = {
   ownerId?: true
   name?: true
   description?: true
+  conditionNotes?: true
+  replacementValue?: true
   photoUrl?: true
   createdAt?: true
+  isArchived?: true
+  archivedAt?: true
+  category?: true
   _all?: true
 }
 
@@ -190,8 +220,13 @@ export type ItemGroupByOutputType = {
   ownerId: string
   name: string
   description: string | null
+  conditionNotes: string | null
+  replacementValue: string | null
   photoUrl: string | null
   createdAt: Date
+  isArchived: boolean
+  archivedAt: Date | null
+  category: string | null
   _count: ItemCountAggregateOutputType | null
   _avg: ItemAvgAggregateOutputType | null
   _sum: ItemSumAggregateOutputType | null
@@ -222,8 +257,13 @@ export type ItemWhereInput = {
   ownerId?: Prisma.StringFilter<"Item"> | string
   name?: Prisma.StringFilter<"Item"> | string
   description?: Prisma.StringNullableFilter<"Item"> | string | null
+  conditionNotes?: Prisma.StringNullableFilter<"Item"> | string | null
+  replacementValue?: Prisma.StringNullableFilter<"Item"> | string | null
   photoUrl?: Prisma.StringNullableFilter<"Item"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Item"> | Date | string
+  isArchived?: Prisma.BoolFilter<"Item"> | boolean
+  archivedAt?: Prisma.DateTimeNullableFilter<"Item"> | Date | string | null
+  category?: Prisma.StringNullableFilter<"Item"> | string | null
   owner?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   itemVisibilities?: Prisma.ItemVisibilityListRelationFilter
   reservations?: Prisma.ReservationListRelationFilter
@@ -234,8 +274,13 @@ export type ItemOrderByWithRelationInput = {
   ownerId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  conditionNotes?: Prisma.SortOrderInput | Prisma.SortOrder
+  replacementValue?: Prisma.SortOrderInput | Prisma.SortOrder
   photoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  isArchived?: Prisma.SortOrder
+  archivedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  category?: Prisma.SortOrderInput | Prisma.SortOrder
   owner?: Prisma.UserOrderByWithRelationInput
   itemVisibilities?: Prisma.ItemVisibilityOrderByRelationAggregateInput
   reservations?: Prisma.ReservationOrderByRelationAggregateInput
@@ -249,8 +294,13 @@ export type ItemWhereUniqueInput = Prisma.AtLeast<{
   ownerId?: Prisma.StringFilter<"Item"> | string
   name?: Prisma.StringFilter<"Item"> | string
   description?: Prisma.StringNullableFilter<"Item"> | string | null
+  conditionNotes?: Prisma.StringNullableFilter<"Item"> | string | null
+  replacementValue?: Prisma.StringNullableFilter<"Item"> | string | null
   photoUrl?: Prisma.StringNullableFilter<"Item"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Item"> | Date | string
+  isArchived?: Prisma.BoolFilter<"Item"> | boolean
+  archivedAt?: Prisma.DateTimeNullableFilter<"Item"> | Date | string | null
+  category?: Prisma.StringNullableFilter<"Item"> | string | null
   owner?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   itemVisibilities?: Prisma.ItemVisibilityListRelationFilter
   reservations?: Prisma.ReservationListRelationFilter
@@ -261,8 +311,13 @@ export type ItemOrderByWithAggregationInput = {
   ownerId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  conditionNotes?: Prisma.SortOrderInput | Prisma.SortOrder
+  replacementValue?: Prisma.SortOrderInput | Prisma.SortOrder
   photoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  isArchived?: Prisma.SortOrder
+  archivedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  category?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ItemCountOrderByAggregateInput
   _avg?: Prisma.ItemAvgOrderByAggregateInput
   _max?: Prisma.ItemMaxOrderByAggregateInput
@@ -278,15 +333,25 @@ export type ItemScalarWhereWithAggregatesInput = {
   ownerId?: Prisma.StringWithAggregatesFilter<"Item"> | string
   name?: Prisma.StringWithAggregatesFilter<"Item"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"Item"> | string | null
+  conditionNotes?: Prisma.StringNullableWithAggregatesFilter<"Item"> | string | null
+  replacementValue?: Prisma.StringNullableWithAggregatesFilter<"Item"> | string | null
   photoUrl?: Prisma.StringNullableWithAggregatesFilter<"Item"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Item"> | Date | string
+  isArchived?: Prisma.BoolWithAggregatesFilter<"Item"> | boolean
+  archivedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Item"> | Date | string | null
+  category?: Prisma.StringNullableWithAggregatesFilter<"Item"> | string | null
 }
 
 export type ItemCreateInput = {
   name: string
   description?: string | null
+  conditionNotes?: string | null
+  replacementValue?: string | null
   photoUrl?: string | null
   createdAt?: Date | string
+  isArchived?: boolean
+  archivedAt?: Date | string | null
+  category?: string | null
   owner: Prisma.UserCreateNestedOneWithoutItemsInput
   itemVisibilities?: Prisma.ItemVisibilityCreateNestedManyWithoutItemInput
   reservations?: Prisma.ReservationCreateNestedManyWithoutItemInput
@@ -297,8 +362,13 @@ export type ItemUncheckedCreateInput = {
   ownerId: string
   name: string
   description?: string | null
+  conditionNotes?: string | null
+  replacementValue?: string | null
   photoUrl?: string | null
   createdAt?: Date | string
+  isArchived?: boolean
+  archivedAt?: Date | string | null
+  category?: string | null
   itemVisibilities?: Prisma.ItemVisibilityUncheckedCreateNestedManyWithoutItemInput
   reservations?: Prisma.ReservationUncheckedCreateNestedManyWithoutItemInput
 }
@@ -306,8 +376,13 @@ export type ItemUncheckedCreateInput = {
 export type ItemUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  conditionNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  replacementValue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   owner?: Prisma.UserUpdateOneRequiredWithoutItemsNestedInput
   itemVisibilities?: Prisma.ItemVisibilityUpdateManyWithoutItemNestedInput
   reservations?: Prisma.ReservationUpdateManyWithoutItemNestedInput
@@ -318,8 +393,13 @@ export type ItemUncheckedUpdateInput = {
   ownerId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  conditionNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  replacementValue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemVisibilities?: Prisma.ItemVisibilityUncheckedUpdateManyWithoutItemNestedInput
   reservations?: Prisma.ReservationUncheckedUpdateManyWithoutItemNestedInput
 }
@@ -329,15 +409,25 @@ export type ItemCreateManyInput = {
   ownerId: string
   name: string
   description?: string | null
+  conditionNotes?: string | null
+  replacementValue?: string | null
   photoUrl?: string | null
   createdAt?: Date | string
+  isArchived?: boolean
+  archivedAt?: Date | string | null
+  category?: string | null
 }
 
 export type ItemUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  conditionNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  replacementValue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ItemUncheckedUpdateManyInput = {
@@ -345,8 +435,13 @@ export type ItemUncheckedUpdateManyInput = {
   ownerId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  conditionNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  replacementValue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ItemListRelationFilter = {
@@ -364,8 +459,13 @@ export type ItemCountOrderByAggregateInput = {
   ownerId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  conditionNotes?: Prisma.SortOrder
+  replacementValue?: Prisma.SortOrder
   photoUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  isArchived?: Prisma.SortOrder
+  archivedAt?: Prisma.SortOrder
+  category?: Prisma.SortOrder
 }
 
 export type ItemAvgOrderByAggregateInput = {
@@ -377,8 +477,13 @@ export type ItemMaxOrderByAggregateInput = {
   ownerId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  conditionNotes?: Prisma.SortOrder
+  replacementValue?: Prisma.SortOrder
   photoUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  isArchived?: Prisma.SortOrder
+  archivedAt?: Prisma.SortOrder
+  category?: Prisma.SortOrder
 }
 
 export type ItemMinOrderByAggregateInput = {
@@ -386,8 +491,13 @@ export type ItemMinOrderByAggregateInput = {
   ownerId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  conditionNotes?: Prisma.SortOrder
+  replacementValue?: Prisma.SortOrder
   photoUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  isArchived?: Prisma.SortOrder
+  archivedAt?: Prisma.SortOrder
+  category?: Prisma.SortOrder
 }
 
 export type ItemSumOrderByAggregateInput = {
@@ -441,6 +551,10 @@ export type ItemUncheckedUpdateManyWithoutOwnerNestedInput = {
   deleteMany?: Prisma.ItemScalarWhereInput | Prisma.ItemScalarWhereInput[]
 }
 
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
+}
+
 export type ItemCreateNestedOneWithoutItemVisibilitiesInput = {
   create?: Prisma.XOR<Prisma.ItemCreateWithoutItemVisibilitiesInput, Prisma.ItemUncheckedCreateWithoutItemVisibilitiesInput>
   connectOrCreate?: Prisma.ItemCreateOrConnectWithoutItemVisibilitiesInput
@@ -472,8 +586,13 @@ export type ItemUpdateOneRequiredWithoutReservationsNestedInput = {
 export type ItemCreateWithoutOwnerInput = {
   name: string
   description?: string | null
+  conditionNotes?: string | null
+  replacementValue?: string | null
   photoUrl?: string | null
   createdAt?: Date | string
+  isArchived?: boolean
+  archivedAt?: Date | string | null
+  category?: string | null
   itemVisibilities?: Prisma.ItemVisibilityCreateNestedManyWithoutItemInput
   reservations?: Prisma.ReservationCreateNestedManyWithoutItemInput
 }
@@ -482,8 +601,13 @@ export type ItemUncheckedCreateWithoutOwnerInput = {
   id?: number
   name: string
   description?: string | null
+  conditionNotes?: string | null
+  replacementValue?: string | null
   photoUrl?: string | null
   createdAt?: Date | string
+  isArchived?: boolean
+  archivedAt?: Date | string | null
+  category?: string | null
   itemVisibilities?: Prisma.ItemVisibilityUncheckedCreateNestedManyWithoutItemInput
   reservations?: Prisma.ReservationUncheckedCreateNestedManyWithoutItemInput
 }
@@ -522,15 +646,25 @@ export type ItemScalarWhereInput = {
   ownerId?: Prisma.StringFilter<"Item"> | string
   name?: Prisma.StringFilter<"Item"> | string
   description?: Prisma.StringNullableFilter<"Item"> | string | null
+  conditionNotes?: Prisma.StringNullableFilter<"Item"> | string | null
+  replacementValue?: Prisma.StringNullableFilter<"Item"> | string | null
   photoUrl?: Prisma.StringNullableFilter<"Item"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Item"> | Date | string
+  isArchived?: Prisma.BoolFilter<"Item"> | boolean
+  archivedAt?: Prisma.DateTimeNullableFilter<"Item"> | Date | string | null
+  category?: Prisma.StringNullableFilter<"Item"> | string | null
 }
 
 export type ItemCreateWithoutItemVisibilitiesInput = {
   name: string
   description?: string | null
+  conditionNotes?: string | null
+  replacementValue?: string | null
   photoUrl?: string | null
   createdAt?: Date | string
+  isArchived?: boolean
+  archivedAt?: Date | string | null
+  category?: string | null
   owner: Prisma.UserCreateNestedOneWithoutItemsInput
   reservations?: Prisma.ReservationCreateNestedManyWithoutItemInput
 }
@@ -540,8 +674,13 @@ export type ItemUncheckedCreateWithoutItemVisibilitiesInput = {
   ownerId: string
   name: string
   description?: string | null
+  conditionNotes?: string | null
+  replacementValue?: string | null
   photoUrl?: string | null
   createdAt?: Date | string
+  isArchived?: boolean
+  archivedAt?: Date | string | null
+  category?: string | null
   reservations?: Prisma.ReservationUncheckedCreateNestedManyWithoutItemInput
 }
 
@@ -564,8 +703,13 @@ export type ItemUpdateToOneWithWhereWithoutItemVisibilitiesInput = {
 export type ItemUpdateWithoutItemVisibilitiesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  conditionNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  replacementValue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   owner?: Prisma.UserUpdateOneRequiredWithoutItemsNestedInput
   reservations?: Prisma.ReservationUpdateManyWithoutItemNestedInput
 }
@@ -575,16 +719,26 @@ export type ItemUncheckedUpdateWithoutItemVisibilitiesInput = {
   ownerId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  conditionNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  replacementValue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reservations?: Prisma.ReservationUncheckedUpdateManyWithoutItemNestedInput
 }
 
 export type ItemCreateWithoutReservationsInput = {
   name: string
   description?: string | null
+  conditionNotes?: string | null
+  replacementValue?: string | null
   photoUrl?: string | null
   createdAt?: Date | string
+  isArchived?: boolean
+  archivedAt?: Date | string | null
+  category?: string | null
   owner: Prisma.UserCreateNestedOneWithoutItemsInput
   itemVisibilities?: Prisma.ItemVisibilityCreateNestedManyWithoutItemInput
 }
@@ -594,8 +748,13 @@ export type ItemUncheckedCreateWithoutReservationsInput = {
   ownerId: string
   name: string
   description?: string | null
+  conditionNotes?: string | null
+  replacementValue?: string | null
   photoUrl?: string | null
   createdAt?: Date | string
+  isArchived?: boolean
+  archivedAt?: Date | string | null
+  category?: string | null
   itemVisibilities?: Prisma.ItemVisibilityUncheckedCreateNestedManyWithoutItemInput
 }
 
@@ -618,8 +777,13 @@ export type ItemUpdateToOneWithWhereWithoutReservationsInput = {
 export type ItemUpdateWithoutReservationsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  conditionNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  replacementValue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   owner?: Prisma.UserUpdateOneRequiredWithoutItemsNestedInput
   itemVisibilities?: Prisma.ItemVisibilityUpdateManyWithoutItemNestedInput
 }
@@ -629,8 +793,13 @@ export type ItemUncheckedUpdateWithoutReservationsInput = {
   ownerId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  conditionNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  replacementValue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemVisibilities?: Prisma.ItemVisibilityUncheckedUpdateManyWithoutItemNestedInput
 }
 
@@ -638,15 +807,25 @@ export type ItemCreateManyOwnerInput = {
   id?: number
   name: string
   description?: string | null
+  conditionNotes?: string | null
+  replacementValue?: string | null
   photoUrl?: string | null
   createdAt?: Date | string
+  isArchived?: boolean
+  archivedAt?: Date | string | null
+  category?: string | null
 }
 
 export type ItemUpdateWithoutOwnerInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  conditionNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  replacementValue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemVisibilities?: Prisma.ItemVisibilityUpdateManyWithoutItemNestedInput
   reservations?: Prisma.ReservationUpdateManyWithoutItemNestedInput
 }
@@ -655,8 +834,13 @@ export type ItemUncheckedUpdateWithoutOwnerInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  conditionNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  replacementValue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemVisibilities?: Prisma.ItemVisibilityUncheckedUpdateManyWithoutItemNestedInput
   reservations?: Prisma.ReservationUncheckedUpdateManyWithoutItemNestedInput
 }
@@ -665,8 +849,13 @@ export type ItemUncheckedUpdateManyWithoutOwnerInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  conditionNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  replacementValue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -714,8 +903,13 @@ export type ItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   ownerId?: boolean
   name?: boolean
   description?: boolean
+  conditionNotes?: boolean
+  replacementValue?: boolean
   photoUrl?: boolean
   createdAt?: boolean
+  isArchived?: boolean
+  archivedAt?: boolean
+  category?: boolean
   owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   itemVisibilities?: boolean | Prisma.Item$itemVisibilitiesArgs<ExtArgs>
   reservations?: boolean | Prisma.Item$reservationsArgs<ExtArgs>
@@ -727,8 +921,13 @@ export type ItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   ownerId?: boolean
   name?: boolean
   description?: boolean
+  conditionNotes?: boolean
+  replacementValue?: boolean
   photoUrl?: boolean
   createdAt?: boolean
+  isArchived?: boolean
+  archivedAt?: boolean
+  category?: boolean
   owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["item"]>
 
@@ -737,8 +936,13 @@ export type ItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   ownerId?: boolean
   name?: boolean
   description?: boolean
+  conditionNotes?: boolean
+  replacementValue?: boolean
   photoUrl?: boolean
   createdAt?: boolean
+  isArchived?: boolean
+  archivedAt?: boolean
+  category?: boolean
   owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["item"]>
 
@@ -747,11 +951,16 @@ export type ItemSelectScalar = {
   ownerId?: boolean
   name?: boolean
   description?: boolean
+  conditionNotes?: boolean
+  replacementValue?: boolean
   photoUrl?: boolean
   createdAt?: boolean
+  isArchived?: boolean
+  archivedAt?: boolean
+  category?: boolean
 }
 
-export type ItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "ownerId" | "name" | "description" | "photoUrl" | "createdAt", ExtArgs["result"]["item"]>
+export type ItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "ownerId" | "name" | "description" | "conditionNotes" | "replacementValue" | "photoUrl" | "createdAt" | "isArchived" | "archivedAt" | "category", ExtArgs["result"]["item"]>
 export type ItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   itemVisibilities?: boolean | Prisma.Item$itemVisibilitiesArgs<ExtArgs>
@@ -777,8 +986,13 @@ export type $ItemPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     ownerId: string
     name: string
     description: string | null
+    conditionNotes: string | null
+    replacementValue: string | null
     photoUrl: string | null
     createdAt: Date
+    isArchived: boolean
+    archivedAt: Date | null
+    category: string | null
   }, ExtArgs["result"]["item"]>
   composites: {}
 }
@@ -1209,8 +1423,13 @@ export interface ItemFieldRefs {
   readonly ownerId: Prisma.FieldRef<"Item", 'String'>
   readonly name: Prisma.FieldRef<"Item", 'String'>
   readonly description: Prisma.FieldRef<"Item", 'String'>
+  readonly conditionNotes: Prisma.FieldRef<"Item", 'String'>
+  readonly replacementValue: Prisma.FieldRef<"Item", 'String'>
   readonly photoUrl: Prisma.FieldRef<"Item", 'String'>
   readonly createdAt: Prisma.FieldRef<"Item", 'DateTime'>
+  readonly isArchived: Prisma.FieldRef<"Item", 'Boolean'>
+  readonly archivedAt: Prisma.FieldRef<"Item", 'DateTime'>
+  readonly category: Prisma.FieldRef<"Item", 'String'>
 }
     
 

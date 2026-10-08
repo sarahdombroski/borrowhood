@@ -29,11 +29,13 @@ export type AggregateReservation = {
 export type ReservationAvgAggregateOutputType = {
   id: number | null
   itemId: number | null
+  maxLoan: number | null
 }
 
 export type ReservationSumAggregateOutputType = {
   id: number | null
   itemId: number | null
+  maxLoan: number | null
 }
 
 export type ReservationMinAggregateOutputType = {
@@ -42,6 +44,7 @@ export type ReservationMinAggregateOutputType = {
   borrowerId: string | null
   startDate: Date | null
   endDate: Date | null
+  maxLoan: number | null
   status: $Enums.Status | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -53,6 +56,7 @@ export type ReservationMaxAggregateOutputType = {
   borrowerId: string | null
   startDate: Date | null
   endDate: Date | null
+  maxLoan: number | null
   status: $Enums.Status | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -64,6 +68,7 @@ export type ReservationCountAggregateOutputType = {
   borrowerId: number
   startDate: number
   endDate: number
+  maxLoan: number
   status: number
   createdAt: number
   updatedAt: number
@@ -74,11 +79,13 @@ export type ReservationCountAggregateOutputType = {
 export type ReservationAvgAggregateInputType = {
   id?: true
   itemId?: true
+  maxLoan?: true
 }
 
 export type ReservationSumAggregateInputType = {
   id?: true
   itemId?: true
+  maxLoan?: true
 }
 
 export type ReservationMinAggregateInputType = {
@@ -87,6 +94,7 @@ export type ReservationMinAggregateInputType = {
   borrowerId?: true
   startDate?: true
   endDate?: true
+  maxLoan?: true
   status?: true
   createdAt?: true
   updatedAt?: true
@@ -98,6 +106,7 @@ export type ReservationMaxAggregateInputType = {
   borrowerId?: true
   startDate?: true
   endDate?: true
+  maxLoan?: true
   status?: true
   createdAt?: true
   updatedAt?: true
@@ -109,6 +118,7 @@ export type ReservationCountAggregateInputType = {
   borrowerId?: true
   startDate?: true
   endDate?: true
+  maxLoan?: true
   status?: true
   createdAt?: true
   updatedAt?: true
@@ -207,6 +217,7 @@ export type ReservationGroupByOutputType = {
   borrowerId: string
   startDate: Date
   endDate: Date
+  maxLoan: number | null
   status: $Enums.Status
   createdAt: Date
   updatedAt: Date
@@ -241,6 +252,7 @@ export type ReservationWhereInput = {
   borrowerId?: Prisma.StringFilter<"Reservation"> | string
   startDate?: Prisma.DateTimeFilter<"Reservation"> | Date | string
   endDate?: Prisma.DateTimeFilter<"Reservation"> | Date | string
+  maxLoan?: Prisma.IntNullableFilter<"Reservation"> | number | null
   status?: Prisma.EnumStatusFilter<"Reservation"> | $Enums.Status
   createdAt?: Prisma.DateTimeFilter<"Reservation"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Reservation"> | Date | string
@@ -254,6 +266,7 @@ export type ReservationOrderByWithRelationInput = {
   borrowerId?: Prisma.SortOrder
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
+  maxLoan?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -270,6 +283,7 @@ export type ReservationWhereUniqueInput = Prisma.AtLeast<{
   borrowerId?: Prisma.StringFilter<"Reservation"> | string
   startDate?: Prisma.DateTimeFilter<"Reservation"> | Date | string
   endDate?: Prisma.DateTimeFilter<"Reservation"> | Date | string
+  maxLoan?: Prisma.IntNullableFilter<"Reservation"> | number | null
   status?: Prisma.EnumStatusFilter<"Reservation"> | $Enums.Status
   createdAt?: Prisma.DateTimeFilter<"Reservation"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Reservation"> | Date | string
@@ -283,6 +297,7 @@ export type ReservationOrderByWithAggregationInput = {
   borrowerId?: Prisma.SortOrder
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
+  maxLoan?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -302,6 +317,7 @@ export type ReservationScalarWhereWithAggregatesInput = {
   borrowerId?: Prisma.StringWithAggregatesFilter<"Reservation"> | string
   startDate?: Prisma.DateTimeWithAggregatesFilter<"Reservation"> | Date | string
   endDate?: Prisma.DateTimeWithAggregatesFilter<"Reservation"> | Date | string
+  maxLoan?: Prisma.IntNullableWithAggregatesFilter<"Reservation"> | number | null
   status?: Prisma.EnumStatusWithAggregatesFilter<"Reservation"> | $Enums.Status
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Reservation"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Reservation"> | Date | string
@@ -310,6 +326,7 @@ export type ReservationScalarWhereWithAggregatesInput = {
 export type ReservationCreateInput = {
   startDate: Date | string
   endDate: Date | string
+  maxLoan?: number | null
   status?: $Enums.Status
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -323,6 +340,7 @@ export type ReservationUncheckedCreateInput = {
   borrowerId: string
   startDate: Date | string
   endDate: Date | string
+  maxLoan?: number | null
   status?: $Enums.Status
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -331,6 +349,7 @@ export type ReservationUncheckedCreateInput = {
 export type ReservationUpdateInput = {
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  maxLoan?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -344,6 +363,7 @@ export type ReservationUncheckedUpdateInput = {
   borrowerId?: Prisma.StringFieldUpdateOperationsInput | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  maxLoan?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -355,6 +375,7 @@ export type ReservationCreateManyInput = {
   borrowerId: string
   startDate: Date | string
   endDate: Date | string
+  maxLoan?: number | null
   status?: $Enums.Status
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -363,6 +384,7 @@ export type ReservationCreateManyInput = {
 export type ReservationUpdateManyMutationInput = {
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  maxLoan?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -374,6 +396,7 @@ export type ReservationUncheckedUpdateManyInput = {
   borrowerId?: Prisma.StringFieldUpdateOperationsInput | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  maxLoan?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -395,6 +418,7 @@ export type ReservationCountOrderByAggregateInput = {
   borrowerId?: Prisma.SortOrder
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
+  maxLoan?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -403,6 +427,7 @@ export type ReservationCountOrderByAggregateInput = {
 export type ReservationAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   itemId?: Prisma.SortOrder
+  maxLoan?: Prisma.SortOrder
 }
 
 export type ReservationMaxOrderByAggregateInput = {
@@ -411,6 +436,7 @@ export type ReservationMaxOrderByAggregateInput = {
   borrowerId?: Prisma.SortOrder
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
+  maxLoan?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -422,6 +448,7 @@ export type ReservationMinOrderByAggregateInput = {
   borrowerId?: Prisma.SortOrder
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
+  maxLoan?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -430,6 +457,7 @@ export type ReservationMinOrderByAggregateInput = {
 export type ReservationSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   itemId?: Prisma.SortOrder
+  maxLoan?: Prisma.SortOrder
 }
 
 export type ReservationCreateNestedManyWithoutBorrowerInput = {
@@ -516,6 +544,14 @@ export type ReservationUncheckedUpdateManyWithoutItemNestedInput = {
   deleteMany?: Prisma.ReservationScalarWhereInput | Prisma.ReservationScalarWhereInput[]
 }
 
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type EnumStatusFieldUpdateOperationsInput = {
   set?: $Enums.Status
 }
@@ -523,6 +559,7 @@ export type EnumStatusFieldUpdateOperationsInput = {
 export type ReservationCreateWithoutBorrowerInput = {
   startDate: Date | string
   endDate: Date | string
+  maxLoan?: number | null
   status?: $Enums.Status
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -534,6 +571,7 @@ export type ReservationUncheckedCreateWithoutBorrowerInput = {
   itemId: number
   startDate: Date | string
   endDate: Date | string
+  maxLoan?: number | null
   status?: $Enums.Status
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -574,6 +612,7 @@ export type ReservationScalarWhereInput = {
   borrowerId?: Prisma.StringFilter<"Reservation"> | string
   startDate?: Prisma.DateTimeFilter<"Reservation"> | Date | string
   endDate?: Prisma.DateTimeFilter<"Reservation"> | Date | string
+  maxLoan?: Prisma.IntNullableFilter<"Reservation"> | number | null
   status?: Prisma.EnumStatusFilter<"Reservation"> | $Enums.Status
   createdAt?: Prisma.DateTimeFilter<"Reservation"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Reservation"> | Date | string
@@ -582,6 +621,7 @@ export type ReservationScalarWhereInput = {
 export type ReservationCreateWithoutItemInput = {
   startDate: Date | string
   endDate: Date | string
+  maxLoan?: number | null
   status?: $Enums.Status
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -593,6 +633,7 @@ export type ReservationUncheckedCreateWithoutItemInput = {
   borrowerId: string
   startDate: Date | string
   endDate: Date | string
+  maxLoan?: number | null
   status?: $Enums.Status
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -629,6 +670,7 @@ export type ReservationCreateManyBorrowerInput = {
   itemId: number
   startDate: Date | string
   endDate: Date | string
+  maxLoan?: number | null
   status?: $Enums.Status
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -637,6 +679,7 @@ export type ReservationCreateManyBorrowerInput = {
 export type ReservationUpdateWithoutBorrowerInput = {
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  maxLoan?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -648,6 +691,7 @@ export type ReservationUncheckedUpdateWithoutBorrowerInput = {
   itemId?: Prisma.IntFieldUpdateOperationsInput | number
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  maxLoan?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -658,6 +702,7 @@ export type ReservationUncheckedUpdateManyWithoutBorrowerInput = {
   itemId?: Prisma.IntFieldUpdateOperationsInput | number
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  maxLoan?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -668,6 +713,7 @@ export type ReservationCreateManyItemInput = {
   borrowerId: string
   startDate: Date | string
   endDate: Date | string
+  maxLoan?: number | null
   status?: $Enums.Status
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -676,6 +722,7 @@ export type ReservationCreateManyItemInput = {
 export type ReservationUpdateWithoutItemInput = {
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  maxLoan?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -687,6 +734,7 @@ export type ReservationUncheckedUpdateWithoutItemInput = {
   borrowerId?: Prisma.StringFieldUpdateOperationsInput | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  maxLoan?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -697,6 +745,7 @@ export type ReservationUncheckedUpdateManyWithoutItemInput = {
   borrowerId?: Prisma.StringFieldUpdateOperationsInput | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  maxLoan?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -710,6 +759,7 @@ export type ReservationSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   borrowerId?: boolean
   startDate?: boolean
   endDate?: boolean
+  maxLoan?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -723,6 +773,7 @@ export type ReservationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   borrowerId?: boolean
   startDate?: boolean
   endDate?: boolean
+  maxLoan?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -736,6 +787,7 @@ export type ReservationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   borrowerId?: boolean
   startDate?: boolean
   endDate?: boolean
+  maxLoan?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -749,12 +801,13 @@ export type ReservationSelectScalar = {
   borrowerId?: boolean
   startDate?: boolean
   endDate?: boolean
+  maxLoan?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ReservationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "itemId" | "borrowerId" | "startDate" | "endDate" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["reservation"]>
+export type ReservationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "itemId" | "borrowerId" | "startDate" | "endDate" | "maxLoan" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["reservation"]>
 export type ReservationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   item?: boolean | Prisma.ItemDefaultArgs<ExtArgs>
   borrower?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -780,6 +833,7 @@ export type $ReservationPayload<ExtArgs extends runtime.Types.Extensions.Interna
     borrowerId: string
     startDate: Date
     endDate: Date
+    maxLoan: number | null
     status: $Enums.Status
     createdAt: Date
     updatedAt: Date
@@ -1213,6 +1267,7 @@ export interface ReservationFieldRefs {
   readonly borrowerId: Prisma.FieldRef<"Reservation", 'String'>
   readonly startDate: Prisma.FieldRef<"Reservation", 'DateTime'>
   readonly endDate: Prisma.FieldRef<"Reservation", 'DateTime'>
+  readonly maxLoan: Prisma.FieldRef<"Reservation", 'Int'>
   readonly status: Prisma.FieldRef<"Reservation", 'Status'>
   readonly createdAt: Prisma.FieldRef<"Reservation", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Reservation", 'DateTime'>
