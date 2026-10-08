@@ -58,8 +58,13 @@ model Item {
   owner            User             @relation(fields: [ownerId], references: [id])
   name             String
   description      String?
+  conditionNotes   String?
+  replacementValue String?
   photoUrl         String?
   createdAt        DateTime         @default(now())
+  isArchived       Boolean          @default(false)
+  archivedAt       DateTime?
+  category         String?
   itemVisibilities ItemVisibility[]
   reservations     Reservation[]
 }
@@ -82,6 +87,7 @@ model Reservation {
   borrower   User     @relation(fields: [borrowerId], references: [id])
   startDate  DateTime
   endDate    DateTime
+  maxLoan    Int?
   status     Status   @default(PENDING)
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
