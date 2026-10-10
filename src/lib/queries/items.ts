@@ -1,20 +1,7 @@
+import "server-only";
 import { ForbiddenError, NotFoundError } from "../errors";
 import { prisma, visibleToUser } from "../prisma";
-
-interface CreateItemInput {
-  ownerId: string;
-  name: string;
-  description?: string;
-  conditionNotes?: string;
-  replacementValue?: string;
-  photoUrl?: string;
-  category?: string;
-}
-
-interface UpdateItemInput {
-  name: string;
-  description: string;
-}
+import { CreateItemInput, UpdateItemInput } from "../validation/items";
 
 export async function getItemById(userId: string, itemId: number) {
   return prisma.item.findFirst({
@@ -25,10 +12,12 @@ export async function getItemById(userId: string, itemId: number) {
 export async function getVisibleItems(userId: string, groupId?: number) {
   return prisma.item.findMany({
     where: {
-      ...visibleToUser(userId),
-      ...(groupId && {
-        itemVisibilities: { some: { groupId, group: { memberships: { some: { userId } } } } },
-      }),
+      AND: [
+        visibleToUser(userId),
+        ...(groupId ? [{
+        itemVisibilities: { some: { groupId } } 
+      }]: []),
+      ],
     },
     include: { itemVisibilities: { select: { groupId: true } } },
     orderBy: { createdAt: "desc" },
@@ -38,14 +27,13 @@ export async function getVisibleItems(userId: string, groupId?: number) {
 export async function getMyItems(userId: string) {
   return prisma.item.findMany({
     where: { 
-      ownerId: userId, 
-      ...visibleToUser(userId)
+      ownerId: userId
     },
     orderBy: { createdAt: "desc" }
   });
 }
 
-export async function createItem(userId: string, data: CreateItemInput) {
+export async function createItemQuery(userId: string, data: CreateItemInput) {
   const item = await prisma.item.create({
     data: {
       ownerId: userId,
@@ -60,10 +48,10 @@ export async function createItem(userId: string, data: CreateItemInput) {
   return item;
 }
 
-export async function updateItem(userId: string, itemId: number, data: UpdateItemInput, expectedUpdatedAt: Date) {
+export async function updateItemQuery(userId: string, itemId: number, data: UpdateItemInput, expectedUpdatedAt: Date) {
   const { count } = await prisma.item.updateMany({
     where: { id: itemId, ownerId: userId, updatedAt: expectedUpdatedAt },
-    data: { name: data.name, description: data.description },
+    data: { name: data.name },
   });
   if (count === 0) throw new NotFoundError();
   return getItemById(userId, itemId);
@@ -90,7 +78,7 @@ export async function setItemVisibility(userId: string, itemId: number, groupIds
   });
 }
 
-export async function archiveItem(userId: string, itemId: number) {
+export async function archiveItemQuery(userId: string, itemId: number) {
   return await prisma.item.update({
     where: { id: itemId, ownerId: userId },
     data: {
@@ -100,12 +88,12 @@ export async function archiveItem(userId: string, itemId: number) {
   });
 }
 
-export async function unarchiveItem(userId: string, itemId: number) {
+export async function unarchiveItemQuery(userId: string, itemId: number) {
   return await prisma.item.update({
     where: { id: itemId, ownerId: userId, isArchived: true },
     data: {
       isArchived: false,
-      archivedAt: new Date()
+      archivedAt: null
     } 
   });
 }
