@@ -1,6 +1,11 @@
+import { getCurrentUser } from '@/lib/session';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 
-export default function Home() {
+export default async function Home() {
+  const user = await getCurrentUser();
+  if (user) redirect("/dashboard");
+
   return (
     <div className='p-4 flex flex-col items-center'>
       <img src="borrowhood.png" alt="borrowhood logo" className="max-w-md" />
