@@ -66,6 +66,7 @@ model Item {
   isArchived       Boolean          @default(false)
   archivedAt       DateTime?
   category         String?
+  maxLoan          Int?
   itemVisibilities ItemVisibility[]
   reservations     Reservation[]
 }
@@ -86,9 +87,8 @@ model Reservation {
   item       Item     @relation(fields: [itemId], references: [id])
   borrowerId String
   borrower   User     @relation(fields: [borrowerId], references: [id])
-  startDate  DateTime
-  endDate    DateTime
-  maxLoan    Int?
+  startDate  DateTime @db.Timestamptz(3)
+  endDate    DateTime @db.Timestamptz(3)
   status     Status   @default(PENDING)
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt

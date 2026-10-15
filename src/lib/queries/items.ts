@@ -1,7 +1,8 @@
 import "server-only";
 import { ForbiddenError, NotFoundError } from "../errors";
 import { prisma, visibleToUser } from "../prisma";
-import { CreateItemInput, UpdateItemInput } from "../validation/items";
+import { CreateItemInput, ReserveInput, ReserveResult, UpdateItemInput } from "../validation/items";
+import { z } from "zod";
 
 export async function getItemByIdQuery(userId: string, itemId: number) {
   return prisma.item.findFirst({
@@ -96,6 +97,34 @@ export async function unarchiveItemQuery(userId: string, itemId: number) {
       archivedAt: null
     } 
   });
+}
+
+export async function reserveItemQuery(borrowerId: string, { itemId, startDate, endDate }: z.infer<typeof ReserveInput>): Promise<ReserveResult> {
+  const item = await prisma.item.findFirst({
+    where: {
+      id: itemId,
+      itemVisibilities: { some: { group: { memberships: { some: { userId: borrowerId } } } } }
+    }
+  });
+  if (!item) return { ok: false, error: "NOT_FOUND" }
+  if (item.ownerId === borrowerId) return { ok: false, error: "OWN_ITEM" }
+
+  if (item.maxLoan) {
+    const days = (endDate.getTime() - startDate.getTime()) / 86_400_000;
+    if (days > item.maxLoan) return { ok: false, error: "TOO_LONG" }
+  }
+
+  try {
+    const reservation = await prisma.reservation.create({
+      data: { itemId, borrowerId, startDate, endDate },
+    });
+    return { ok: true, reservation }
+  } catch (e) {
+    if (e instanceof Error && e.message.includes("23P01")) {
+      return { ok: false, error: "ALREADY_BOOKED" };
+    } 
+    throw e;
+  }
 }
 
 // setItemPhotoKey(userId, itemId, key)

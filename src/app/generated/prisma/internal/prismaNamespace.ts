@@ -1178,7 +1178,8 @@ export const ItemScalarFieldEnum = {
   updatedAt: 'updatedAt',
   isArchived: 'isArchived',
   archivedAt: 'archivedAt',
-  category: 'category'
+  category: 'category',
+  maxLoan: 'maxLoan'
 } as const
 
 export type ItemScalarFieldEnum = (typeof ItemScalarFieldEnum)[keyof typeof ItemScalarFieldEnum]
@@ -1199,7 +1200,6 @@ export const ReservationScalarFieldEnum = {
   borrowerId: 'borrowerId',
   startDate: 'startDate',
   endDate: 'endDate',
-  maxLoan: 'maxLoan',
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

@@ -1,8 +1,8 @@
 "use server";
 
-import { archiveItemQuery, createItemQuery, getItemByIdQuery, getVisibleItemsQuery, setItemVisibilityQuery, unarchiveItemQuery, updateItemQuery } from "@/lib/queries/items";
+import { archiveItemQuery, createItemQuery, getItemByIdQuery, getVisibleItemsQuery, reserveItemQuery, setItemVisibilityQuery, unarchiveItemQuery, updateItemQuery } from "@/lib/queries/items";
 import { requireUser } from "@/lib/session";
-import { createItemSchema, updateItemSchema } from "@/lib/validation/items";
+import { createItemSchema, ReserveInput, ReserveResult, updateItemSchema } from "@/lib/validation/items";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -57,6 +57,13 @@ export async function unArchiveItem(itemId: number) {
   const user = await requireUser();
   await unarchiveItemQuery(user.id, itemId);
   redirect('/items');
+}
+
+export async function reserveItem(input: unknown): Promise<ReserveResult> {
+  const user = await requireUser();
+  const parsed = ReserveInput.safeParse(input);
+  if (!parsed.success) return { ok: false, error: "INVALID_INPUT" }
+  return await reserveItemQuery(user.id, parsed.data);
 }
 
 // toggleAvailabilityAction
