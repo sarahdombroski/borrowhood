@@ -2,12 +2,11 @@
 
 import { prisma } from "@/lib/prisma";
 import { canRemoveOwnerFromGroup, createGroupQuery, joinGroupByCode, leaveGroupQuery } from "@/lib/queries/groups";
-import { getCurrentUser } from "@/lib/session";
+import { requireUser } from "@/lib/session";
 import { redirect } from "next/navigation";
 
 export async function createGroup(formData: FormData) {
-  const user = await getCurrentUser();
-  if (!user) redirect("/login");
+  const user = await requireUser();
 
   const name = String(formData.get("name") ?? "").trim();
   if (name.length < 1 || name.length > 60) {
@@ -19,8 +18,7 @@ export async function createGroup(formData: FormData) {
 }
 
 export async function joinGroup(formData: FormData) {
-  const user = await getCurrentUser();
-  if (!user) redirect("/login");
+  const user = await requireUser();
 
   const code = Number(formData.get("joinCode") ?? "");
   if (code.toString().length != 6) {
@@ -33,8 +31,7 @@ export async function joinGroup(formData: FormData) {
 }
 
 export async function leaveGroup(groupId: number) {
-  const user = await getCurrentUser();
-  if (!user) redirect("/login");
+  const user = await requireUser();
 
   const membership = await prisma.membership.findFirst({
     where: {userId: user.id, groupId: groupId},

@@ -41,7 +41,6 @@ export async function createItemQuery(userId: string, data: CreateItemInput) {
       description: data.description,
       conditionNotes: data.conditionNotes,
       replacementValue: data.replacementValue,
-      photoUrl: data.photoUrl,
       category: data.category
     }
   });

@@ -1,59 +1,42 @@
 "use server";
 
 import { archiveItemQuery, createItemQuery, getItemByIdQuery, getVisibleItemsQuery, setItemVisibilityQuery, unarchiveItemQuery, updateItemQuery } from "@/lib/queries/items";
-import { getCurrentUser } from "@/lib/session";
-import { CreateItemInput, UpdateItemInput } from "@/lib/validation/items";
+import { requireUser } from "@/lib/session";
+import { createItemSchema, updateItemSchema } from "@/lib/validation/items";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function getItemById(itemId: number) {
-  const user = await getCurrentUser();
-  if (!user) redirect("/login");
+  const user = await requireUser();
   return await getItemByIdQuery(user.id, itemId)
 }
 
 export async function getVisibleItems(groupId?: number) {
-  const user = await getCurrentUser();
-  if (!user) redirect("/login");
+  const user = await requireUser();
   return await getVisibleItemsQuery(user.id, groupId);
 }
 
 export async function createItem(formData: FormData) {
-  const user = await getCurrentUser();
-  if (!user) redirect("/login");
+  const user = await requireUser();
 
-  const name = String(formData.get("name") ?? "").trim();
-  if (name.length < 1 || name.length > 60) {
-    throw new Error("Item name must be 1-60 characters");
-  }
-  const data: CreateItemInput = {ownerId: user.id, name: name}
-  const item = await createItemQuery(user.id, data);
+  const parsed = createItemSchema.safeParse(Object.fromEntries(formData));
+  if (!parsed.success) throw new Error(parsed.error.issues[0].message);
+
+  const item = await createItemQuery(user.id, parsed.data);
   redirect(`/items/${item.id}`);
 }
 
 export async function updateItem(itemId: number, formData: FormData) {
-  const user = await getCurrentUser();
-  if (!user) redirect("/login");
+  const user = await requireUser();
 
-  const name = String(formData.get("name") ?? "").trim();
-  if (name.length < 1 || name.length > 60) {
-    throw new Error("Item name must be 1-60 characters");
-  }
-  const description = String(formData.get("description") ?? "").trim();
-  if (description.length < 1 || description.length > 250) {
-    throw new Error("Item description must be 1-250 characters");
-  }
-  const data: UpdateItemInput = {name: name}
+  const parsed = updateItemSchema.safeParse(Object.fromEntries(formData));
+  if (!parsed.success) throw new Error(parsed.error.issues[0].message);
 
-  const expectedUpdatedAt = new Date(String(formData.get("expectedUpdatedAt")));
-  if (isNaN(expectedUpdatedAt.getTime())) throw new Error("Missing version");
-
-  return await updateItemQuery(user.id, itemId, data, expectedUpdatedAt);
+  return await updateItemQuery(user.id, itemId, parsed.data, parsed.data.expectedUpdatedAt);
 }
 
 export async function setItemVisibility(itemId: number, formData: FormData) {
-  const user = await getCurrentUser();
-  if (!user) redirect("/login");
+  const user = await requireUser();
 
   const groupIds = formData.getAll("groupIds").map(Number);
   if (groupIds.some((id) => !Number.isInteger(id))) {
@@ -65,15 +48,13 @@ export async function setItemVisibility(itemId: number, formData: FormData) {
 }
 
 export async function archiveItem(itemId: number) {
-  const user = await getCurrentUser();
-  if (!user) redirect("/login");
+  const user = await requireUser();
   await archiveItemQuery(user.id, itemId);
   redirect('/items');
 }
 
 export async function unArchiveItem(itemId: number) {
-  const user = await getCurrentUser();
-  if (!user) redirect("/login");
+  const user = await requireUser();
   await unarchiveItemQuery(user.id, itemId);
   redirect('/items');
 }
