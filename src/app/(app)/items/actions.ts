@@ -1,9 +1,22 @@
 "use server";
 
-import { archiveItemQuery, createItemQuery, unarchiveItemQuery, updateItemQuery } from "@/lib/queries/items";
+import { archiveItemQuery, createItemQuery, getItemByIdQuery, getVisibleItemsQuery, setItemVisibilityQuery, unarchiveItemQuery, updateItemQuery } from "@/lib/queries/items";
 import { getCurrentUser } from "@/lib/session";
 import { CreateItemInput, UpdateItemInput } from "@/lib/validation/items";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+
+export async function getItemById(itemId: number) {
+  const user = await getCurrentUser();
+  if (!user) redirect("/login");
+  return await getItemByIdQuery(user.id, itemId)
+}
+
+export async function getVisibleItems(groupId?: number) {
+  const user = await getCurrentUser();
+  if (!user) redirect("/login");
+  return await getVisibleItemsQuery(user.id, groupId);
+}
 
 export async function createItem(formData: FormData) {
   const user = await getCurrentUser();
@@ -38,7 +51,18 @@ export async function updateItem(itemId: number, formData: FormData) {
   return await updateItemQuery(user.id, itemId, data, expectedUpdatedAt);
 }
 
-// setItemVisibilityAction
+export async function setItemVisibility(itemId: number, formData: FormData) {
+  const user = await getCurrentUser();
+  if (!user) redirect("/login");
+
+  const groupIds = formData.getAll("groupIds").map(Number);
+  if (groupIds.some((id) => !Number.isInteger(id))) {
+    throw new Error("Invalid group selection");
+  }
+  await setItemVisibilityQuery(user.id, itemId, groupIds);
+  revalidatePath(`/items/${itemId}`);
+  revalidatePath("/items");
+}
 
 export async function archiveItem(itemId: number) {
   const user = await getCurrentUser();

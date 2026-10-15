@@ -24,7 +24,7 @@ export async function joinGroup(formData: FormData) {
 
   const code = String(formData.get("joinCode") ?? "").trim();
   if (code.length != 6) {
-    throw new Error("Group join code must be 6 characters");
+    throw new Error("Group join code must be 6 numbers");
   }
 
   const group = await joinGroupByCode(user.id, code);
@@ -42,6 +42,7 @@ export async function leaveGroup(groupId: number) {
 
   if ((membership?.role == "ADMIN") && !(await canRemoveOwnerFromGroup(groupId))) {
     // TODO: implement a better handler for this when you add in toast messages
+    // TODO: catch the possible race of two admins leaving at the same time
     console.log("Cannot leave, you are the admin :(");
     return;
   }

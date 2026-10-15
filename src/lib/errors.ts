@@ -1,4 +1,4 @@
-import { ZodError } from "better-auth";
+import { ZodError } from "zod";
 
 export type ErrorCode =
   | "not_found"

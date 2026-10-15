@@ -1,5 +1,6 @@
 import "server-only";
 import { prisma } from "../prisma";
+import { randomInt } from 'crypto';
 
 export async function getMyGroups(userId: string) {
   const memberships = await prisma.membership.findMany({
@@ -55,6 +56,14 @@ export async function joinGroupByCode(userId: string, code: string) {
   });
   if (!group) throw new Error("Join code doesn't link to a group");
   
+  const isMember = await prisma.membership.findFirst({
+    where: {groupId: group.id, userId: userId}
+  })
+  if (isMember) {
+    console.log("You're already a member here.")
+    return;
+  }
+
   await prisma.$transaction(async (tx) => {
     await tx.membership.create({ 
       data: { 
@@ -66,12 +75,7 @@ export async function joinGroupByCode(userId: string, code: string) {
   return group;
 }
 
-function generateJoinCode(length = 6) {
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  let code = '';
-  for (let i = 0; i < length; i++) {
-    const randomIndex = Math.floor(Math.random() * chars.length);
-    code += chars[randomIndex];
-  }
+function generateJoinCode() {
+  const code = randomInt(100000, 1000000)
   return code;
 }

@@ -3,13 +3,13 @@ import { ForbiddenError, NotFoundError } from "../errors";
 import { prisma, visibleToUser } from "../prisma";
 import { CreateItemInput, UpdateItemInput } from "../validation/items";
 
-export async function getItemById(userId: string, itemId: number) {
+export async function getItemByIdQuery(userId: string, itemId: number) {
   return prisma.item.findFirst({
     where: { id: itemId, ...visibleToUser(userId) }
   });
 }
 
-export async function getVisibleItems(userId: string, groupId?: number) {
+export async function getVisibleItemsQuery(userId: string, groupId?: number) {
   return prisma.item.findMany({
     where: {
       AND: [
@@ -54,10 +54,10 @@ export async function updateItemQuery(userId: string, itemId: number, data: Upda
     data: { name: data.name },
   });
   if (count === 0) throw new NotFoundError();
-  return getItemById(userId, itemId);
+  return getItemByIdQuery(userId, itemId);
 }
 
-export async function setItemVisibility(userId: string, itemId: number, groupIds: number[]) {
+export async function setItemVisibilityQuery(userId: string, itemId: number, groupIds: number[]) {
   const wanted = [...new Set(groupIds)];
   await prisma.$transaction(async (tx) => {
     const item = await tx.item.findFirst({ where: { id: itemId, ownerId: userId } });
@@ -97,7 +97,5 @@ export async function unarchiveItemQuery(userId: string, itemId: number) {
     } 
   });
 }
-
-// setItemAvaliability(userId, itemId, avaliable)
 
 // setItemPhotoKey(userId, itemId, key)

@@ -18,9 +18,14 @@ if (process.env.NODE_ENV !== "production") {
 
 export function visibleToUser(userId: string): Prisma.ItemWhereInput {
   return {
-    archivedAt: null,
-    itemVisibilities: {
-      some: { group: { memberships: { some: { userId } } } },
-    },
+    OR: [
+      { ownerId: userId },
+      {
+        archivedAt: null,
+        itemVisibilities: {
+          some: { group: { memberships: { some: { userId } } } },
+        },
+      },
+    ],
   };
 }
