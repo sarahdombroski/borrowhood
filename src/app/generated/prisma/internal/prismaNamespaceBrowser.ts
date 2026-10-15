@@ -123,6 +123,7 @@ export const ItemScalarFieldEnum = {
   replacementValue: 'replacementValue',
   photoUrl: 'photoUrl',
   createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
   isArchived: 'isArchived',
   archivedAt: 'archivedAt',
   category: 'category'

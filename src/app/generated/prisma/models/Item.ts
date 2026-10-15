@@ -43,6 +43,7 @@ export type ItemMinAggregateOutputType = {
   replacementValue: string | null
   photoUrl: string | null
   createdAt: Date | null
+  updatedAt: Date | null
   isArchived: boolean | null
   archivedAt: Date | null
   category: string | null
@@ -57,6 +58,7 @@ export type ItemMaxAggregateOutputType = {
   replacementValue: string | null
   photoUrl: string | null
   createdAt: Date | null
+  updatedAt: Date | null
   isArchived: boolean | null
   archivedAt: Date | null
   category: string | null
@@ -71,6 +73,7 @@ export type ItemCountAggregateOutputType = {
   replacementValue: number
   photoUrl: number
   createdAt: number
+  updatedAt: number
   isArchived: number
   archivedAt: number
   category: number
@@ -95,6 +98,7 @@ export type ItemMinAggregateInputType = {
   replacementValue?: true
   photoUrl?: true
   createdAt?: true
+  updatedAt?: true
   isArchived?: true
   archivedAt?: true
   category?: true
@@ -109,6 +113,7 @@ export type ItemMaxAggregateInputType = {
   replacementValue?: true
   photoUrl?: true
   createdAt?: true
+  updatedAt?: true
   isArchived?: true
   archivedAt?: true
   category?: true
@@ -123,6 +128,7 @@ export type ItemCountAggregateInputType = {
   replacementValue?: true
   photoUrl?: true
   createdAt?: true
+  updatedAt?: true
   isArchived?: true
   archivedAt?: true
   category?: true
@@ -224,6 +230,7 @@ export type ItemGroupByOutputType = {
   replacementValue: string | null
   photoUrl: string | null
   createdAt: Date
+  updatedAt: Date
   isArchived: boolean
   archivedAt: Date | null
   category: string | null
@@ -261,6 +268,7 @@ export type ItemWhereInput = {
   replacementValue?: Prisma.StringNullableFilter<"Item"> | string | null
   photoUrl?: Prisma.StringNullableFilter<"Item"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Item"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Item"> | Date | string
   isArchived?: Prisma.BoolFilter<"Item"> | boolean
   archivedAt?: Prisma.DateTimeNullableFilter<"Item"> | Date | string | null
   category?: Prisma.StringNullableFilter<"Item"> | string | null
@@ -278,6 +286,7 @@ export type ItemOrderByWithRelationInput = {
   replacementValue?: Prisma.SortOrderInput | Prisma.SortOrder
   photoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   isArchived?: Prisma.SortOrder
   archivedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   category?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -298,6 +307,7 @@ export type ItemWhereUniqueInput = Prisma.AtLeast<{
   replacementValue?: Prisma.StringNullableFilter<"Item"> | string | null
   photoUrl?: Prisma.StringNullableFilter<"Item"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Item"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Item"> | Date | string
   isArchived?: Prisma.BoolFilter<"Item"> | boolean
   archivedAt?: Prisma.DateTimeNullableFilter<"Item"> | Date | string | null
   category?: Prisma.StringNullableFilter<"Item"> | string | null
@@ -315,6 +325,7 @@ export type ItemOrderByWithAggregationInput = {
   replacementValue?: Prisma.SortOrderInput | Prisma.SortOrder
   photoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   isArchived?: Prisma.SortOrder
   archivedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   category?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -337,6 +348,7 @@ export type ItemScalarWhereWithAggregatesInput = {
   replacementValue?: Prisma.StringNullableWithAggregatesFilter<"Item"> | string | null
   photoUrl?: Prisma.StringNullableWithAggregatesFilter<"Item"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Item"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Item"> | Date | string
   isArchived?: Prisma.BoolWithAggregatesFilter<"Item"> | boolean
   archivedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Item"> | Date | string | null
   category?: Prisma.StringNullableWithAggregatesFilter<"Item"> | string | null
@@ -349,6 +361,7 @@ export type ItemCreateInput = {
   replacementValue?: string | null
   photoUrl?: string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
   isArchived?: boolean
   archivedAt?: Date | string | null
   category?: string | null
@@ -366,6 +379,7 @@ export type ItemUncheckedCreateInput = {
   replacementValue?: string | null
   photoUrl?: string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
   isArchived?: boolean
   archivedAt?: Date | string | null
   category?: string | null
@@ -380,6 +394,7 @@ export type ItemUpdateInput = {
   replacementValue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -397,6 +412,7 @@ export type ItemUncheckedUpdateInput = {
   replacementValue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -413,6 +429,7 @@ export type ItemCreateManyInput = {
   replacementValue?: string | null
   photoUrl?: string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
   isArchived?: boolean
   archivedAt?: Date | string | null
   category?: string | null
@@ -425,6 +442,7 @@ export type ItemUpdateManyMutationInput = {
   replacementValue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -439,6 +457,7 @@ export type ItemUncheckedUpdateManyInput = {
   replacementValue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -463,6 +482,7 @@ export type ItemCountOrderByAggregateInput = {
   replacementValue?: Prisma.SortOrder
   photoUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   isArchived?: Prisma.SortOrder
   archivedAt?: Prisma.SortOrder
   category?: Prisma.SortOrder
@@ -481,6 +501,7 @@ export type ItemMaxOrderByAggregateInput = {
   replacementValue?: Prisma.SortOrder
   photoUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   isArchived?: Prisma.SortOrder
   archivedAt?: Prisma.SortOrder
   category?: Prisma.SortOrder
@@ -495,6 +516,7 @@ export type ItemMinOrderByAggregateInput = {
   replacementValue?: Prisma.SortOrder
   photoUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   isArchived?: Prisma.SortOrder
   archivedAt?: Prisma.SortOrder
   category?: Prisma.SortOrder
@@ -590,6 +612,7 @@ export type ItemCreateWithoutOwnerInput = {
   replacementValue?: string | null
   photoUrl?: string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
   isArchived?: boolean
   archivedAt?: Date | string | null
   category?: string | null
@@ -605,6 +628,7 @@ export type ItemUncheckedCreateWithoutOwnerInput = {
   replacementValue?: string | null
   photoUrl?: string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
   isArchived?: boolean
   archivedAt?: Date | string | null
   category?: string | null
@@ -650,6 +674,7 @@ export type ItemScalarWhereInput = {
   replacementValue?: Prisma.StringNullableFilter<"Item"> | string | null
   photoUrl?: Prisma.StringNullableFilter<"Item"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Item"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Item"> | Date | string
   isArchived?: Prisma.BoolFilter<"Item"> | boolean
   archivedAt?: Prisma.DateTimeNullableFilter<"Item"> | Date | string | null
   category?: Prisma.StringNullableFilter<"Item"> | string | null
@@ -662,6 +687,7 @@ export type ItemCreateWithoutItemVisibilitiesInput = {
   replacementValue?: string | null
   photoUrl?: string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
   isArchived?: boolean
   archivedAt?: Date | string | null
   category?: string | null
@@ -678,6 +704,7 @@ export type ItemUncheckedCreateWithoutItemVisibilitiesInput = {
   replacementValue?: string | null
   photoUrl?: string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
   isArchived?: boolean
   archivedAt?: Date | string | null
   category?: string | null
@@ -707,6 +734,7 @@ export type ItemUpdateWithoutItemVisibilitiesInput = {
   replacementValue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -723,6 +751,7 @@ export type ItemUncheckedUpdateWithoutItemVisibilitiesInput = {
   replacementValue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -736,6 +765,7 @@ export type ItemCreateWithoutReservationsInput = {
   replacementValue?: string | null
   photoUrl?: string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
   isArchived?: boolean
   archivedAt?: Date | string | null
   category?: string | null
@@ -752,6 +782,7 @@ export type ItemUncheckedCreateWithoutReservationsInput = {
   replacementValue?: string | null
   photoUrl?: string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
   isArchived?: boolean
   archivedAt?: Date | string | null
   category?: string | null
@@ -781,6 +812,7 @@ export type ItemUpdateWithoutReservationsInput = {
   replacementValue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -797,6 +829,7 @@ export type ItemUncheckedUpdateWithoutReservationsInput = {
   replacementValue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -811,6 +844,7 @@ export type ItemCreateManyOwnerInput = {
   replacementValue?: string | null
   photoUrl?: string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
   isArchived?: boolean
   archivedAt?: Date | string | null
   category?: string | null
@@ -823,6 +857,7 @@ export type ItemUpdateWithoutOwnerInput = {
   replacementValue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -838,6 +873,7 @@ export type ItemUncheckedUpdateWithoutOwnerInput = {
   replacementValue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -853,6 +889,7 @@ export type ItemUncheckedUpdateManyWithoutOwnerInput = {
   replacementValue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -907,6 +944,7 @@ export type ItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   replacementValue?: boolean
   photoUrl?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
   isArchived?: boolean
   archivedAt?: boolean
   category?: boolean
@@ -925,6 +963,7 @@ export type ItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   replacementValue?: boolean
   photoUrl?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
   isArchived?: boolean
   archivedAt?: boolean
   category?: boolean
@@ -940,6 +979,7 @@ export type ItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   replacementValue?: boolean
   photoUrl?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
   isArchived?: boolean
   archivedAt?: boolean
   category?: boolean
@@ -955,12 +995,13 @@ export type ItemSelectScalar = {
   replacementValue?: boolean
   photoUrl?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
   isArchived?: boolean
   archivedAt?: boolean
   category?: boolean
 }
 
-export type ItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "ownerId" | "name" | "description" | "conditionNotes" | "replacementValue" | "photoUrl" | "createdAt" | "isArchived" | "archivedAt" | "category", ExtArgs["result"]["item"]>
+export type ItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "ownerId" | "name" | "description" | "conditionNotes" | "replacementValue" | "photoUrl" | "createdAt" | "updatedAt" | "isArchived" | "archivedAt" | "category", ExtArgs["result"]["item"]>
 export type ItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   itemVisibilities?: boolean | Prisma.Item$itemVisibilitiesArgs<ExtArgs>
@@ -990,6 +1031,7 @@ export type $ItemPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     replacementValue: string | null
     photoUrl: string | null
     createdAt: Date
+    updatedAt: Date
     isArchived: boolean
     archivedAt: Date | null
     category: string | null
@@ -1427,6 +1469,7 @@ export interface ItemFieldRefs {
   readonly replacementValue: Prisma.FieldRef<"Item", 'String'>
   readonly photoUrl: Prisma.FieldRef<"Item", 'String'>
   readonly createdAt: Prisma.FieldRef<"Item", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"Item", 'DateTime'>
   readonly isArchived: Prisma.FieldRef<"Item", 'Boolean'>
   readonly archivedAt: Prisma.FieldRef<"Item", 'DateTime'>
   readonly category: Prisma.FieldRef<"Item", 'String'>

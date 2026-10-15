@@ -22,12 +22,13 @@ export async function joinGroup(formData: FormData) {
   const user = await getCurrentUser();
   if (!user) redirect("/login");
 
-  const code = String(formData.get("joinCode") ?? "").trim();
-  if (code.length != 6) {
+  const code = Number(formData.get("joinCode") ?? "");
+  if (code.toString().length != 6) {
     throw new Error("Group join code must be 6 numbers");
   }
 
   const group = await joinGroupByCode(user.id, code);
+  if (!group) return;
   redirect(`/groups/${group.id}`);
 }
 

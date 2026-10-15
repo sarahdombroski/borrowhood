@@ -50,7 +50,7 @@ export async function createGroupQuery(userId: string, name: string) {
   });
 }
 
-export async function joinGroupByCode(userId: string, code: string) {
+export async function joinGroupByCode(userId: string, code: number) {
   const group = await prisma.group.findFirst({
     where: { joinCode: code }
   });
@@ -76,6 +76,6 @@ export async function joinGroupByCode(userId: string, code: string) {
 }
 
 function generateJoinCode() {
-  const code = randomInt(100000, 1000000)
+  const code = randomInt(10000000, 100000000)
   return code;
 }
