@@ -12,6 +12,7 @@ export async function getItemByIdQuery(userId: string, itemId: number) {
 export async function getVisibleItemsQuery(userId: string, groupId?: number) {
   return prisma.item.findMany({
     where: {
+      isArchived: false,
       AND: [
         visibleToUser(userId),
         ...(groupId ? [{
