@@ -2,7 +2,7 @@ import "server-only";
 import { prisma } from "../prisma";
 import { randomInt } from 'crypto';
 
-export async function getMyGroups(userId: string) {
+export async function getMyGroupsQuery(userId: string) {
   const memberships = await prisma.membership.findMany({
     where: { userId: userId },
     include: { group: true },

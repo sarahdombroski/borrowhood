@@ -1,7 +1,6 @@
 "use client"
 
 import { useRef, useTransition } from "react";
-import { leaveGroup } from "../(app)/groups/actions";
 import { archiveItem } from "../(app)/items/actions";
 
 export default function DeleteItemButton({ itemId, itemName }: { itemId: number, itemName: string }) {

@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/session";
 import { notFound } from "next/navigation";
 import LeaveGroupButton from "@/app/components/LeaveGroupButton";
+import { getVisibleItems } from "../../items/actions";
 
 export default async function GroupPage({ params }: { params: Promise<{ groupId: string }> }) {
   const { groupId } = await params;
@@ -16,6 +17,7 @@ export default async function GroupPage({ params }: { params: Promise<{ groupId:
   const group = await prisma.group.findFirst({
     where: { id: Number(groupId) }
   });
+  const items = await getVisibleItems(Number(groupId));
 
   return (
     <>
@@ -25,6 +27,11 @@ export default async function GroupPage({ params }: { params: Promise<{ groupId:
         <p>Join code: {group?.joinCode}</p>
       }
       <LeaveGroupButton groupId={membership.group.id} groupName={membership.group.name} />
+      <ul>
+        {items.map((item) => (
+          <li key={item.id}>{item.name}</li>
+        ))}
+      </ul>
     </>
   );
 }
