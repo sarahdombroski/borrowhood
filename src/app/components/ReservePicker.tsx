@@ -39,7 +39,7 @@ export function ReservePicker({ itemId, booked }: { itemId: number; booked: Book
       if (result.ok) {
         setError(null);
         setRange(undefined);
-        router.push("../reservations");
+        router.push("../../reservations");
       }
       setError(result.ok ? null : messages[result.error]);
     });

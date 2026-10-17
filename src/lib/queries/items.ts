@@ -10,6 +10,12 @@ export async function getItemByIdQuery(userId: string, itemId: number) {
   });
 }
 
+export async function getMyItemsQuery(userId: string) {
+  return prisma.item.findMany({
+    where: { ownerId: userId }
+  });
+}
+
 export async function getVisibleItemsQuery(userId: string, groupId?: number) {
   return prisma.item.findMany({
     where: {

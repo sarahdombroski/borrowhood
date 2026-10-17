@@ -1,6 +1,6 @@
 "use server";
 
-import { archiveItemQuery, createItemQuery, getItemByIdQuery, getReservedDaysQuery, getVisibleItemsQuery, reserveItemQuery, setItemVisibilityQuery, unarchiveItemQuery, updateItemQuery } from "@/lib/queries/items";
+import { archiveItemQuery, createItemQuery, getItemByIdQuery, getMyItemsQuery, getReservedDaysQuery, getVisibleItemsQuery, reserveItemQuery, setItemVisibilityQuery, unarchiveItemQuery, updateItemQuery } from "@/lib/queries/items";
 import { requireUser } from "@/lib/session";
 import { createItemSchema, ReserveInput, ReserveResult, updateItemSchema } from "@/lib/validation/items";
 import { revalidatePath } from "next/cache";
@@ -9,6 +9,11 @@ import { redirect } from "next/navigation";
 export async function getItemById(itemId: number) {
   const user = await requireUser();
   return await getItemByIdQuery(user.id, itemId)
+}
+
+export async function getMyItems() {
+  const user = await requireUser();
+  return await getMyItemsQuery(user.id);
 }
 
 export async function getVisibleItems(groupId?: number) {

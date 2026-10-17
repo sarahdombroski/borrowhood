@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { createItem, getVisibleItems } from "./actions";
+import { createItem, getMyItems } from "./actions";
 
 export default async function Items() {
-  const visibileItems = await getVisibleItems();
+  const items = await getMyItems();
   
   return (
     <main>
@@ -15,7 +15,7 @@ export default async function Items() {
       </form>
 
       <ul>
-        {visibileItems.map((item) => (
+        {items.map((item) => (
           <li key={item.name}><Link href={`/items/${item.id}`}>{item.name}</Link></li>
         ))}
       </ul>

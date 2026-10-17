@@ -21,7 +21,7 @@ export function visibleToUser(userId: string): Prisma.ItemWhereInput {
     OR: [
       { ownerId: userId },
       {
-        archivedAt: null,
+        isArchived: false,
         itemVisibilities: {
           some: { group: { memberships: { some: { userId } } } },
         },
