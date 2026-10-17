@@ -1,6 +1,6 @@
 "use server";
 
-import { archiveItemQuery, createItemQuery, getItemByIdQuery, getVisibleItemsQuery, reserveItemQuery, setItemVisibilityQuery, unarchiveItemQuery, updateItemQuery } from "@/lib/queries/items";
+import { archiveItemQuery, createItemQuery, getItemByIdQuery, getReservedDaysQuery, getVisibleItemsQuery, reserveItemQuery, setItemVisibilityQuery, unarchiveItemQuery, updateItemQuery } from "@/lib/queries/items";
 import { requireUser } from "@/lib/session";
 import { createItemSchema, ReserveInput, ReserveResult, updateItemSchema } from "@/lib/validation/items";
 import { revalidatePath } from "next/cache";
@@ -64,6 +64,11 @@ export async function reserveItem(input: unknown): Promise<ReserveResult> {
   const parsed = ReserveInput.safeParse(input);
   if (!parsed.success) return { ok: false, error: "INVALID_INPUT" }
   return await reserveItemQuery(user.id, parsed.data);
+}
+
+export async function getReservedDays(itemId: number) {
+  const user = await requireUser();
+  return await getReservedDaysQuery(itemId, user.id);
 }
 
 // toggleAvailabilityAction

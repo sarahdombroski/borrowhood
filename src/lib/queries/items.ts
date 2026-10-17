@@ -127,4 +127,19 @@ export async function reserveItemQuery(borrowerId: string, { itemId, startDate, 
   }
 }
 
+export async function getReservedDaysQuery(itemId: number, userId: string) {
+  const item = await getItemByIdQuery(userId, itemId);
+  if (!item) return [];
+  
+  return await prisma.reservation.findMany({
+    where: {
+      itemId: itemId,
+      status: { in: ["PENDING", "APPROVED", "PICKED_UP"] },
+      endDate: { gt: new Date() },
+    },
+    select: { startDate: true, endDate: true },
+    orderBy: { startDate: "asc" },
+  });
+}
+
 // setItemPhotoKey(userId, itemId, key)

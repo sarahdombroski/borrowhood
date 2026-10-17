@@ -3,6 +3,7 @@ import { getCurrentUser } from "@/lib/session";
 import { notFound } from "next/navigation";
 import LeaveGroupButton from "@/app/components/LeaveGroupButton";
 import { getVisibleItems } from "../../items/actions";
+import Link from "next/link";
 
 export default async function GroupPage({ params }: { params: Promise<{ groupId: string }> }) {
   const { groupId } = await params;
@@ -29,7 +30,7 @@ export default async function GroupPage({ params }: { params: Promise<{ groupId:
       <LeaveGroupButton groupId={membership.group.id} groupName={membership.group.name} />
       <ul>
         {items.map((item) => (
-          <li key={item.id}>{item.name}</li>
+          <li key={item.id}><Link href={`../items/${item.id}/reserve`}>{item.name}</Link></li>
         ))}
       </ul>
     </>

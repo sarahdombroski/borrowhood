@@ -26,8 +26,8 @@ export async function joinGroup(formData: FormData) {
   const user = await requireUser();
 
   const code = Number(formData.get("joinCode") ?? "");
-  if (code.toString().length != 6) {
-    throw new Error("Group join code must be 6 numbers");
+  if (code.toString().length != 8) {
+    throw new Error("Group join code must be 8 numbers");
   }
 
   const group = await joinGroupByCode(user.id, code);
