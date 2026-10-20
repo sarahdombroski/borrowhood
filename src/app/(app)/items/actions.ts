@@ -76,8 +76,6 @@ export async function getReservedDays(itemId: number) {
   return await getReservedDaysQuery(itemId, user.id);
 }
 
-// toggleAvailabilityAction
-
 // requestPhotoUploadAction(itemId)
   // owner check, returns signed upload url and key
 
