@@ -148,4 +148,42 @@ export async function getReservedDaysQuery(itemId: number, userId: string) {
   });
 }
 
+export async function getCurrentAvailabilityQuery(itemId: number) {
+  const startOfToday = new Date();
+  startOfToday.setHours(0, 0, 0, 0);
+
+  const startOfTomorrow = new Date(startOfToday);
+  startOfTomorrow.setDate(startOfTomorrow.getDate() + 1);
+  
+  const reservation = await prisma.reservation.findFirst({
+    where: {
+      startDate: {
+        lt: startOfTomorrow,
+      },
+      endDate: {
+        gte: startOfToday,
+      },
+      itemId: itemId
+    }
+  });
+  return reservation?.status;
+}
+
+export async function getNextReservationQuery(itemId: number) {
+  const now = new Date();
+
+  const reservation = await prisma.reservation.findFirst({
+    where: {
+      itemId: itemId,
+      endDate: {
+        gt: now,
+      },
+    },
+    orderBy: {
+      startDate: "asc",
+    },
+  });
+  return `${reservation?.startDate.toLocaleDateString()} to ${reservation?.endDate.toLocaleDateString()}`;
+}
+
 // setItemPhotoKey(userId, itemId, key)

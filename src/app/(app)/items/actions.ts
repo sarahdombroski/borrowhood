@@ -1,6 +1,6 @@
 "use server";
 
-import { archiveItemQuery, createItemQuery, getItemByIdQuery, getMyItemsQuery, getReservedDaysQuery, getVisibleItemsQuery, reserveItemQuery, setItemVisibilityQuery, unarchiveItemQuery, updateItemQuery } from "@/lib/queries/items";
+import { archiveItemQuery, createItemQuery, getCurrentAvailabilityQuery, getItemByIdQuery, getMyItemsQuery, getNextReservationQuery, getReservedDaysQuery, getVisibleItemsQuery, reserveItemQuery, setItemVisibilityQuery, unarchiveItemQuery, updateItemQuery } from "@/lib/queries/items";
 import { requireUser } from "@/lib/session";
 import { createItemSchema, ReserveInput, ReserveResult, updateItemSchema } from "@/lib/validation/items";
 import { revalidatePath } from "next/cache";
@@ -74,6 +74,16 @@ export async function reserveItem(input: unknown): Promise<ReserveResult> {
 export async function getReservedDays(itemId: number) {
   const user = await requireUser();
   return await getReservedDaysQuery(itemId, user.id);
+}
+
+export async function getCurrentAvailability(itemId: number) {
+  const user = await requireUser();
+  return await getCurrentAvailabilityQuery(itemId);
+}
+
+export async function getNextReservation(itemId: number) {
+  const user = await requireUser();
+  return await getNextReservationQuery(itemId);
 }
 
 // requestPhotoUploadAction(itemId)
