@@ -75,6 +75,29 @@ export async function joinGroupByCode(userId: string, code: number) {
   return group;
 }
 
+export async function getGroupMemberCountQuery(userId: string, groupId: number) {
+  const inGroup = await prisma.membership.findFirst({
+    where: { userId: userId}
+  });
+  if (!inGroup) throw new Error("User is not in the group");
+
+  return await prisma.membership.count({
+    where: { groupId: groupId }
+  });
+}
+
+export async function getGroupMemberQuery(groupId: number, userId: string) {
+  const inGroup = await prisma.membership.findFirst({
+    where: { userId: userId}
+  });
+  if (!inGroup) throw new Error("User is not in the group");
+  
+  return await prisma.membership.findMany({
+    where: { groupId: groupId },
+    include: { user: true }
+  });
+}
+
 function generateJoinCode() {
   const code = randomInt(10000000, 100000000)
   return code;

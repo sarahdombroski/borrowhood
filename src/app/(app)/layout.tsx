@@ -9,14 +9,16 @@ export default async function AppLayout({ children }: { children: React.ReactNod
     return (
         <div>
             <div className="flex flex-row items-center justify-around">
-                <img src="borrowhood.png" alt="borrowhood logo" className="max-w-xs" />
-                <SignOutButton />
+                <Link href="/dashboard">
+                    <img src="borrowhood.png" alt="borrowhood logo" className="max-w-xs" />
+                </Link>
             </div>
             <nav className="flex flex-row items-center justify-between m-3">
                 <Link href="/dashboard">Home</Link>
                 <Link href="/groups">Groups</Link>
                 <Link href="/items">Items</Link>
                 <Link href="/reservations">Reservations</Link>
+                <SignOutButton />
             </nav>
             <main>{children}</main>
         </div>

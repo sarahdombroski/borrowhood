@@ -19,10 +19,11 @@ export default async function Reservations() {
       <p>Welcome to your reservations!</p>
       <ul>
         {reservedItems.map((r) => (
-          <>
-            <li key={r.reservation.id}><Link href={`reservations/${r.reservation.id}`}>{r.item?.name}</Link></li>
-            <p>{r.reservation.status}</p>
-          </>
+            <li key={r.reservation.id}>
+              <Link href={`reservations/${r.reservation.id}`}>
+                {r.item?.name} - {r.reservation.status}
+              </Link>
+            </li>
         ))}
       </ul>
     </main>
