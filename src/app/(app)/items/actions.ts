@@ -1,6 +1,6 @@
 "use server";
 
-import { archiveItemQuery, createItemQuery, getCurrentAvailabilityQuery, getItemByIdQuery, getMyItemsQuery, getNextReservationQuery, getReservedDaysQuery, getVisibleItemsQuery, reserveItemQuery, setItemVisibilityQuery, unarchiveItemQuery, updateItemQuery } from "@/lib/queries/items";
+import { archiveItemQuery, createItemQuery, getCurrentAvailabilityQuery, getGroupsItemIsSharedWithQuery, getItemByIdQuery, getMyItemsQuery, getNextReservationQuery, getReservedDaysQuery, getVisibleItemsQuery, reserveItemQuery, setItemVisibilityQuery, unarchiveItemQuery, updateItemQuery } from "@/lib/queries/items";
 import { requireUser } from "@/lib/session";
 import { createItemSchema, ReserveInput, ReserveResult, updateItemSchema } from "@/lib/validation/items";
 import { revalidatePath } from "next/cache";
@@ -50,6 +50,11 @@ export async function setItemVisibility(itemId: number, formData: FormData) {
   await setItemVisibilityQuery(user.id, itemId, groupIds);
   revalidatePath(`/items/${itemId}`);
   revalidatePath("/items");
+}
+
+export async function getGroupsItemIsSharedWith(itemId: number) {
+  const user = await requireUser();
+  return await getGroupsItemIsSharedWithQuery(itemId);
 }
 
 export async function archiveItem(itemId: number) {

@@ -10,7 +10,8 @@ export default async function Items() {
   );
 
   async function getItemAvaliability(item: Item) {
-    const currentAvailability = await getCurrentAvailability(item.id);
+    const availability = await getCurrentAvailability(item.id);
+    const currentAvailability = availability?.status;
     const nextReservation = await getNextReservation(item.id);
     return {item, currentAvailability, nextReservation};
   }

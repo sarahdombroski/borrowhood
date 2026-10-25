@@ -15,6 +15,12 @@ export async function getMyGroupsQuery(userId: string) {
  }));
 }
 
+export async function getGroupByIdQuery(groupId: number) {
+  return prisma.group.findFirst({
+    where: { id: groupId }
+  });
+}
+
 export async function getMembership(userId: string, groupId: number) {
   return await prisma.membership.findFirst({
     where: { userId: userId, groupId: groupId }

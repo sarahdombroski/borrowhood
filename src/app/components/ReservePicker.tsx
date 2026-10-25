@@ -10,7 +10,7 @@ type Booked = {
   endDate: Date;
 }
 
-export function ReservePicker({ itemId, booked }: { itemId: number; booked: Booked[] }) {
+export function ReservePicker({ itemId, booked, isOwner }: { itemId: number; booked: Booked[], isOwner: boolean }) {
   const [range, setRange] = useState<DateRange | undefined>();
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
@@ -57,13 +57,17 @@ export function ReservePicker({ itemId, booked }: { itemId: number; booked: Book
         modifiers={{ booked: bookedMatchers }}
         modifiersClassNames={{ booked: "line-through opacity-50" }}
       />
-      {range?.from && range?.to && (
-        <p>{range.from.toLocaleDateString()} to {range.to.toLocaleDateString()}</p>
+      {isOwner == false && (
+        <>
+        {range?.from && range?.to && (
+          <p>{range.from.toLocaleDateString()} to {range.to.toLocaleDateString()}</p>
+        )}
+        {error && <p role="alert">{error}</p>}
+        <button onClick={submit} disabled={isPending || !range?.from || !range?.to}>
+          {isPending ? "Reserving..." : "Reserve"}
+        </button>
+        </>
       )}
-      {error && <p role="alert">{error}</p>}
-      <button onClick={submit} disabled={isPending || !range?.from || !range?.to}>
-        {isPending ? "Reserving..." : "Reserve"}
-      </button>
     </div>
   );
 }

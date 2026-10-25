@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef, useTransition } from "react";
-import { archiveItem } from "../(app)/items/actions";
+import { archiveItem } from "../actions";
 
 export default function DeleteItemButton({ itemId, itemName }: { itemId: number, itemName: string }) {
   const dialogRef = useRef<HTMLDialogElement>(null);

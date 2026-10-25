@@ -25,7 +25,7 @@ export default async function ReserveItem({ params }: { params: Promise<{ id: st
       <p>{item.maxLoan}</p>
 
         <h2>Reserve:</h2>
-        <ReservePicker itemId={item.id} booked={booked} />
+        <ReservePicker itemId={item.id} booked={booked} isOwner={false} />
     </>
   );
 }

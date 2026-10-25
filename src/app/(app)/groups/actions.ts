@@ -1,7 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
-import { canRemoveOwnerFromGroup, createGroupQuery, getGroupMemberCountQuery, getGroupMemberQuery, getMyGroupsQuery, joinGroupByCode, leaveGroupQuery } from "@/lib/queries/groups";
+import { canRemoveOwnerFromGroup, createGroupQuery, getGroupByIdQuery, getGroupMemberCountQuery, getGroupMemberQuery, getMyGroupsQuery, joinGroupByCode, leaveGroupQuery } from "@/lib/queries/groups";
 import { requireUser } from "@/lib/session";
 import { redirect } from "next/navigation";
 
@@ -20,6 +20,11 @@ export async function createGroup(formData: FormData) {
 export async function getMyGroups() {
   const user = await requireUser();
   return await getMyGroupsQuery(user.id);
+}
+
+export async function getGroupById(groupId: number) {
+  const user = await requireUser();
+  return await getGroupByIdQuery(groupId);
 }
 
 export async function joinGroup(formData: FormData) {

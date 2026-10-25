@@ -3,6 +3,7 @@ import { ForbiddenError, NotFoundError } from "../errors";
 import { prisma, visibleToUser } from "../prisma";
 import { CreateItemInput, ReserveInput, ReserveResult, UpdateItemInput } from "../validation/items";
 import { z } from "zod";
+import { getGroupById } from "@/app/(app)/groups/actions";
 
 export async function getItemByIdQuery(userId: string, itemId: number) {
   return prisma.item.findFirst({
@@ -85,6 +86,14 @@ export async function setItemVisibilityQuery(userId: string, itemId: number, gro
   });
 }
 
+export async function getGroupsItemIsSharedWithQuery(itemId: number) {
+  const sharedGroups = await prisma.itemVisibility.findMany({
+    where: { itemId: itemId },
+    select: { groupId: true }
+  });
+  return sharedGroups.map((group) => group.groupId);
+}
+
 export async function archiveItemQuery(userId: string, itemId: number) {
   return await prisma.item.update({
     where: { id: itemId, ownerId: userId },
@@ -155,7 +164,7 @@ export async function getCurrentAvailabilityQuery(itemId: number) {
   const startOfTomorrow = new Date(startOfToday);
   startOfTomorrow.setDate(startOfTomorrow.getDate() + 1);
   
-  const reservation = await prisma.reservation.findFirst({
+  return await prisma.reservation.findFirst({
     where: {
       startDate: {
         lt: startOfTomorrow,
@@ -166,7 +175,6 @@ export async function getCurrentAvailabilityQuery(itemId: number) {
       itemId: itemId
     }
   });
-  return reservation?.status;
 }
 
 export async function getNextReservationQuery(itemId: number) {
