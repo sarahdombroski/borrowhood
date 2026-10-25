@@ -18,14 +18,16 @@ export default async function ReserveItem({ params }: { params: Promise<{ id: st
 
   return (
     <>
-      <h1>{item.name}</h1>
-      <p>{item.description}</p>
-      <p>{item.category}</p>
-      <p>{item.conditionNotes}</p>
-      <p>{item.maxLoan}</p>
-
-        <h2>Reserve:</h2>
+      <h1 className="text-center">Reserve: {item.name}</h1>
+      <div className="m-4">
+        <p>Description: {item.description}</p>
+        <p>Category: {item.category}</p>
+        <p>Condition Notes: {item.conditionNotes}</p>
+        <p>Max Loan: {item.maxLoan}</p>
+      </div>
+      <div className="flex justify-center">
         <ReservePicker itemId={item.id} booked={booked} isOwner={false} />
+      </div>
     </>
   );
 }
