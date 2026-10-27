@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { requireUser } from "@/lib/session";
 import { getReservationById } from "../actions";
 import { getItemById } from "../../items/actions";
-import CancelReservationButton from "@/app/components/CancelReservationButton";
+import CancelReservationButton from "../components/CancelReservationButton";
 
 export default async function ReservationPage({ params }: { params: Promise<{ id: string }> }) {
   const user = await requireUser();

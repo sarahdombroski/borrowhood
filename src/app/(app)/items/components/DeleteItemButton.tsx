@@ -36,7 +36,7 @@ export default function DeleteItemButton({ itemId, itemName }: { itemId: number,
             onClick={confirmArchive} 
             disabled={isPending}
             className="rounded-lg bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700 transition"
-          >{isPending ? "Leaving..." : "Yes, delete"}</button>
+          >{isPending ? "Deleting..." : "Yes, delete"}</button>
         </div>
       </dialog>
     </>
