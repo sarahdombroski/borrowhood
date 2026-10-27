@@ -7,6 +7,22 @@ export async function getReservationsQuery(userId: string) {
   });
 }
 
+export async function getOthersReservationsQuery(userId: string) {
+  const items = await prisma.item.findMany({
+    where: { ownerId: userId }
+  });
+
+  const itemIds = items.map((item) => item.id);
+
+  return await prisma.reservation.findMany({
+    where: {
+      itemId: {
+        in: itemIds
+      }
+    }
+  });
+}
+
 export async function getReservationByIdQuery(userId: string, reservationId: number) {
   return await prisma.reservation.findFirst({
     where: {

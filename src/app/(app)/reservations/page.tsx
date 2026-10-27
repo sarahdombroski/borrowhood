@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getReservations } from "./actions";
+import { getOthersReservations, getReservations } from "./actions";
 import { getItemById } from "../items/actions";
 
 export default async function Reservations() {
@@ -13,19 +13,42 @@ export default async function Reservations() {
       };
     }),
   );
+  const othersReservations = await getOthersReservations();
+  const othersReservedItems = await Promise.all(
+    reservations.map(async (r) => {
+      const item = await getItemById(r.itemId);
+      return {
+        reservation: r,
+        item
+      };
+    }),
+  );
 
   return (
     <main>
-      <p>Welcome to your reservations!</p>
-      <ul>
-        {reservedItems.map((r) => (
-            <li key={r.reservation.id}>
-              <Link href={`reservations/${r.reservation.id}`}>
-                {r.item?.name} - {r.reservation.status}
-              </Link>
-            </li>
-        ))}
-      </ul>
+      <h1 className="text-center">Reservations</h1>
+      <div className="grid grid-cols-[1fr_1fr] items_center gap-4 py-2 m-2">
+        <ul className="border rounded p-2">
+          <h2 className="text-center">Reservations on my Items:</h2>
+          {othersReservedItems.map((r) => (
+              <li key={r.reservation.id}>
+                <Link href={`reservations/${r.reservation.id}`}>
+                  {r.item?.name} - {r.reservation.status}
+                </Link>
+              </li>
+          ))}
+        </ul>
+        <ul className="border rounded p-2">
+          <h2 className="text-center">My reservations:</h2>
+          {reservedItems.map((r) => (
+              <li key={r.reservation.id}>
+                <Link href={`reservations/${r.reservation.id}`}>
+                  {r.item?.name} - {r.reservation.status}
+                </Link>
+              </li>
+          ))}
+        </ul>
+      </div>
     </main>
   )
 }
