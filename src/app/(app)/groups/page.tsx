@@ -24,9 +24,9 @@ export default async function Groups() {
       </div>
 
       <h2 className="text-center">My groups:</h2>
-      <ul className="border rounded p-3">
+      <ul className="border rounded p-3 min-h-[50vh]">
         {memberships.map((m) => (
-          <li key={m.group.id} className="grid grid-cols-[2fr_1fr_1fr_auto] items_center gap-4 py-2">
+          <li key={m.group.id} className="grid grid-cols-[2fr_1fr_1fr_auto] gap-4 py-2">
             <Link href={`/groups/${m.group.id}`}> 
               <p>{m.group.name}</p>
             </Link>
@@ -35,7 +35,7 @@ export default async function Groups() {
               <UsersRound size={24} />
               <p>{getGroupMemberCount(m.group.id)} Members</p>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex gap-2">
               <Link href={`/groups/${m.group.id}`}><House size={24} /></Link>
               <LeaveGroupButton groupId={m.group.id} groupName={m.group.name} isIcon={true} />
             </div>

@@ -28,7 +28,7 @@ export default async function Reservations() {
     <main>
       <h1 className="text-center">Reservations</h1>
       <div className="grid grid-cols-[1fr_1fr] items_center gap-4 py-2 m-2">
-        <ul className="border rounded p-2">
+        <ul className="border rounded p-2 min-h-[50vh]">
           <h2 className="text-center">Reservations on my Items:</h2>
           {othersReservedItems.map((r) => (
               <li key={r.reservation.id}>

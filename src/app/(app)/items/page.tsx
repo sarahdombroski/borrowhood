@@ -25,7 +25,7 @@ export default async function Items() {
 
       {/* TODO: Implement a search function */}
 
-      <ul className="border rounded m-3 p-3">
+      <ul className="border rounded m-3 p-3 min-h-[50vh]">
         {itemsInformation.map((info) => (
           <li key={info.item.id} className="grid grid-cols-[2fr_1fr_auto] items_center gap-4 py-2">
             <Link href={`/items/${info.item.id}`}>{info.item.name}</Link>

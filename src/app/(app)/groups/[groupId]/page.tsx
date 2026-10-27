@@ -32,8 +32,8 @@ export default async function GroupPage({ params }: { params: Promise<{ groupId:
       {membership.role == "ADMIN" &&
         <p className="text-center">Join code: {group?.joinCode}</p>
       }
-      <div className="grid grid-cols-[1fr_1fr] items-center gap-4 py-2">
-        <ul className="border rounded p-3">
+      <div className="grid grid-cols-[1fr_1fr] items-center gap-4 py-2 m-2">
+        <ul className="border rounded p-3 min-h-[50vh]">
           <h2 className="text-center">Members</h2>
           {members.map((member) => (
             <li key={member.id} className="grid grid-cols-[2fr_1fr_auto] items_center">
@@ -43,7 +43,7 @@ export default async function GroupPage({ params }: { params: Promise<{ groupId:
             </li>
           ))}
         </ul>
-        <ul className="border rounded p-3">
+        <ul className="border rounded p-3 min-h-[50vh]">
           <h2 className="text-center">Items</h2>
           {items.map((item) => (
             <li key={item.id} className="grid grid-cols-[1fr_1fr]">
