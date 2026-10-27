@@ -48,7 +48,7 @@ export default async function GroupPage({ params }: { params: Promise<{ groupId:
           {items.map((item) => (
             <li key={item.id} className="grid grid-cols-[1fr_1fr]">
               <p>{item.name}</p>
-              <Link href={`../items/${item.id}/reserve`}>Reserve</Link>
+              <Link href={`../items/${item.id}/reserve?groupId=${groupId}`}>Reserve</Link>
               </li>
           ))}
         </ul>

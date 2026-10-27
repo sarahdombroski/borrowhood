@@ -3,10 +3,19 @@ import { requireUser } from "@/lib/session";
 import { getItemByIdQuery } from "@/lib/queries/items";
 import { ReservePicker } from "@/app/components/ReservePicker";
 import { getReservedDays } from "../../actions";
+import Link from "next/link";
+import { ArrowBigLeft } from "lucide-react";
 
-export default async function ReserveItem({ params }: { params: Promise<{ id: string }> }) {
+export default async function ReserveItem({ 
+  params, 
+  searchParams 
+}: { 
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ groupId?: string }>; 
+}) {
   const user = await requireUser();
   const { id } = await params;
+  const { groupId } = await searchParams;
   const itemId = Number(id);
   if (!Number.isInteger(itemId)) notFound();
 
@@ -19,6 +28,7 @@ export default async function ReserveItem({ params }: { params: Promise<{ id: st
   return (
     <>
       <h1 className="text-center">Reserve: {item.name}</h1>
+      <Link href={`/groups/${groupId}`} className="flex justify-center"><ArrowBigLeft />Back to group</Link>
       <div className="m-4">
         <p>Description: {item.description}</p>
         <p>Category: {item.category}</p>
