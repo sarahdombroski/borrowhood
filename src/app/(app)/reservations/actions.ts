@@ -1,6 +1,6 @@
 "use server";
 
-import { approveRequestQuery, cancelReservationQuery, declineRequestQuery, getOthersReservationsQuery, getReservationByIdQuery, getReservationsQuery, markPickedUpQuery, markReturnedQuery } from "@/lib/queries/reservations";
+import { approveRequestQuery, cancelReservationQuery, declineRequestQuery, getOthersReservationsQuery, getReservationByIdQuery, getReservationsQuery, getUserByIdQuery, markPickedUpQuery, markReturnedQuery } from "@/lib/queries/reservations";
 import { requireUser } from "@/lib/session";
 import { redirect } from "next/navigation";
 
@@ -14,9 +14,14 @@ export async function getOthersReservations() {
   return await getOthersReservationsQuery(user.id);
 }
 
+export async function getUserById(userId: string) {
+  const user = await requireUser();
+  return await getUserByIdQuery(userId);
+}
+
 export async function getReservationById(reservationId: number) {
   const user = await requireUser();
-  return await getReservationByIdQuery(user.id, reservationId);
+  return await getReservationByIdQuery(reservationId);
 }
 
 export async function cancelReservation(reservationId: number) {

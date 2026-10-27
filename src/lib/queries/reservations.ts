@@ -23,10 +23,15 @@ export async function getOthersReservationsQuery(userId: string) {
   });
 }
 
-export async function getReservationByIdQuery(userId: string, reservationId: number) {
+export async function getUserByIdQuery(userId: string) {
+  return await prisma.user.findFirst({
+    where: { id: userId }
+  });
+}
+
+export async function getReservationByIdQuery(reservationId: number) {
   return await prisma.reservation.findFirst({
     where: {
-      borrowerId: userId,
       id: reservationId
     }
   })
