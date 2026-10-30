@@ -30,7 +30,12 @@ export default async function Items() {
           <li key={info.item.id} className="grid grid-cols-[2fr_1fr_auto] items_center gap-4 py-2">
             <Link href={`/items/${info.item.id}`}>{info.item.name}</Link>
             <p>{info.currentAvailability}</p>
-            <p>{String(info.nextReservation)}</p>
+            {String(info.nextReservation) !== "undefined to undefined" ? (
+              <p>{String(info.nextReservation)}</p>
+            ) : (
+              <p>No reservations</p>
+            )
+            }
           </li>
         ))}
       </ul>
