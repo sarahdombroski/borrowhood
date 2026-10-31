@@ -13,18 +13,19 @@ datasource db {
 }
 
 model User {
-  id            String        @id
-  email         String        @unique
-  emailVerified Boolean       @default(false)
-  image         String?
-  name          String
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
-  memberships   Membership[]
-  items         Item[]
-  reservations  Reservation[]
-  sessions      Session[]
-  accounts      Account[]
+  id                    String        @id
+  email                 String        @unique
+  emailVerified         Boolean       @default(false)
+  image                 String?
+  name                  String
+  createdAt             DateTime      @default(now())
+  updatedAt             DateTime      @updatedAt
+  memberships           Membership[]
+  items                 Item[]
+  reservations          Reservation[] @relation("Borrower")
+  preemptedReservations Reservation[] @relation("PreemptedBy")
+  sessions              Session[]
+  accounts              Account[]
 
   @@map("user")
 }
@@ -82,16 +83,20 @@ model ItemVisibility {
 }
 
 model Reservation {
-  id         Int      @id @default(autoincrement())
-  itemId     Int
-  item       Item     @relation(fields: [itemId], references: [id])
-  borrowerId String
-  borrower   User     @relation(fields: [borrowerId], references: [id])
-  startDate  DateTime @db.Timestamptz(3)
-  endDate    DateTime @db.Timestamptz(3)
-  status     Status   @default(PENDING)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id              Int       @id @default(autoincrement())
+  itemId          Int
+  item            Item      @relation(fields: [itemId], references: [id])
+  borrowerId      String
+  borrower        User      @relation("Borrower", fields: [borrowerId], references: [id])
+  startDate       DateTime  @db.Timestamptz(3)
+  endDate         DateTime  @db.Timestamptz(3)
+  status          Status    @default(PENDING)
+  preemptedAt     DateTime?
+  preemptedById   String?
+  preemptedBy     User?     @relation("PreemptedBy", fields: [preemptedById], references: [id], onDelete: SetNull)
+  preemptedReason String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 }
 
 model Session {
@@ -153,4 +158,5 @@ enum Status {
   RETURNED
   CANCELLED
   DENIED
+  PREEMPTED
 }
