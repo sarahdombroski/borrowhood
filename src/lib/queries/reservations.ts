@@ -108,3 +108,43 @@ export async function markReturnedQuery(requestId: number, ownerId: string) {
     data: { status: "RETURNED" }
   });
 }
+
+export async function preemptItemQuery(ownerId: string, reservationId: number, preemptionReason: string) {
+  const reservation = await prisma.reservation.findFirst({
+    where: { id: reservationId },
+    include: { item: true }
+  });
+  if (!reservation) return;
+  if (reservation.item.ownerId != ownerId) throw new Error('You do not own this item.');
+  
+  const now = new Date();
+  const diffInMs = Math.abs(reservation.startDate.getTime() - now.getTime());
+  const fortyEightHoursInMs = 48 * 60 * 60 * 1000;
+  if (diffInMs < fortyEightHoursInMs) {
+    // send notificaiton request for early pickup
+    return;
+  }
+
+  await prisma.reservation.update({
+    where: { id: reservationId },
+    data: { 
+      status: "PREEMPTED", 
+      preemptedAt: now, 
+      preemptedById: ownerId,
+      preemptedReason: preemptionReason
+    }
+  });
+
+  const newReservation = await prisma.reservation.create({
+    data: {
+      itemId: reservation.item.id,
+      borrowerId: ownerId,
+      startDate: reservation.startDate,
+      endDate: reservation.endDate,
+      status: "APPROVED"
+    }
+  });
+  
+  // enqueue a notification row for the borrower
+  return newReservation;
+}

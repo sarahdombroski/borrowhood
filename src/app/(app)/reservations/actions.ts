@@ -1,6 +1,6 @@
 "use server";
 
-import { approveRequestQuery, cancelReservationQuery, declineRequestQuery, getOthersReservationsQuery, getReservationByIdQuery, getReservationsQuery, getUserByIdQuery, markPickedUpQuery, markReturnedQuery } from "@/lib/queries/reservations";
+import { approveRequestQuery, cancelReservationQuery, declineRequestQuery, getOthersReservationsQuery, getReservationByIdQuery, getReservationsQuery, getUserByIdQuery, markPickedUpQuery, markReturnedQuery, preemptItemQuery } from "@/lib/queries/reservations";
 import { requireUser } from "@/lib/session";
 import { redirect } from "next/navigation";
 
@@ -48,4 +48,9 @@ export async function markPickedUp(requestId: number) {
 export async function markReturned(requestId: number) {
   const owner = await requireUser();
   return await markReturnedQuery(requestId, owner.id);
+}
+
+export async function preemptItem(reservationId: number, preemptionReason: string) {
+  const owner = await requireUser();
+  return await preemptItemQuery(owner.id, reservationId, preemptionReason);
 }

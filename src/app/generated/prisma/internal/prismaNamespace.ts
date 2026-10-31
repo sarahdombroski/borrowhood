@@ -1201,6 +1201,9 @@ export const ReservationScalarFieldEnum = {
   startDate: 'startDate',
   endDate: 'endDate',
   status: 'status',
+  preemptedAt: 'preemptedAt',
+  preemptedById: 'preemptedById',
+  preemptedReason: 'preemptedReason',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

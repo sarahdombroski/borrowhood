@@ -23,7 +23,8 @@ export const Status = {
   PICKED_UP: 'PICKED_UP',
   RETURNED: 'RETURNED',
   CANCELLED: 'CANCELLED',
-  DENIED: 'DENIED'
+  DENIED: 'DENIED',
+  PREEMPTED: 'PREEMPTED'
 } as const
 
 export type Status = (typeof Status)[keyof typeof Status]

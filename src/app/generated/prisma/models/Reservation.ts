@@ -43,6 +43,9 @@ export type ReservationMinAggregateOutputType = {
   startDate: Date | null
   endDate: Date | null
   status: $Enums.Status | null
+  preemptedAt: Date | null
+  preemptedById: string | null
+  preemptedReason: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -54,6 +57,9 @@ export type ReservationMaxAggregateOutputType = {
   startDate: Date | null
   endDate: Date | null
   status: $Enums.Status | null
+  preemptedAt: Date | null
+  preemptedById: string | null
+  preemptedReason: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -65,6 +71,9 @@ export type ReservationCountAggregateOutputType = {
   startDate: number
   endDate: number
   status: number
+  preemptedAt: number
+  preemptedById: number
+  preemptedReason: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -88,6 +97,9 @@ export type ReservationMinAggregateInputType = {
   startDate?: true
   endDate?: true
   status?: true
+  preemptedAt?: true
+  preemptedById?: true
+  preemptedReason?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -99,6 +111,9 @@ export type ReservationMaxAggregateInputType = {
   startDate?: true
   endDate?: true
   status?: true
+  preemptedAt?: true
+  preemptedById?: true
+  preemptedReason?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -110,6 +125,9 @@ export type ReservationCountAggregateInputType = {
   startDate?: true
   endDate?: true
   status?: true
+  preemptedAt?: true
+  preemptedById?: true
+  preemptedReason?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -208,6 +226,9 @@ export type ReservationGroupByOutputType = {
   startDate: Date
   endDate: Date
   status: $Enums.Status
+  preemptedAt: Date | null
+  preemptedById: string | null
+  preemptedReason: string | null
   createdAt: Date
   updatedAt: Date
   _count: ReservationCountAggregateOutputType | null
@@ -242,10 +263,14 @@ export type ReservationWhereInput = {
   startDate?: Prisma.DateTimeFilter<"Reservation"> | Date | string
   endDate?: Prisma.DateTimeFilter<"Reservation"> | Date | string
   status?: Prisma.EnumStatusFilter<"Reservation"> | $Enums.Status
+  preemptedAt?: Prisma.DateTimeNullableFilter<"Reservation"> | Date | string | null
+  preemptedById?: Prisma.StringNullableFilter<"Reservation"> | string | null
+  preemptedReason?: Prisma.StringNullableFilter<"Reservation"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Reservation"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Reservation"> | Date | string
   item?: Prisma.XOR<Prisma.ItemScalarRelationFilter, Prisma.ItemWhereInput>
   borrower?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  preemptedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
 export type ReservationOrderByWithRelationInput = {
@@ -255,10 +280,14 @@ export type ReservationOrderByWithRelationInput = {
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  preemptedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  preemptedById?: Prisma.SortOrderInput | Prisma.SortOrder
+  preemptedReason?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   item?: Prisma.ItemOrderByWithRelationInput
   borrower?: Prisma.UserOrderByWithRelationInput
+  preemptedBy?: Prisma.UserOrderByWithRelationInput
 }
 
 export type ReservationWhereUniqueInput = Prisma.AtLeast<{
@@ -271,10 +300,14 @@ export type ReservationWhereUniqueInput = Prisma.AtLeast<{
   startDate?: Prisma.DateTimeFilter<"Reservation"> | Date | string
   endDate?: Prisma.DateTimeFilter<"Reservation"> | Date | string
   status?: Prisma.EnumStatusFilter<"Reservation"> | $Enums.Status
+  preemptedAt?: Prisma.DateTimeNullableFilter<"Reservation"> | Date | string | null
+  preemptedById?: Prisma.StringNullableFilter<"Reservation"> | string | null
+  preemptedReason?: Prisma.StringNullableFilter<"Reservation"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Reservation"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Reservation"> | Date | string
   item?: Prisma.XOR<Prisma.ItemScalarRelationFilter, Prisma.ItemWhereInput>
   borrower?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  preemptedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id">
 
 export type ReservationOrderByWithAggregationInput = {
@@ -284,6 +317,9 @@ export type ReservationOrderByWithAggregationInput = {
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  preemptedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  preemptedById?: Prisma.SortOrderInput | Prisma.SortOrder
+  preemptedReason?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.ReservationCountOrderByAggregateInput
@@ -303,6 +339,9 @@ export type ReservationScalarWhereWithAggregatesInput = {
   startDate?: Prisma.DateTimeWithAggregatesFilter<"Reservation"> | Date | string
   endDate?: Prisma.DateTimeWithAggregatesFilter<"Reservation"> | Date | string
   status?: Prisma.EnumStatusWithAggregatesFilter<"Reservation"> | $Enums.Status
+  preemptedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Reservation"> | Date | string | null
+  preemptedById?: Prisma.StringNullableWithAggregatesFilter<"Reservation"> | string | null
+  preemptedReason?: Prisma.StringNullableWithAggregatesFilter<"Reservation"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Reservation"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Reservation"> | Date | string
 }
@@ -311,10 +350,13 @@ export type ReservationCreateInput = {
   startDate: Date | string
   endDate: Date | string
   status?: $Enums.Status
+  preemptedAt?: Date | string | null
+  preemptedReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   item: Prisma.ItemCreateNestedOneWithoutReservationsInput
   borrower: Prisma.UserCreateNestedOneWithoutReservationsInput
+  preemptedBy?: Prisma.UserCreateNestedOneWithoutPreemptedReservationsInput
 }
 
 export type ReservationUncheckedCreateInput = {
@@ -324,6 +366,9 @@ export type ReservationUncheckedCreateInput = {
   startDate: Date | string
   endDate: Date | string
   status?: $Enums.Status
+  preemptedAt?: Date | string | null
+  preemptedById?: string | null
+  preemptedReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -332,10 +377,13 @@ export type ReservationUpdateInput = {
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
+  preemptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  preemptedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   item?: Prisma.ItemUpdateOneRequiredWithoutReservationsNestedInput
   borrower?: Prisma.UserUpdateOneRequiredWithoutReservationsNestedInput
+  preemptedBy?: Prisma.UserUpdateOneWithoutPreemptedReservationsNestedInput
 }
 
 export type ReservationUncheckedUpdateInput = {
@@ -345,6 +393,9 @@ export type ReservationUncheckedUpdateInput = {
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
+  preemptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  preemptedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preemptedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -356,6 +407,9 @@ export type ReservationCreateManyInput = {
   startDate: Date | string
   endDate: Date | string
   status?: $Enums.Status
+  preemptedAt?: Date | string | null
+  preemptedById?: string | null
+  preemptedReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -364,6 +418,8 @@ export type ReservationUpdateManyMutationInput = {
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
+  preemptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  preemptedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -375,6 +431,9 @@ export type ReservationUncheckedUpdateManyInput = {
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
+  preemptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  preemptedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preemptedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -396,6 +455,9 @@ export type ReservationCountOrderByAggregateInput = {
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  preemptedAt?: Prisma.SortOrder
+  preemptedById?: Prisma.SortOrder
+  preemptedReason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -412,6 +474,9 @@ export type ReservationMaxOrderByAggregateInput = {
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  preemptedAt?: Prisma.SortOrder
+  preemptedById?: Prisma.SortOrder
+  preemptedReason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -423,6 +488,9 @@ export type ReservationMinOrderByAggregateInput = {
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  preemptedAt?: Prisma.SortOrder
+  preemptedById?: Prisma.SortOrder
+  preemptedReason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -439,10 +507,24 @@ export type ReservationCreateNestedManyWithoutBorrowerInput = {
   connect?: Prisma.ReservationWhereUniqueInput | Prisma.ReservationWhereUniqueInput[]
 }
 
+export type ReservationCreateNestedManyWithoutPreemptedByInput = {
+  create?: Prisma.XOR<Prisma.ReservationCreateWithoutPreemptedByInput, Prisma.ReservationUncheckedCreateWithoutPreemptedByInput> | Prisma.ReservationCreateWithoutPreemptedByInput[] | Prisma.ReservationUncheckedCreateWithoutPreemptedByInput[]
+  connectOrCreate?: Prisma.ReservationCreateOrConnectWithoutPreemptedByInput | Prisma.ReservationCreateOrConnectWithoutPreemptedByInput[]
+  createMany?: Prisma.ReservationCreateManyPreemptedByInputEnvelope
+  connect?: Prisma.ReservationWhereUniqueInput | Prisma.ReservationWhereUniqueInput[]
+}
+
 export type ReservationUncheckedCreateNestedManyWithoutBorrowerInput = {
   create?: Prisma.XOR<Prisma.ReservationCreateWithoutBorrowerInput, Prisma.ReservationUncheckedCreateWithoutBorrowerInput> | Prisma.ReservationCreateWithoutBorrowerInput[] | Prisma.ReservationUncheckedCreateWithoutBorrowerInput[]
   connectOrCreate?: Prisma.ReservationCreateOrConnectWithoutBorrowerInput | Prisma.ReservationCreateOrConnectWithoutBorrowerInput[]
   createMany?: Prisma.ReservationCreateManyBorrowerInputEnvelope
+  connect?: Prisma.ReservationWhereUniqueInput | Prisma.ReservationWhereUniqueInput[]
+}
+
+export type ReservationUncheckedCreateNestedManyWithoutPreemptedByInput = {
+  create?: Prisma.XOR<Prisma.ReservationCreateWithoutPreemptedByInput, Prisma.ReservationUncheckedCreateWithoutPreemptedByInput> | Prisma.ReservationCreateWithoutPreemptedByInput[] | Prisma.ReservationUncheckedCreateWithoutPreemptedByInput[]
+  connectOrCreate?: Prisma.ReservationCreateOrConnectWithoutPreemptedByInput | Prisma.ReservationCreateOrConnectWithoutPreemptedByInput[]
+  createMany?: Prisma.ReservationCreateManyPreemptedByInputEnvelope
   connect?: Prisma.ReservationWhereUniqueInput | Prisma.ReservationWhereUniqueInput[]
 }
 
@@ -460,6 +542,20 @@ export type ReservationUpdateManyWithoutBorrowerNestedInput = {
   deleteMany?: Prisma.ReservationScalarWhereInput | Prisma.ReservationScalarWhereInput[]
 }
 
+export type ReservationUpdateManyWithoutPreemptedByNestedInput = {
+  create?: Prisma.XOR<Prisma.ReservationCreateWithoutPreemptedByInput, Prisma.ReservationUncheckedCreateWithoutPreemptedByInput> | Prisma.ReservationCreateWithoutPreemptedByInput[] | Prisma.ReservationUncheckedCreateWithoutPreemptedByInput[]
+  connectOrCreate?: Prisma.ReservationCreateOrConnectWithoutPreemptedByInput | Prisma.ReservationCreateOrConnectWithoutPreemptedByInput[]
+  upsert?: Prisma.ReservationUpsertWithWhereUniqueWithoutPreemptedByInput | Prisma.ReservationUpsertWithWhereUniqueWithoutPreemptedByInput[]
+  createMany?: Prisma.ReservationCreateManyPreemptedByInputEnvelope
+  set?: Prisma.ReservationWhereUniqueInput | Prisma.ReservationWhereUniqueInput[]
+  disconnect?: Prisma.ReservationWhereUniqueInput | Prisma.ReservationWhereUniqueInput[]
+  delete?: Prisma.ReservationWhereUniqueInput | Prisma.ReservationWhereUniqueInput[]
+  connect?: Prisma.ReservationWhereUniqueInput | Prisma.ReservationWhereUniqueInput[]
+  update?: Prisma.ReservationUpdateWithWhereUniqueWithoutPreemptedByInput | Prisma.ReservationUpdateWithWhereUniqueWithoutPreemptedByInput[]
+  updateMany?: Prisma.ReservationUpdateManyWithWhereWithoutPreemptedByInput | Prisma.ReservationUpdateManyWithWhereWithoutPreemptedByInput[]
+  deleteMany?: Prisma.ReservationScalarWhereInput | Prisma.ReservationScalarWhereInput[]
+}
+
 export type ReservationUncheckedUpdateManyWithoutBorrowerNestedInput = {
   create?: Prisma.XOR<Prisma.ReservationCreateWithoutBorrowerInput, Prisma.ReservationUncheckedCreateWithoutBorrowerInput> | Prisma.ReservationCreateWithoutBorrowerInput[] | Prisma.ReservationUncheckedCreateWithoutBorrowerInput[]
   connectOrCreate?: Prisma.ReservationCreateOrConnectWithoutBorrowerInput | Prisma.ReservationCreateOrConnectWithoutBorrowerInput[]
@@ -471,6 +567,20 @@ export type ReservationUncheckedUpdateManyWithoutBorrowerNestedInput = {
   connect?: Prisma.ReservationWhereUniqueInput | Prisma.ReservationWhereUniqueInput[]
   update?: Prisma.ReservationUpdateWithWhereUniqueWithoutBorrowerInput | Prisma.ReservationUpdateWithWhereUniqueWithoutBorrowerInput[]
   updateMany?: Prisma.ReservationUpdateManyWithWhereWithoutBorrowerInput | Prisma.ReservationUpdateManyWithWhereWithoutBorrowerInput[]
+  deleteMany?: Prisma.ReservationScalarWhereInput | Prisma.ReservationScalarWhereInput[]
+}
+
+export type ReservationUncheckedUpdateManyWithoutPreemptedByNestedInput = {
+  create?: Prisma.XOR<Prisma.ReservationCreateWithoutPreemptedByInput, Prisma.ReservationUncheckedCreateWithoutPreemptedByInput> | Prisma.ReservationCreateWithoutPreemptedByInput[] | Prisma.ReservationUncheckedCreateWithoutPreemptedByInput[]
+  connectOrCreate?: Prisma.ReservationCreateOrConnectWithoutPreemptedByInput | Prisma.ReservationCreateOrConnectWithoutPreemptedByInput[]
+  upsert?: Prisma.ReservationUpsertWithWhereUniqueWithoutPreemptedByInput | Prisma.ReservationUpsertWithWhereUniqueWithoutPreemptedByInput[]
+  createMany?: Prisma.ReservationCreateManyPreemptedByInputEnvelope
+  set?: Prisma.ReservationWhereUniqueInput | Prisma.ReservationWhereUniqueInput[]
+  disconnect?: Prisma.ReservationWhereUniqueInput | Prisma.ReservationWhereUniqueInput[]
+  delete?: Prisma.ReservationWhereUniqueInput | Prisma.ReservationWhereUniqueInput[]
+  connect?: Prisma.ReservationWhereUniqueInput | Prisma.ReservationWhereUniqueInput[]
+  update?: Prisma.ReservationUpdateWithWhereUniqueWithoutPreemptedByInput | Prisma.ReservationUpdateWithWhereUniqueWithoutPreemptedByInput[]
+  updateMany?: Prisma.ReservationUpdateManyWithWhereWithoutPreemptedByInput | Prisma.ReservationUpdateManyWithWhereWithoutPreemptedByInput[]
   deleteMany?: Prisma.ReservationScalarWhereInput | Prisma.ReservationScalarWhereInput[]
 }
 
@@ -524,9 +634,12 @@ export type ReservationCreateWithoutBorrowerInput = {
   startDate: Date | string
   endDate: Date | string
   status?: $Enums.Status
+  preemptedAt?: Date | string | null
+  preemptedReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   item: Prisma.ItemCreateNestedOneWithoutReservationsInput
+  preemptedBy?: Prisma.UserCreateNestedOneWithoutPreemptedReservationsInput
 }
 
 export type ReservationUncheckedCreateWithoutBorrowerInput = {
@@ -535,6 +648,9 @@ export type ReservationUncheckedCreateWithoutBorrowerInput = {
   startDate: Date | string
   endDate: Date | string
   status?: $Enums.Status
+  preemptedAt?: Date | string | null
+  preemptedById?: string | null
+  preemptedReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -546,6 +662,41 @@ export type ReservationCreateOrConnectWithoutBorrowerInput = {
 
 export type ReservationCreateManyBorrowerInputEnvelope = {
   data: Prisma.ReservationCreateManyBorrowerInput | Prisma.ReservationCreateManyBorrowerInput[]
+  skipDuplicates?: boolean
+}
+
+export type ReservationCreateWithoutPreemptedByInput = {
+  startDate: Date | string
+  endDate: Date | string
+  status?: $Enums.Status
+  preemptedAt?: Date | string | null
+  preemptedReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  item: Prisma.ItemCreateNestedOneWithoutReservationsInput
+  borrower: Prisma.UserCreateNestedOneWithoutReservationsInput
+}
+
+export type ReservationUncheckedCreateWithoutPreemptedByInput = {
+  id?: number
+  itemId: number
+  borrowerId: string
+  startDate: Date | string
+  endDate: Date | string
+  status?: $Enums.Status
+  preemptedAt?: Date | string | null
+  preemptedReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type ReservationCreateOrConnectWithoutPreemptedByInput = {
+  where: Prisma.ReservationWhereUniqueInput
+  create: Prisma.XOR<Prisma.ReservationCreateWithoutPreemptedByInput, Prisma.ReservationUncheckedCreateWithoutPreemptedByInput>
+}
+
+export type ReservationCreateManyPreemptedByInputEnvelope = {
+  data: Prisma.ReservationCreateManyPreemptedByInput | Prisma.ReservationCreateManyPreemptedByInput[]
   skipDuplicates?: boolean
 }
 
@@ -575,17 +726,39 @@ export type ReservationScalarWhereInput = {
   startDate?: Prisma.DateTimeFilter<"Reservation"> | Date | string
   endDate?: Prisma.DateTimeFilter<"Reservation"> | Date | string
   status?: Prisma.EnumStatusFilter<"Reservation"> | $Enums.Status
+  preemptedAt?: Prisma.DateTimeNullableFilter<"Reservation"> | Date | string | null
+  preemptedById?: Prisma.StringNullableFilter<"Reservation"> | string | null
+  preemptedReason?: Prisma.StringNullableFilter<"Reservation"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Reservation"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Reservation"> | Date | string
+}
+
+export type ReservationUpsertWithWhereUniqueWithoutPreemptedByInput = {
+  where: Prisma.ReservationWhereUniqueInput
+  update: Prisma.XOR<Prisma.ReservationUpdateWithoutPreemptedByInput, Prisma.ReservationUncheckedUpdateWithoutPreemptedByInput>
+  create: Prisma.XOR<Prisma.ReservationCreateWithoutPreemptedByInput, Prisma.ReservationUncheckedCreateWithoutPreemptedByInput>
+}
+
+export type ReservationUpdateWithWhereUniqueWithoutPreemptedByInput = {
+  where: Prisma.ReservationWhereUniqueInput
+  data: Prisma.XOR<Prisma.ReservationUpdateWithoutPreemptedByInput, Prisma.ReservationUncheckedUpdateWithoutPreemptedByInput>
+}
+
+export type ReservationUpdateManyWithWhereWithoutPreemptedByInput = {
+  where: Prisma.ReservationScalarWhereInput
+  data: Prisma.XOR<Prisma.ReservationUpdateManyMutationInput, Prisma.ReservationUncheckedUpdateManyWithoutPreemptedByInput>
 }
 
 export type ReservationCreateWithoutItemInput = {
   startDate: Date | string
   endDate: Date | string
   status?: $Enums.Status
+  preemptedAt?: Date | string | null
+  preemptedReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   borrower: Prisma.UserCreateNestedOneWithoutReservationsInput
+  preemptedBy?: Prisma.UserCreateNestedOneWithoutPreemptedReservationsInput
 }
 
 export type ReservationUncheckedCreateWithoutItemInput = {
@@ -594,6 +767,9 @@ export type ReservationUncheckedCreateWithoutItemInput = {
   startDate: Date | string
   endDate: Date | string
   status?: $Enums.Status
+  preemptedAt?: Date | string | null
+  preemptedById?: string | null
+  preemptedReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -630,6 +806,22 @@ export type ReservationCreateManyBorrowerInput = {
   startDate: Date | string
   endDate: Date | string
   status?: $Enums.Status
+  preemptedAt?: Date | string | null
+  preemptedById?: string | null
+  preemptedReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type ReservationCreateManyPreemptedByInput = {
+  id?: number
+  itemId: number
+  borrowerId: string
+  startDate: Date | string
+  endDate: Date | string
+  status?: $Enums.Status
+  preemptedAt?: Date | string | null
+  preemptedReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -638,9 +830,12 @@ export type ReservationUpdateWithoutBorrowerInput = {
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
+  preemptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  preemptedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   item?: Prisma.ItemUpdateOneRequiredWithoutReservationsNestedInput
+  preemptedBy?: Prisma.UserUpdateOneWithoutPreemptedReservationsNestedInput
 }
 
 export type ReservationUncheckedUpdateWithoutBorrowerInput = {
@@ -649,6 +844,9 @@ export type ReservationUncheckedUpdateWithoutBorrowerInput = {
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
+  preemptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  preemptedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preemptedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -659,6 +857,47 @@ export type ReservationUncheckedUpdateManyWithoutBorrowerInput = {
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
+  preemptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  preemptedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preemptedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type ReservationUpdateWithoutPreemptedByInput = {
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
+  preemptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  preemptedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  item?: Prisma.ItemUpdateOneRequiredWithoutReservationsNestedInput
+  borrower?: Prisma.UserUpdateOneRequiredWithoutReservationsNestedInput
+}
+
+export type ReservationUncheckedUpdateWithoutPreemptedByInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  itemId?: Prisma.IntFieldUpdateOperationsInput | number
+  borrowerId?: Prisma.StringFieldUpdateOperationsInput | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
+  preemptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  preemptedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type ReservationUncheckedUpdateManyWithoutPreemptedByInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  itemId?: Prisma.IntFieldUpdateOperationsInput | number
+  borrowerId?: Prisma.StringFieldUpdateOperationsInput | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
+  preemptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  preemptedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -669,6 +908,9 @@ export type ReservationCreateManyItemInput = {
   startDate: Date | string
   endDate: Date | string
   status?: $Enums.Status
+  preemptedAt?: Date | string | null
+  preemptedById?: string | null
+  preemptedReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -677,9 +919,12 @@ export type ReservationUpdateWithoutItemInput = {
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
+  preemptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  preemptedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   borrower?: Prisma.UserUpdateOneRequiredWithoutReservationsNestedInput
+  preemptedBy?: Prisma.UserUpdateOneWithoutPreemptedReservationsNestedInput
 }
 
 export type ReservationUncheckedUpdateWithoutItemInput = {
@@ -688,6 +933,9 @@ export type ReservationUncheckedUpdateWithoutItemInput = {
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
+  preemptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  preemptedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preemptedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -698,6 +946,9 @@ export type ReservationUncheckedUpdateManyWithoutItemInput = {
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
+  preemptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  preemptedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preemptedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -711,10 +962,14 @@ export type ReservationSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   startDate?: boolean
   endDate?: boolean
   status?: boolean
+  preemptedAt?: boolean
+  preemptedById?: boolean
+  preemptedReason?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   item?: boolean | Prisma.ItemDefaultArgs<ExtArgs>
   borrower?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  preemptedBy?: boolean | Prisma.Reservation$preemptedByArgs<ExtArgs>
 }, ExtArgs["result"]["reservation"]>
 
 export type ReservationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -724,10 +979,14 @@ export type ReservationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   startDate?: boolean
   endDate?: boolean
   status?: boolean
+  preemptedAt?: boolean
+  preemptedById?: boolean
+  preemptedReason?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   item?: boolean | Prisma.ItemDefaultArgs<ExtArgs>
   borrower?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  preemptedBy?: boolean | Prisma.Reservation$preemptedByArgs<ExtArgs>
 }, ExtArgs["result"]["reservation"]>
 
 export type ReservationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -737,10 +996,14 @@ export type ReservationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   startDate?: boolean
   endDate?: boolean
   status?: boolean
+  preemptedAt?: boolean
+  preemptedById?: boolean
+  preemptedReason?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   item?: boolean | Prisma.ItemDefaultArgs<ExtArgs>
   borrower?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  preemptedBy?: boolean | Prisma.Reservation$preemptedByArgs<ExtArgs>
 }, ExtArgs["result"]["reservation"]>
 
 export type ReservationSelectScalar = {
@@ -750,22 +1013,28 @@ export type ReservationSelectScalar = {
   startDate?: boolean
   endDate?: boolean
   status?: boolean
+  preemptedAt?: boolean
+  preemptedById?: boolean
+  preemptedReason?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ReservationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "itemId" | "borrowerId" | "startDate" | "endDate" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["reservation"]>
+export type ReservationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "itemId" | "borrowerId" | "startDate" | "endDate" | "status" | "preemptedAt" | "preemptedById" | "preemptedReason" | "createdAt" | "updatedAt", ExtArgs["result"]["reservation"]>
 export type ReservationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   item?: boolean | Prisma.ItemDefaultArgs<ExtArgs>
   borrower?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  preemptedBy?: boolean | Prisma.Reservation$preemptedByArgs<ExtArgs>
 }
 export type ReservationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   item?: boolean | Prisma.ItemDefaultArgs<ExtArgs>
   borrower?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  preemptedBy?: boolean | Prisma.Reservation$preemptedByArgs<ExtArgs>
 }
 export type ReservationIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   item?: boolean | Prisma.ItemDefaultArgs<ExtArgs>
   borrower?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  preemptedBy?: boolean | Prisma.Reservation$preemptedByArgs<ExtArgs>
 }
 
 export type $ReservationPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -773,6 +1042,7 @@ export type $ReservationPayload<ExtArgs extends runtime.Types.Extensions.Interna
   objects: {
     item: Prisma.$ItemPayload<ExtArgs>
     borrower: Prisma.$UserPayload<ExtArgs>
+    preemptedBy: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -781,6 +1051,9 @@ export type $ReservationPayload<ExtArgs extends runtime.Types.Extensions.Interna
     startDate: Date
     endDate: Date
     status: $Enums.Status
+    preemptedAt: Date | null
+    preemptedById: string | null
+    preemptedReason: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["reservation"]>
@@ -1179,6 +1452,7 @@ export interface Prisma__ReservationClient<T, Null = never, ExtArgs extends runt
   readonly [Symbol.toStringTag]: "PrismaPromise"
   item<T extends Prisma.ItemDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ItemDefaultArgs<ExtArgs>>): Prisma.Prisma__ItemClient<runtime.Types.Result.GetResult<Prisma.$ItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   borrower<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  preemptedBy<T extends Prisma.Reservation$preemptedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Reservation$preemptedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1214,6 +1488,9 @@ export interface ReservationFieldRefs {
   readonly startDate: Prisma.FieldRef<"Reservation", 'DateTime'>
   readonly endDate: Prisma.FieldRef<"Reservation", 'DateTime'>
   readonly status: Prisma.FieldRef<"Reservation", 'Status'>
+  readonly preemptedAt: Prisma.FieldRef<"Reservation", 'DateTime'>
+  readonly preemptedById: Prisma.FieldRef<"Reservation", 'String'>
+  readonly preemptedReason: Prisma.FieldRef<"Reservation", 'String'>
   readonly createdAt: Prisma.FieldRef<"Reservation", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Reservation", 'DateTime'>
 }
@@ -1614,6 +1891,25 @@ export type ReservationDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * Limit how many Reservations to delete.
    */
   limit?: number
+}
+
+/**
+ * Reservation.preemptedBy
+ */
+export type Reservation$preemptedByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
 }
 
 /**

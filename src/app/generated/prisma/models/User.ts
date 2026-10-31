@@ -201,6 +201,7 @@ export type UserWhereInput = {
   memberships?: Prisma.MembershipListRelationFilter
   items?: Prisma.ItemListRelationFilter
   reservations?: Prisma.ReservationListRelationFilter
+  preemptedReservations?: Prisma.ReservationListRelationFilter
   sessions?: Prisma.SessionListRelationFilter
   accounts?: Prisma.AccountListRelationFilter
 }
@@ -216,6 +217,7 @@ export type UserOrderByWithRelationInput = {
   memberships?: Prisma.MembershipOrderByRelationAggregateInput
   items?: Prisma.ItemOrderByRelationAggregateInput
   reservations?: Prisma.ReservationOrderByRelationAggregateInput
+  preemptedReservations?: Prisma.ReservationOrderByRelationAggregateInput
   sessions?: Prisma.SessionOrderByRelationAggregateInput
   accounts?: Prisma.AccountOrderByRelationAggregateInput
 }
@@ -234,6 +236,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   memberships?: Prisma.MembershipListRelationFilter
   items?: Prisma.ItemListRelationFilter
   reservations?: Prisma.ReservationListRelationFilter
+  preemptedReservations?: Prisma.ReservationListRelationFilter
   sessions?: Prisma.SessionListRelationFilter
   accounts?: Prisma.AccountListRelationFilter
 }, "id" | "email">
@@ -275,6 +278,7 @@ export type UserCreateInput = {
   memberships?: Prisma.MembershipCreateNestedManyWithoutUserInput
   items?: Prisma.ItemCreateNestedManyWithoutOwnerInput
   reservations?: Prisma.ReservationCreateNestedManyWithoutBorrowerInput
+  preemptedReservations?: Prisma.ReservationCreateNestedManyWithoutPreemptedByInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
 }
@@ -290,6 +294,7 @@ export type UserUncheckedCreateInput = {
   memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutUserInput
   items?: Prisma.ItemUncheckedCreateNestedManyWithoutOwnerInput
   reservations?: Prisma.ReservationUncheckedCreateNestedManyWithoutBorrowerInput
+  preemptedReservations?: Prisma.ReservationUncheckedCreateNestedManyWithoutPreemptedByInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
 }
@@ -305,6 +310,7 @@ export type UserUpdateInput = {
   memberships?: Prisma.MembershipUpdateManyWithoutUserNestedInput
   items?: Prisma.ItemUpdateManyWithoutOwnerNestedInput
   reservations?: Prisma.ReservationUpdateManyWithoutBorrowerNestedInput
+  preemptedReservations?: Prisma.ReservationUpdateManyWithoutPreemptedByNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
 }
@@ -320,6 +326,7 @@ export type UserUncheckedUpdateInput = {
   memberships?: Prisma.MembershipUncheckedUpdateManyWithoutUserNestedInput
   items?: Prisma.ItemUncheckedUpdateManyWithoutOwnerNestedInput
   reservations?: Prisma.ReservationUncheckedUpdateManyWithoutBorrowerNestedInput
+  preemptedReservations?: Prisma.ReservationUncheckedUpdateManyWithoutPreemptedByNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -389,6 +396,11 @@ export type UserScalarRelationFilter = {
   isNot?: Prisma.UserWhereInput
 }
 
+export type UserNullableScalarRelationFilter = {
+  is?: Prisma.UserWhereInput | null
+  isNot?: Prisma.UserWhereInput | null
+}
+
 export type StringFieldUpdateOperationsInput = {
   set?: string
 }
@@ -439,12 +451,28 @@ export type UserCreateNestedOneWithoutReservationsInput = {
   connect?: Prisma.UserWhereUniqueInput
 }
 
+export type UserCreateNestedOneWithoutPreemptedReservationsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPreemptedReservationsInput, Prisma.UserUncheckedCreateWithoutPreemptedReservationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPreemptedReservationsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
 export type UserUpdateOneRequiredWithoutReservationsNestedInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutReservationsInput, Prisma.UserUncheckedCreateWithoutReservationsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutReservationsInput
   upsert?: Prisma.UserUpsertWithoutReservationsInput
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutReservationsInput, Prisma.UserUpdateWithoutReservationsInput>, Prisma.UserUncheckedUpdateWithoutReservationsInput>
+}
+
+export type UserUpdateOneWithoutPreemptedReservationsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPreemptedReservationsInput, Prisma.UserUncheckedCreateWithoutPreemptedReservationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPreemptedReservationsInput
+  upsert?: Prisma.UserUpsertWithoutPreemptedReservationsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPreemptedReservationsInput, Prisma.UserUpdateWithoutPreemptedReservationsInput>, Prisma.UserUncheckedUpdateWithoutPreemptedReservationsInput>
 }
 
 export type UserCreateNestedOneWithoutSessionsInput = {
@@ -485,6 +513,7 @@ export type UserCreateWithoutMembershipsInput = {
   updatedAt?: Date | string
   items?: Prisma.ItemCreateNestedManyWithoutOwnerInput
   reservations?: Prisma.ReservationCreateNestedManyWithoutBorrowerInput
+  preemptedReservations?: Prisma.ReservationCreateNestedManyWithoutPreemptedByInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
 }
@@ -499,6 +528,7 @@ export type UserUncheckedCreateWithoutMembershipsInput = {
   updatedAt?: Date | string
   items?: Prisma.ItemUncheckedCreateNestedManyWithoutOwnerInput
   reservations?: Prisma.ReservationUncheckedCreateNestedManyWithoutBorrowerInput
+  preemptedReservations?: Prisma.ReservationUncheckedCreateNestedManyWithoutPreemptedByInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
 }
@@ -529,6 +559,7 @@ export type UserUpdateWithoutMembershipsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.ItemUpdateManyWithoutOwnerNestedInput
   reservations?: Prisma.ReservationUpdateManyWithoutBorrowerNestedInput
+  preemptedReservations?: Prisma.ReservationUpdateManyWithoutPreemptedByNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
 }
@@ -543,6 +574,7 @@ export type UserUncheckedUpdateWithoutMembershipsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.ItemUncheckedUpdateManyWithoutOwnerNestedInput
   reservations?: Prisma.ReservationUncheckedUpdateManyWithoutBorrowerNestedInput
+  preemptedReservations?: Prisma.ReservationUncheckedUpdateManyWithoutPreemptedByNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -557,6 +589,7 @@ export type UserCreateWithoutItemsInput = {
   updatedAt?: Date | string
   memberships?: Prisma.MembershipCreateNestedManyWithoutUserInput
   reservations?: Prisma.ReservationCreateNestedManyWithoutBorrowerInput
+  preemptedReservations?: Prisma.ReservationCreateNestedManyWithoutPreemptedByInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
 }
@@ -571,6 +604,7 @@ export type UserUncheckedCreateWithoutItemsInput = {
   updatedAt?: Date | string
   memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutUserInput
   reservations?: Prisma.ReservationUncheckedCreateNestedManyWithoutBorrowerInput
+  preemptedReservations?: Prisma.ReservationUncheckedCreateNestedManyWithoutPreemptedByInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
 }
@@ -601,6 +635,7 @@ export type UserUpdateWithoutItemsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.MembershipUpdateManyWithoutUserNestedInput
   reservations?: Prisma.ReservationUpdateManyWithoutBorrowerNestedInput
+  preemptedReservations?: Prisma.ReservationUpdateManyWithoutPreemptedByNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
 }
@@ -615,6 +650,7 @@ export type UserUncheckedUpdateWithoutItemsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.MembershipUncheckedUpdateManyWithoutUserNestedInput
   reservations?: Prisma.ReservationUncheckedUpdateManyWithoutBorrowerNestedInput
+  preemptedReservations?: Prisma.ReservationUncheckedUpdateManyWithoutPreemptedByNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -629,6 +665,7 @@ export type UserCreateWithoutReservationsInput = {
   updatedAt?: Date | string
   memberships?: Prisma.MembershipCreateNestedManyWithoutUserInput
   items?: Prisma.ItemCreateNestedManyWithoutOwnerInput
+  preemptedReservations?: Prisma.ReservationCreateNestedManyWithoutPreemptedByInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
 }
@@ -643,6 +680,7 @@ export type UserUncheckedCreateWithoutReservationsInput = {
   updatedAt?: Date | string
   memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutUserInput
   items?: Prisma.ItemUncheckedCreateNestedManyWithoutOwnerInput
+  preemptedReservations?: Prisma.ReservationUncheckedCreateNestedManyWithoutPreemptedByInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
 }
@@ -650,6 +688,41 @@ export type UserUncheckedCreateWithoutReservationsInput = {
 export type UserCreateOrConnectWithoutReservationsInput = {
   where: Prisma.UserWhereUniqueInput
   create: Prisma.XOR<Prisma.UserCreateWithoutReservationsInput, Prisma.UserUncheckedCreateWithoutReservationsInput>
+}
+
+export type UserCreateWithoutPreemptedReservationsInput = {
+  id: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  name: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  memberships?: Prisma.MembershipCreateNestedManyWithoutUserInput
+  items?: Prisma.ItemCreateNestedManyWithoutOwnerInput
+  reservations?: Prisma.ReservationCreateNestedManyWithoutBorrowerInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutPreemptedReservationsInput = {
+  id: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  name: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutUserInput
+  items?: Prisma.ItemUncheckedCreateNestedManyWithoutOwnerInput
+  reservations?: Prisma.ReservationUncheckedCreateNestedManyWithoutBorrowerInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutPreemptedReservationsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutPreemptedReservationsInput, Prisma.UserUncheckedCreateWithoutPreemptedReservationsInput>
 }
 
 export type UserUpsertWithoutReservationsInput = {
@@ -673,6 +746,7 @@ export type UserUpdateWithoutReservationsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.MembershipUpdateManyWithoutUserNestedInput
   items?: Prisma.ItemUpdateManyWithoutOwnerNestedInput
+  preemptedReservations?: Prisma.ReservationUpdateManyWithoutPreemptedByNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
 }
@@ -687,6 +761,48 @@ export type UserUncheckedUpdateWithoutReservationsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.MembershipUncheckedUpdateManyWithoutUserNestedInput
   items?: Prisma.ItemUncheckedUpdateManyWithoutOwnerNestedInput
+  preemptedReservations?: Prisma.ReservationUncheckedUpdateManyWithoutPreemptedByNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserUpsertWithoutPreemptedReservationsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutPreemptedReservationsInput, Prisma.UserUncheckedUpdateWithoutPreemptedReservationsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutPreemptedReservationsInput, Prisma.UserUncheckedCreateWithoutPreemptedReservationsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutPreemptedReservationsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutPreemptedReservationsInput, Prisma.UserUncheckedUpdateWithoutPreemptedReservationsInput>
+}
+
+export type UserUpdateWithoutPreemptedReservationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.MembershipUpdateManyWithoutUserNestedInput
+  items?: Prisma.ItemUpdateManyWithoutOwnerNestedInput
+  reservations?: Prisma.ReservationUpdateManyWithoutBorrowerNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutPreemptedReservationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutUserNestedInput
+  items?: Prisma.ItemUncheckedUpdateManyWithoutOwnerNestedInput
+  reservations?: Prisma.ReservationUncheckedUpdateManyWithoutBorrowerNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -702,6 +818,7 @@ export type UserCreateWithoutSessionsInput = {
   memberships?: Prisma.MembershipCreateNestedManyWithoutUserInput
   items?: Prisma.ItemCreateNestedManyWithoutOwnerInput
   reservations?: Prisma.ReservationCreateNestedManyWithoutBorrowerInput
+  preemptedReservations?: Prisma.ReservationCreateNestedManyWithoutPreemptedByInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
 }
 
@@ -716,6 +833,7 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutUserInput
   items?: Prisma.ItemUncheckedCreateNestedManyWithoutOwnerInput
   reservations?: Prisma.ReservationUncheckedCreateNestedManyWithoutBorrowerInput
+  preemptedReservations?: Prisma.ReservationUncheckedCreateNestedManyWithoutPreemptedByInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -746,6 +864,7 @@ export type UserUpdateWithoutSessionsInput = {
   memberships?: Prisma.MembershipUpdateManyWithoutUserNestedInput
   items?: Prisma.ItemUpdateManyWithoutOwnerNestedInput
   reservations?: Prisma.ReservationUpdateManyWithoutBorrowerNestedInput
+  preemptedReservations?: Prisma.ReservationUpdateManyWithoutPreemptedByNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
 }
 
@@ -760,6 +879,7 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   memberships?: Prisma.MembershipUncheckedUpdateManyWithoutUserNestedInput
   items?: Prisma.ItemUncheckedUpdateManyWithoutOwnerNestedInput
   reservations?: Prisma.ReservationUncheckedUpdateManyWithoutBorrowerNestedInput
+  preemptedReservations?: Prisma.ReservationUncheckedUpdateManyWithoutPreemptedByNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -774,6 +894,7 @@ export type UserCreateWithoutAccountsInput = {
   memberships?: Prisma.MembershipCreateNestedManyWithoutUserInput
   items?: Prisma.ItemCreateNestedManyWithoutOwnerInput
   reservations?: Prisma.ReservationCreateNestedManyWithoutBorrowerInput
+  preemptedReservations?: Prisma.ReservationCreateNestedManyWithoutPreemptedByInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
 }
 
@@ -788,6 +909,7 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutUserInput
   items?: Prisma.ItemUncheckedCreateNestedManyWithoutOwnerInput
   reservations?: Prisma.ReservationUncheckedCreateNestedManyWithoutBorrowerInput
+  preemptedReservations?: Prisma.ReservationUncheckedCreateNestedManyWithoutPreemptedByInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -818,6 +940,7 @@ export type UserUpdateWithoutAccountsInput = {
   memberships?: Prisma.MembershipUpdateManyWithoutUserNestedInput
   items?: Prisma.ItemUpdateManyWithoutOwnerNestedInput
   reservations?: Prisma.ReservationUpdateManyWithoutBorrowerNestedInput
+  preemptedReservations?: Prisma.ReservationUpdateManyWithoutPreemptedByNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
 }
 
@@ -832,6 +955,7 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   memberships?: Prisma.MembershipUncheckedUpdateManyWithoutUserNestedInput
   items?: Prisma.ItemUncheckedUpdateManyWithoutOwnerNestedInput
   reservations?: Prisma.ReservationUncheckedUpdateManyWithoutBorrowerNestedInput
+  preemptedReservations?: Prisma.ReservationUncheckedUpdateManyWithoutPreemptedByNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -844,6 +968,7 @@ export type UserCountOutputType = {
   memberships: number
   items: number
   reservations: number
+  preemptedReservations: number
   sessions: number
   accounts: number
 }
@@ -852,6 +977,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   memberships?: boolean | UserCountOutputTypeCountMembershipsArgs
   items?: boolean | UserCountOutputTypeCountItemsArgs
   reservations?: boolean | UserCountOutputTypeCountReservationsArgs
+  preemptedReservations?: boolean | UserCountOutputTypeCountPreemptedReservationsArgs
   sessions?: boolean | UserCountOutputTypeCountSessionsArgs
   accounts?: boolean | UserCountOutputTypeCountAccountsArgs
 }
@@ -890,6 +1016,13 @@ export type UserCountOutputTypeCountReservationsArgs<ExtArgs extends runtime.Typ
 /**
  * UserCountOutputType without action
  */
+export type UserCountOutputTypeCountPreemptedReservationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ReservationWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
 export type UserCountOutputTypeCountSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.SessionWhereInput
 }
@@ -913,6 +1046,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   memberships?: boolean | Prisma.User$membershipsArgs<ExtArgs>
   items?: boolean | Prisma.User$itemsArgs<ExtArgs>
   reservations?: boolean | Prisma.User$reservationsArgs<ExtArgs>
+  preemptedReservations?: boolean | Prisma.User$preemptedReservationsArgs<ExtArgs>
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -953,6 +1087,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   memberships?: boolean | Prisma.User$membershipsArgs<ExtArgs>
   items?: boolean | Prisma.User$itemsArgs<ExtArgs>
   reservations?: boolean | Prisma.User$reservationsArgs<ExtArgs>
+  preemptedReservations?: boolean | Prisma.User$preemptedReservationsArgs<ExtArgs>
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -966,6 +1101,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     memberships: Prisma.$MembershipPayload<ExtArgs>[]
     items: Prisma.$ItemPayload<ExtArgs>[]
     reservations: Prisma.$ReservationPayload<ExtArgs>[]
+    preemptedReservations: Prisma.$ReservationPayload<ExtArgs>[]
     sessions: Prisma.$SessionPayload<ExtArgs>[]
     accounts: Prisma.$AccountPayload<ExtArgs>[]
   }
@@ -1374,6 +1510,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   memberships<T extends Prisma.User$membershipsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$membershipsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   items<T extends Prisma.User$itemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   reservations<T extends Prisma.User$reservationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$reservationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReservationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  preemptedReservations<T extends Prisma.User$preemptedReservationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$preemptedReservationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReservationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   sessions<T extends Prisma.User$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   accounts<T extends Prisma.User$accountsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -1856,6 +1993,30 @@ export type User$itemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
  * User.reservations
  */
 export type User$reservationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Reservation
+   */
+  select?: Prisma.ReservationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Reservation
+   */
+  omit?: Prisma.ReservationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReservationInclude<ExtArgs> | null
+  where?: Prisma.ReservationWhereInput
+  orderBy?: Prisma.ReservationOrderByWithRelationInput | Prisma.ReservationOrderByWithRelationInput[]
+  cursor?: Prisma.ReservationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ReservationScalarFieldEnum | Prisma.ReservationScalarFieldEnum[]
+}
+
+/**
+ * User.preemptedReservations
+ */
+export type User$preemptedReservationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Reservation
    */
