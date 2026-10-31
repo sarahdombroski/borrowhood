@@ -271,6 +271,7 @@ export type ReservationWhereInput = {
   item?: Prisma.XOR<Prisma.ItemScalarRelationFilter, Prisma.ItemWhereInput>
   borrower?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   preemptedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  notifications?: Prisma.NotificationListRelationFilter
 }
 
 export type ReservationOrderByWithRelationInput = {
@@ -288,6 +289,7 @@ export type ReservationOrderByWithRelationInput = {
   item?: Prisma.ItemOrderByWithRelationInput
   borrower?: Prisma.UserOrderByWithRelationInput
   preemptedBy?: Prisma.UserOrderByWithRelationInput
+  notifications?: Prisma.NotificationOrderByRelationAggregateInput
 }
 
 export type ReservationWhereUniqueInput = Prisma.AtLeast<{
@@ -308,6 +310,7 @@ export type ReservationWhereUniqueInput = Prisma.AtLeast<{
   item?: Prisma.XOR<Prisma.ItemScalarRelationFilter, Prisma.ItemWhereInput>
   borrower?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   preemptedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  notifications?: Prisma.NotificationListRelationFilter
 }, "id">
 
 export type ReservationOrderByWithAggregationInput = {
@@ -357,6 +360,7 @@ export type ReservationCreateInput = {
   item: Prisma.ItemCreateNestedOneWithoutReservationsInput
   borrower: Prisma.UserCreateNestedOneWithoutReservationsInput
   preemptedBy?: Prisma.UserCreateNestedOneWithoutPreemptedReservationsInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutReservationInput
 }
 
 export type ReservationUncheckedCreateInput = {
@@ -371,6 +375,7 @@ export type ReservationUncheckedCreateInput = {
   preemptedReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutReservationInput
 }
 
 export type ReservationUpdateInput = {
@@ -384,6 +389,7 @@ export type ReservationUpdateInput = {
   item?: Prisma.ItemUpdateOneRequiredWithoutReservationsNestedInput
   borrower?: Prisma.UserUpdateOneRequiredWithoutReservationsNestedInput
   preemptedBy?: Prisma.UserUpdateOneWithoutPreemptedReservationsNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutReservationNestedInput
 }
 
 export type ReservationUncheckedUpdateInput = {
@@ -398,6 +404,7 @@ export type ReservationUncheckedUpdateInput = {
   preemptedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutReservationNestedInput
 }
 
 export type ReservationCreateManyInput = {
@@ -498,6 +505,11 @@ export type ReservationMinOrderByAggregateInput = {
 export type ReservationSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   itemId?: Prisma.SortOrder
+}
+
+export type ReservationNullableScalarRelationFilter = {
+  is?: Prisma.ReservationWhereInput | null
+  isNot?: Prisma.ReservationWhereInput | null
 }
 
 export type ReservationCreateNestedManyWithoutBorrowerInput = {
@@ -630,6 +642,22 @@ export type EnumStatusFieldUpdateOperationsInput = {
   set?: $Enums.Status
 }
 
+export type ReservationCreateNestedOneWithoutNotificationsInput = {
+  create?: Prisma.XOR<Prisma.ReservationCreateWithoutNotificationsInput, Prisma.ReservationUncheckedCreateWithoutNotificationsInput>
+  connectOrCreate?: Prisma.ReservationCreateOrConnectWithoutNotificationsInput
+  connect?: Prisma.ReservationWhereUniqueInput
+}
+
+export type ReservationUpdateOneWithoutNotificationsNestedInput = {
+  create?: Prisma.XOR<Prisma.ReservationCreateWithoutNotificationsInput, Prisma.ReservationUncheckedCreateWithoutNotificationsInput>
+  connectOrCreate?: Prisma.ReservationCreateOrConnectWithoutNotificationsInput
+  upsert?: Prisma.ReservationUpsertWithoutNotificationsInput
+  disconnect?: Prisma.ReservationWhereInput | boolean
+  delete?: Prisma.ReservationWhereInput | boolean
+  connect?: Prisma.ReservationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ReservationUpdateToOneWithWhereWithoutNotificationsInput, Prisma.ReservationUpdateWithoutNotificationsInput>, Prisma.ReservationUncheckedUpdateWithoutNotificationsInput>
+}
+
 export type ReservationCreateWithoutBorrowerInput = {
   startDate: Date | string
   endDate: Date | string
@@ -640,6 +668,7 @@ export type ReservationCreateWithoutBorrowerInput = {
   updatedAt?: Date | string
   item: Prisma.ItemCreateNestedOneWithoutReservationsInput
   preemptedBy?: Prisma.UserCreateNestedOneWithoutPreemptedReservationsInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutReservationInput
 }
 
 export type ReservationUncheckedCreateWithoutBorrowerInput = {
@@ -653,6 +682,7 @@ export type ReservationUncheckedCreateWithoutBorrowerInput = {
   preemptedReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutReservationInput
 }
 
 export type ReservationCreateOrConnectWithoutBorrowerInput = {
@@ -675,6 +705,7 @@ export type ReservationCreateWithoutPreemptedByInput = {
   updatedAt?: Date | string
   item: Prisma.ItemCreateNestedOneWithoutReservationsInput
   borrower: Prisma.UserCreateNestedOneWithoutReservationsInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutReservationInput
 }
 
 export type ReservationUncheckedCreateWithoutPreemptedByInput = {
@@ -688,6 +719,7 @@ export type ReservationUncheckedCreateWithoutPreemptedByInput = {
   preemptedReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutReservationInput
 }
 
 export type ReservationCreateOrConnectWithoutPreemptedByInput = {
@@ -759,6 +791,7 @@ export type ReservationCreateWithoutItemInput = {
   updatedAt?: Date | string
   borrower: Prisma.UserCreateNestedOneWithoutReservationsInput
   preemptedBy?: Prisma.UserCreateNestedOneWithoutPreemptedReservationsInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutReservationInput
 }
 
 export type ReservationUncheckedCreateWithoutItemInput = {
@@ -772,6 +805,7 @@ export type ReservationUncheckedCreateWithoutItemInput = {
   preemptedReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutReservationInput
 }
 
 export type ReservationCreateOrConnectWithoutItemInput = {
@@ -798,6 +832,76 @@ export type ReservationUpdateWithWhereUniqueWithoutItemInput = {
 export type ReservationUpdateManyWithWhereWithoutItemInput = {
   where: Prisma.ReservationScalarWhereInput
   data: Prisma.XOR<Prisma.ReservationUpdateManyMutationInput, Prisma.ReservationUncheckedUpdateManyWithoutItemInput>
+}
+
+export type ReservationCreateWithoutNotificationsInput = {
+  startDate: Date | string
+  endDate: Date | string
+  status?: $Enums.Status
+  preemptedAt?: Date | string | null
+  preemptedReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  item: Prisma.ItemCreateNestedOneWithoutReservationsInput
+  borrower: Prisma.UserCreateNestedOneWithoutReservationsInput
+  preemptedBy?: Prisma.UserCreateNestedOneWithoutPreemptedReservationsInput
+}
+
+export type ReservationUncheckedCreateWithoutNotificationsInput = {
+  id?: number
+  itemId: number
+  borrowerId: string
+  startDate: Date | string
+  endDate: Date | string
+  status?: $Enums.Status
+  preemptedAt?: Date | string | null
+  preemptedById?: string | null
+  preemptedReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type ReservationCreateOrConnectWithoutNotificationsInput = {
+  where: Prisma.ReservationWhereUniqueInput
+  create: Prisma.XOR<Prisma.ReservationCreateWithoutNotificationsInput, Prisma.ReservationUncheckedCreateWithoutNotificationsInput>
+}
+
+export type ReservationUpsertWithoutNotificationsInput = {
+  update: Prisma.XOR<Prisma.ReservationUpdateWithoutNotificationsInput, Prisma.ReservationUncheckedUpdateWithoutNotificationsInput>
+  create: Prisma.XOR<Prisma.ReservationCreateWithoutNotificationsInput, Prisma.ReservationUncheckedCreateWithoutNotificationsInput>
+  where?: Prisma.ReservationWhereInput
+}
+
+export type ReservationUpdateToOneWithWhereWithoutNotificationsInput = {
+  where?: Prisma.ReservationWhereInput
+  data: Prisma.XOR<Prisma.ReservationUpdateWithoutNotificationsInput, Prisma.ReservationUncheckedUpdateWithoutNotificationsInput>
+}
+
+export type ReservationUpdateWithoutNotificationsInput = {
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
+  preemptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  preemptedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  item?: Prisma.ItemUpdateOneRequiredWithoutReservationsNestedInput
+  borrower?: Prisma.UserUpdateOneRequiredWithoutReservationsNestedInput
+  preemptedBy?: Prisma.UserUpdateOneWithoutPreemptedReservationsNestedInput
+}
+
+export type ReservationUncheckedUpdateWithoutNotificationsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  itemId?: Prisma.IntFieldUpdateOperationsInput | number
+  borrowerId?: Prisma.StringFieldUpdateOperationsInput | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
+  preemptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  preemptedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preemptedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ReservationCreateManyBorrowerInput = {
@@ -836,6 +940,7 @@ export type ReservationUpdateWithoutBorrowerInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   item?: Prisma.ItemUpdateOneRequiredWithoutReservationsNestedInput
   preemptedBy?: Prisma.UserUpdateOneWithoutPreemptedReservationsNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutReservationNestedInput
 }
 
 export type ReservationUncheckedUpdateWithoutBorrowerInput = {
@@ -849,6 +954,7 @@ export type ReservationUncheckedUpdateWithoutBorrowerInput = {
   preemptedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutReservationNestedInput
 }
 
 export type ReservationUncheckedUpdateManyWithoutBorrowerInput = {
@@ -874,6 +980,7 @@ export type ReservationUpdateWithoutPreemptedByInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   item?: Prisma.ItemUpdateOneRequiredWithoutReservationsNestedInput
   borrower?: Prisma.UserUpdateOneRequiredWithoutReservationsNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutReservationNestedInput
 }
 
 export type ReservationUncheckedUpdateWithoutPreemptedByInput = {
@@ -887,6 +994,7 @@ export type ReservationUncheckedUpdateWithoutPreemptedByInput = {
   preemptedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutReservationNestedInput
 }
 
 export type ReservationUncheckedUpdateManyWithoutPreemptedByInput = {
@@ -925,6 +1033,7 @@ export type ReservationUpdateWithoutItemInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   borrower?: Prisma.UserUpdateOneRequiredWithoutReservationsNestedInput
   preemptedBy?: Prisma.UserUpdateOneWithoutPreemptedReservationsNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutReservationNestedInput
 }
 
 export type ReservationUncheckedUpdateWithoutItemInput = {
@@ -938,6 +1047,7 @@ export type ReservationUncheckedUpdateWithoutItemInput = {
   preemptedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutReservationNestedInput
 }
 
 export type ReservationUncheckedUpdateManyWithoutItemInput = {
@@ -953,6 +1063,35 @@ export type ReservationUncheckedUpdateManyWithoutItemInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
+
+/**
+ * Count Type ReservationCountOutputType
+ */
+
+export type ReservationCountOutputType = {
+  notifications: number
+}
+
+export type ReservationCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  notifications?: boolean | ReservationCountOutputTypeCountNotificationsArgs
+}
+
+/**
+ * ReservationCountOutputType without action
+ */
+export type ReservationCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ReservationCountOutputType
+   */
+  select?: Prisma.ReservationCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ReservationCountOutputType without action
+ */
+export type ReservationCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.NotificationWhereInput
+}
 
 
 export type ReservationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -970,6 +1109,8 @@ export type ReservationSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   item?: boolean | Prisma.ItemDefaultArgs<ExtArgs>
   borrower?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   preemptedBy?: boolean | Prisma.Reservation$preemptedByArgs<ExtArgs>
+  notifications?: boolean | Prisma.Reservation$notificationsArgs<ExtArgs>
+  _count?: boolean | Prisma.ReservationCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["reservation"]>
 
 export type ReservationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1025,6 +1166,8 @@ export type ReservationInclude<ExtArgs extends runtime.Types.Extensions.Internal
   item?: boolean | Prisma.ItemDefaultArgs<ExtArgs>
   borrower?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   preemptedBy?: boolean | Prisma.Reservation$preemptedByArgs<ExtArgs>
+  notifications?: boolean | Prisma.Reservation$notificationsArgs<ExtArgs>
+  _count?: boolean | Prisma.ReservationCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ReservationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   item?: boolean | Prisma.ItemDefaultArgs<ExtArgs>
@@ -1043,6 +1186,7 @@ export type $ReservationPayload<ExtArgs extends runtime.Types.Extensions.Interna
     item: Prisma.$ItemPayload<ExtArgs>
     borrower: Prisma.$UserPayload<ExtArgs>
     preemptedBy: Prisma.$UserPayload<ExtArgs> | null
+    notifications: Prisma.$NotificationPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1453,6 +1597,7 @@ export interface Prisma__ReservationClient<T, Null = never, ExtArgs extends runt
   item<T extends Prisma.ItemDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ItemDefaultArgs<ExtArgs>>): Prisma.Prisma__ItemClient<runtime.Types.Result.GetResult<Prisma.$ItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   borrower<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   preemptedBy<T extends Prisma.Reservation$preemptedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Reservation$preemptedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  notifications<T extends Prisma.Reservation$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Reservation$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1910,6 +2055,30 @@ export type Reservation$preemptedByArgs<ExtArgs extends runtime.Types.Extensions
    */
   include?: Prisma.UserInclude<ExtArgs> | null
   where?: Prisma.UserWhereInput
+}
+
+/**
+ * Reservation.notifications
+ */
+export type Reservation$notificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Notification
+   */
+  select?: Prisma.NotificationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Notification
+   */
+  omit?: Prisma.NotificationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NotificationInclude<ExtArgs> | null
+  where?: Prisma.NotificationWhereInput
+  orderBy?: Prisma.NotificationOrderByWithRelationInput | Prisma.NotificationOrderByWithRelationInput[]
+  cursor?: Prisma.NotificationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.NotificationScalarFieldEnum | Prisma.NotificationScalarFieldEnum[]
 }
 
 /**

@@ -13,19 +13,20 @@ datasource db {
 }
 
 model User {
-  id                    String        @id
-  email                 String        @unique
-  emailVerified         Boolean       @default(false)
+  id                    String         @id
+  email                 String         @unique
+  emailVerified         Boolean        @default(false)
   image                 String?
   name                  String
-  createdAt             DateTime      @default(now())
-  updatedAt             DateTime      @updatedAt
+  createdAt             DateTime       @default(now())
+  updatedAt             DateTime       @updatedAt
   memberships           Membership[]
   items                 Item[]
-  reservations          Reservation[] @relation("Borrower")
-  preemptedReservations Reservation[] @relation("PreemptedBy")
+  reservations          Reservation[]  @relation("Borrower")
+  preemptedReservations Reservation[]  @relation("PreemptedBy")
   sessions              Session[]
   accounts              Account[]
+  notifications         Notification[]
 
   @@map("user")
 }
@@ -83,20 +84,21 @@ model ItemVisibility {
 }
 
 model Reservation {
-  id              Int       @id @default(autoincrement())
+  id              Int            @id @default(autoincrement())
   itemId          Int
-  item            Item      @relation(fields: [itemId], references: [id])
+  item            Item           @relation(fields: [itemId], references: [id])
   borrowerId      String
-  borrower        User      @relation("Borrower", fields: [borrowerId], references: [id])
-  startDate       DateTime  @db.Timestamptz(3)
-  endDate         DateTime  @db.Timestamptz(3)
-  status          Status    @default(PENDING)
+  borrower        User           @relation("Borrower", fields: [borrowerId], references: [id])
+  startDate       DateTime       @db.Timestamptz(3)
+  endDate         DateTime       @db.Timestamptz(3)
+  status          Status         @default(PENDING)
   preemptedAt     DateTime?
   preemptedById   String?
-  preemptedBy     User?     @relation("PreemptedBy", fields: [preemptedById], references: [id], onDelete: SetNull)
+  preemptedBy     User?          @relation("PreemptedBy", fields: [preemptedById], references: [id], onDelete: SetNull)
   preemptedReason String?
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  notifications   Notification[]
 }
 
 model Session {
@@ -146,6 +148,24 @@ model Verification {
   @@map("verification")
 }
 
+model Notification {
+  id             Int                @id @default(autoincrement())
+  recipientId    String
+  recipient      User               @relation(fields: [recipientId], references: [id], onDelete: Cascade)
+  reservationId  Int?
+  reservation    Reservation?       @relation(fields: [reservationId], references: [id], onDelete: SetNull)
+  type           NotificationType
+  payload        Json
+  status         NotificationStatus @default(PENDING)
+  idempotencyKey String             @unique
+  attempts       Int                @default(0)
+  lastError      String?
+  createdAt      DateTime           @default(now())
+  sentAt         DateTime?
+
+  @@index([status, createdAt])
+}
+
 enum Role {
   MEMBER
   ADMIN
@@ -159,4 +179,17 @@ enum Status {
   CANCELLED
   DENIED
   PREEMPTED
+}
+
+enum NotificationType {
+  RESERVATION_PREEMPTED
+  PICKUP_REMINDER
+  OVERDUE_NUDGE
+  RESERVATION_EXPIRED
+}
+
+enum NotificationStatus {
+  PENDING
+  SENT
+  FAILED
 }

@@ -28,3 +28,22 @@ export const Status = {
 } as const
 
 export type Status = (typeof Status)[keyof typeof Status]
+
+
+export const NotificationType = {
+  RESERVATION_PREEMPTED: 'RESERVATION_PREEMPTED',
+  PICKUP_REMINDER: 'PICKUP_REMINDER',
+  OVERDUE_NUDGE: 'OVERDUE_NUDGE',
+  RESERVATION_EXPIRED: 'RESERVATION_EXPIRED'
+} as const
+
+export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]
+
+
+export const NotificationStatus = {
+  PENDING: 'PENDING',
+  SENT: 'SENT',
+  FAILED: 'FAILED'
+} as const
+
+export type NotificationStatus = (typeof NotificationStatus)[keyof typeof NotificationStatus]
