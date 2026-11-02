@@ -162,6 +162,7 @@ model Notification {
   lastError      String?
   createdAt      DateTime           @default(now())
   sentAt         DateTime?
+  readAt         DateTime?
 
   @@index([status, createdAt])
 }

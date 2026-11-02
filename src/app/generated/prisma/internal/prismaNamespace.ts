@@ -1342,7 +1342,8 @@ export const NotificationScalarFieldEnum = {
   attempts: 'attempts',
   lastError: 'lastError',
   createdAt: 'createdAt',
-  sentAt: 'sentAt'
+  sentAt: 'sentAt',
+  readAt: 'readAt'
 } as const
 
 export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
