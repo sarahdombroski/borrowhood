@@ -1,5 +1,6 @@
 import "server-only";
 import { prisma } from "../prisma";
+import { informOfPreempt, requestPreempt } from "../notify";
 
 export async function getReservationsQuery(userId: string) {
   return await prisma.reservation.findMany({
@@ -121,7 +122,7 @@ export async function preemptItemQuery(ownerId: string, reservationId: number, p
   const diffInMs = Math.abs(reservation.startDate.getTime() - now.getTime());
   const fortyEightHoursInMs = 48 * 60 * 60 * 1000;
   if (diffInMs < fortyEightHoursInMs) {
-    // send notificaiton request for early pickup
+    await requestPreempt(ownerId, reservationId);
     return;
   }
 
@@ -144,7 +145,7 @@ export async function preemptItemQuery(ownerId: string, reservationId: number, p
       status: "APPROVED"
     }
   });
-  
-  // enqueue a notification row for the borrower
+
+  await informOfPreempt(ownerId, reservationId);
   return newReservation;
 }

@@ -3,6 +3,7 @@ import { requireUser } from "@/lib/session";
 import { getReservationById, getUserById } from "../actions";
 import { getItemById } from "../../items/actions";
 import CancelReservationButton from "../components/CancelReservationButton";
+import PreemptReservationButton from "../components/PreemptReservationButton";
 
 export default async function ReservationPage({ params }: { params: Promise<{ id: string }> }) {
   const user = await requireUser();
@@ -40,7 +41,14 @@ export default async function ReservationPage({ params }: { params: Promise<{ id
           <p>Reservation created at: {reservation.createdAt.toLocaleDateString()}</p>
         </div>
       </div>
-      <CancelReservationButton reservationId={reservation.id} itemName={item.name} />
+      <div className="flex justify-center">
+        {user.id == reservation.borrowerId && (
+          <CancelReservationButton reservationId={reservation.id} itemName={item.name} />
+        )}
+        {user.id == item.ownerId && (
+          <PreemptReservationButton reservationId={reservation.id} itemName={item.name} />
+        )}
+      </div>
     </>
   );
 }

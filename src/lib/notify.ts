@@ -81,3 +81,74 @@ export async function deleteNotification(userId: string, notificationId: number)
     where: { id: notificationId, recipientId: userId }
   });
 }
+
+export async function requestPreempt(
+  ownerId: string,
+  reservationId: number,
+  message?: string
+) {
+  await prisma.$transaction(async (tx) => {
+    const reservation = await tx.reservation.findUniqueOrThrow({
+      where: { id: reservationId },
+      include: { item: true },
+    });
+
+    if (reservation.item.ownerId !== ownerId) {
+      throw new Error("Not the item owner");
+    }
+
+    await createNotifications(tx, [
+      {
+        recipientId: reservation.borrowerId,
+        reservationId: reservation.id,
+        type: "EARLY_RETURN_REQUESTED",
+        payload: {
+          itemName: reservation.item.name,
+          originalEnd: reservation.endDate.toISOString(),
+          message: message ?? null,
+        },
+        idempotencyKey: `preempt-request:${reservation.id}`,
+      },
+    ]);
+  });
+  await dispatchPending();
+}
+
+export async function informOfPreempt(
+  ownerId: string,
+  reservationId: number,
+  reason?: string
+) {
+  await prisma.$transaction(async (tx) => {
+    const reservation = await tx.reservation.findUniqueOrThrow({
+      where: { id: reservationId },
+      include: { item: true },
+    });
+
+    const owner = await tx.user.findFirst({
+      where: { id: ownerId }
+    });
+    if (!owner) throw new Error("Could not find user record.")
+
+    if (reservation.item.ownerId !== ownerId) {
+      throw new Error("Not the item owner");
+    }
+
+    await createNotifications(tx, [
+      {
+        recipientId: reservation.borrowerId,
+        reservationId: reservation.id,
+        type: "RESERVATION_PREEMPTED",
+        payload: {
+          itemName: reservation.item.name,
+          originalStart: reservation.startDate.toISOString(),
+          originalEnd: reservation.endDate.toISOString(),
+          preemptedBy: owner.name,
+          reason: reason ?? null,
+        },
+        idempotencyKey: `preempted:${reservation.id}`,
+      },
+    ]);
+  });
+  await dispatchPending();
+}

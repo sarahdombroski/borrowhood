@@ -187,6 +187,7 @@ enum NotificationType {
   PICKUP_REMINDER
   OVERDUE_NUDGE
   RESERVATION_EXPIRED
+  EARLY_RETURN_REQUESTED
 }
 
 enum NotificationStatus {
