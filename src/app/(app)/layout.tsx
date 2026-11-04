@@ -2,6 +2,7 @@ import { getCurrentUser } from "@/lib/session";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import SignOutButton from "../components/SignOutButton";
+import { NotificationInbox } from "../components/NotificationInbox";
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
     const user = await getCurrentUser();
@@ -20,7 +21,10 @@ export default async function AppLayout({ children }: { children: React.ReactNod
                 <Link href="/reservations">Reservations</Link>
                 <SignOutButton />
             </nav>
-            <main>{children}</main>
+            <main>
+                {children}
+                <NotificationInbox />
+            </main>
         </div>
     )
 }
