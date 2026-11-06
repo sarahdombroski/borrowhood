@@ -20,7 +20,8 @@ export async function getOthersReservationsQuery(userId: string) {
       itemId: {
         in: itemIds
       }
-    }
+    },
+    include: { borrower: true }
   });
 }
 
@@ -34,6 +35,9 @@ export async function getReservationByIdQuery(reservationId: number) {
   return await prisma.reservation.findFirst({
     where: {
       id: reservationId
+    },
+    include: {
+      borrower: true
     }
   })
 }
@@ -84,8 +88,8 @@ export async function declineRequestQuery(requestId: number, ownerId: string) {
   await informOfDenied(ownerId, reservation.id)
 
   return await prisma.reservation.update({
-    where: { id: requestId, status: "DENIED" },
-    data: { status: "APPROVED" }
+    where: { id: requestId, status: "PENDING" },
+    data: { status: "DENIED" }
   });
 }
 

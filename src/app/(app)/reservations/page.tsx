@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { getOthersReservations, getReservations } from "./actions";
 import { getItemById } from "../items/actions";
+import ApproveReservationButton from "./components/ApproveReservationButton";
+import DenyReservationButton from "./components/DenyReservationButton";
 
 export default async function Reservations() {
   const reservations = await getReservations();
@@ -13,13 +15,15 @@ export default async function Reservations() {
       };
     }),
   );
+  
   const othersReservations = await getOthersReservations();
   const othersReservedItems = await Promise.all(
     othersReservations.map(async (r) => {
       const item = await getItemById(r.itemId);
       return {
         reservation: r,
-        item
+        borrower: r.borrower,
+        item: item
       };
     }),
   );
@@ -35,6 +39,12 @@ export default async function Reservations() {
                 <Link href={`/reservations/${r.reservation.id}`}>
                   {r.item?.name} - {r.reservation.status}
                 </Link>
+                {r.reservation.status === "PENDING" && (
+                  <div>
+                    <ApproveReservationButton reservation={r.reservation} borrowerName={r.borrower.name} itemName={r.item?.name} />
+                    <DenyReservationButton reservation={r.reservation} borrowerName={r.borrower.name} itemName={r.item?.name} />
+                  </div>
+                )}
               </li>
           ))}
         </ul>

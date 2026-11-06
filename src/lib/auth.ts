@@ -7,4 +7,5 @@ export const auth = betterAuth({
   database: prismaAdapter(prisma, { provider: "postgresql" }),
   emailAndPassword: { enabled: true },
   plugins: [nextCookies()],
+  trustedOrigins: ["http://localhost:3000", "http://192.168.12.108:3000",],
 });
