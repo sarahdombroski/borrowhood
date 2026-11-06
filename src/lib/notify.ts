@@ -92,6 +92,10 @@ export async function requestPreempt(
       where: { id: reservationId },
       include: { item: true },
     });
+    const owner = await prisma.user.findFirst({
+      where: { id: ownerId }
+    });
+    if (!owner) throw new Error("Cannot find the owner.")
 
     if (reservation.item.ownerId !== ownerId) {
       throw new Error("Not the item owner");
@@ -104,7 +108,7 @@ export async function requestPreempt(
         type: "EARLY_RETURN_REQUESTED",
         payload: {
           itemName: reservation.item.name,
-          originalEnd: reservation.endDate.toISOString(),
+          owner: owner.name,
           message: message ?? null,
         },
         idempotencyKey: `preempt-request:${reservation.id}`,

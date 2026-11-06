@@ -34,11 +34,15 @@ export function NotificationInbox() {
           if (notification.type === "EARLY_RETURN_REQUESTED") {
             const payload = notification.payload as NotificationPayloads["EARLY_RETURN_REQUESTED"];
             return (
-              <li key={notification.id}>
-                <p>{notification.createdAt.toLocaleDateString('en-US')}</p>
-                <p>{notification.type}</p>
-                <p>{payload.itemName}</p>
-                <p>{payload.message}</p>
+              <li key={notification.id} className="border text-sm flex">
+                <div>
+                  <p>{notification.createdAt.toLocaleDateString('en-US')}</p>
+                  <p>{payload.owner} has requested an early return {payload.itemName}. If possible, please return the item as soon as you can.</p>
+                  <p>{payload.message}</p>
+                </div>
+                {!notification.readAt && (
+                  <BellDot size={25} className="min-w-[25px]" />
+                )}
               </li>
             )
           }
@@ -52,37 +56,41 @@ export function NotificationInbox() {
                 <p>{payload.reason}</p>
                 </div>
                 {!notification.readAt && (
-                  <BellDot />
+                  <BellDot size={25} className="min-w-[25px]" />
                 )}
               </li>
             )
           }
           if (notification.type === "RESERVATION_PENDING") {
             const payload = notification.payload as NotificationPayloads["RESERVATION_PENDING"];
+            const start = new Date(payload.start);
+            const end = new Date(payload.end);
             return (
               <li key={notification.id} className="border text-sm flex">
                 <div>
                 <p>{notification.createdAt.toLocaleDateString('en-US')}</p>
-                <p>{payload.requester} has requested to reserve {payload.itemName} from {payload.start} to {payload.end} and are awaiting your approval.</p>
+                <p>{payload.requester} has requested to reserve {payload.itemName} from {start.toLocaleDateString()} to {end.toLocaleDateString()} and are awaiting your approval.</p>
                 <p>{payload.message}</p>
                 </div>
                 {!notification.readAt && (
-                  <BellDot />
+                  <BellDot size={25} className="min-w-[25px]" />
                 )}
               </li>
             )
           }
           if (notification.type === "RESERVATION_APPROVED") {
             const payload = notification.payload as NotificationPayloads["RESERVATION_APPROVED"];
+            const start = new Date(payload.start)
+            const end = new Date(payload.end)
             return (
               <li key={notification.id} className="border text-sm flex">
                 <div>
                 <p>{notification.createdAt.toLocaleDateString('en-US')}</p>
-                <p>Your reservation on {payload.itemName} from {payload.start} to {payload.end} has been approved. Don't forget to pick it up!</p>
+                <p>Your reservation on {payload.itemName} from {start.toLocaleDateString()} to {end.toLocaleDateString()} has been approved. Don't forget to pick it up!</p>
                 <p>{payload.message}</p>
                 </div>
                 {!notification.readAt && (
-                  <BellDot />
+                  <BellDot size={25} className="min-w-[25px]" />
                 )}
               </li>
             )
@@ -97,22 +105,24 @@ export function NotificationInbox() {
                 <p>{payload.reason}</p>
                 </div>
                 {!notification.readAt && (
-                  <BellDot />
+                  <BellDot size={25} className="min-w-[25px]" />
                 )}
               </li>
             )
           }
           if (notification.type === "RESERVATION_CANCELLED") {
             const payload = notification.payload as NotificationPayloads["RESERVATION_CANCELLED"];
+            const start = new Date(payload.originalStart)
+            const end = new Date(payload.originalEnd)
             return (
               <li key={notification.id} className="border text-sm flex">
                 <div>
                 <p>{notification.createdAt.toLocaleDateString('en-US')}</p>
-                <p>{payload.originalBorrower}'s reservation on {payload.itemName} from {payload.originalStart} to {payload.originalEnd} has been cancelled.</p>
+                <p>{payload.originalBorrower}'s reservation on {payload.itemName} from {start.toLocaleDateString()} to {end.toLocaleDateString()} has been cancelled.</p>
                 <p>{payload.reason}</p>
                 </div>
                 {!notification.readAt && (
-                  <BellDot />
+                  <BellDot size={25} className="min-w-[25px]" />
                 )}
               </li>
             )

@@ -1,7 +1,7 @@
 export type NotificationPayloads = {
   EARLY_RETURN_REQUESTED: {
     itemName: string;
-    originalEnd: string;
+    owner: string;
     message: string | null;
   };
 
