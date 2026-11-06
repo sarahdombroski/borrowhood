@@ -1,6 +1,6 @@
 import "server-only";
 import { prisma } from "../prisma";
-import { informOfPreempt, requestPreempt } from "../notify";
+import { informOfApproved, informOfCancelled, informOfDenied, informOfPreempt, requestPreempt } from "../notify";
 
 export async function getReservationsQuery(userId: string) {
   return await prisma.reservation.findMany({
@@ -39,11 +39,18 @@ export async function getReservationByIdQuery(reservationId: number) {
 }
 
 export async function cancelReservationQuery(userId: string, reservationId: number) {
+  const reservation = await prisma.reservation.findFirst({
+    where: { id: reservationId },
+    include: { item: true }
+  });
+  if (!reservation) throw new Error('No reservation found');
   await prisma.$transaction(async (tx) => {
     await tx.reservation.delete({
       where: { id: reservationId, borrowerId: userId },
     });
   });
+
+  await informOfCancelled(reservation.item.ownerId, reservationId);
 }
 
 export async function approveRequestQuery(requestId: number, ownerId: string) {
@@ -56,6 +63,8 @@ export async function approveRequestQuery(requestId: number, ownerId: string) {
   });
   if (!item || item.ownerId !== ownerId) throw new Error("There was a problem grabbing the item.");
   
+  await informOfApproved(ownerId, reservation.id);
+
   return await prisma.reservation.update({
     where: { id: requestId, status: "PENDING" },
     data: { status: "APPROVED" }
@@ -72,6 +81,8 @@ export async function declineRequestQuery(requestId: number, ownerId: string) {
   });
   if (!item || item.ownerId !== ownerId) throw new Error("There was a problem grabbing the item.");
   
+  await informOfDenied(ownerId, reservation.id)
+
   return await prisma.reservation.update({
     where: { id: requestId, status: "DENIED" },
     data: { status: "APPROVED" }

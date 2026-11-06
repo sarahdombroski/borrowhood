@@ -152,3 +152,155 @@ export async function informOfPreempt(
   });
   await dispatchPending();
 }
+
+export async function informOnwerOfNewReservation(
+  ownerId: string,
+  reservationId: number,
+  message?: string
+) {
+  await prisma.$transaction(async (tx) => {
+    const reservation = await tx.reservation.findUniqueOrThrow({
+      where: { id: reservationId },
+      include: { item: true, borrower: true },
+    });
+
+    const owner = await tx.user.findFirst({
+      where: { id: ownerId }
+    });
+    if (!owner) throw new Error("Could not find user record.")
+
+    if (reservation.item.ownerId !== ownerId) {
+      throw new Error("Not the item owner");
+    }
+
+    await createNotifications(tx, [
+      {
+        recipientId: ownerId,
+        reservationId: reservation.id,
+        type: "RESERVATION_PENDING",
+        payload: {
+          itemName: reservation.item.name,
+          start: reservation.startDate.toISOString(),
+          end: reservation.endDate.toISOString(),
+          requester: reservation.borrower.name,
+          message: message ?? null
+        },
+        idempotencyKey: `requested:${reservation.id}`,
+      },
+    ]);
+  });
+  await dispatchPending();
+}
+
+export async function informOfApproved(
+  ownerId: string,
+  reservationId: number,
+  message?: string
+) {
+  await prisma.$transaction(async (tx) => {
+    const reservation = await tx.reservation.findUniqueOrThrow({
+      where: { id: reservationId },
+      include: { item: true },
+    });
+
+    const owner = await tx.user.findFirst({
+      where: { id: ownerId }
+    });
+    if (!owner) throw new Error("Could not find user record.")
+
+    if (reservation.item.ownerId !== ownerId) {
+      throw new Error("Not the item owner");
+    }
+
+    await createNotifications(tx, [
+      {
+        recipientId: reservation.borrowerId,
+        reservationId: reservation.id,
+        type: "RESERVATION_APPROVED",
+        payload: {
+          itemName: reservation.item.name,
+          start: reservation.startDate.toISOString(),
+          end: reservation.endDate.toISOString(),
+          message: message ?? null
+        },
+        idempotencyKey: `approved:${reservation.id}`,
+      },
+    ]);
+  });
+  await dispatchPending();
+}
+
+export async function informOfDenied(
+  ownerId: string,
+  reservationId: number,
+  reason?: string
+) {
+  await prisma.$transaction(async (tx) => {
+    const reservation = await tx.reservation.findUniqueOrThrow({
+      where: { id: reservationId },
+      include: { item: true },
+    });
+
+    const owner = await tx.user.findFirst({
+      where: { id: ownerId }
+    });
+    if (!owner) throw new Error("Could not find user record.")
+
+    if (reservation.item.ownerId !== ownerId) {
+      throw new Error("Not the item owner");
+    }
+
+    await createNotifications(tx, [
+      {
+        recipientId: reservation.borrowerId,
+        reservationId: reservation.id,
+        type: "RESERVATION_DENIED",
+        payload: {
+          itemName: reservation.item.name,
+          reason: reason ?? null
+        },
+        idempotencyKey: `denied:${reservation.id}`,
+      },
+    ]);
+  });
+  await dispatchPending();
+}
+
+export async function informOfCancelled(
+  ownerId: string,
+  reservationId: number,
+  reason?: string
+) {
+  await prisma.$transaction(async (tx) => {
+    const reservation = await tx.reservation.findUniqueOrThrow({
+      where: { id: reservationId },
+      include: { item: true, borrower: true },
+    });
+
+    const owner = await tx.user.findFirst({
+      where: { id: ownerId }
+    });
+    if (!owner) throw new Error("Could not find user record.")
+
+    if (reservation.item.ownerId !== ownerId) {
+      throw new Error("Not the item owner");
+    }
+
+    await createNotifications(tx, [
+      {
+        recipientId: ownerId,
+        reservationId: reservation.id,
+        type: "RESERVATION_CANCELLED",
+        payload: {
+          itemName: reservation.item.name,
+          originalStart: reservation.startDate,
+          originalEnd: reservation.endDate,
+          originalBorrower: reservation.borrower.name,
+          reason: reason ?? null
+        },
+        idempotencyKey: `cancelled:${reservation.id}`,
+      },
+    ]);
+  });
+  await dispatchPending();
+}

@@ -3,7 +3,7 @@ import { ForbiddenError, NotFoundError } from "../errors";
 import { prisma, visibleToUser } from "../prisma";
 import { CreateItemInput, ReserveInput, ReserveResult, UpdateItemInput } from "../validation/items";
 import { z } from "zod";
-import { getGroupById } from "@/app/(app)/groups/actions";
+import { informOnwerOfNewReservation } from "../notify";
 
 export async function getItemByIdQuery(userId: string, itemId: number) {
   return prisma.item.findFirst({
@@ -133,6 +133,7 @@ export async function reserveItemQuery(borrowerId: string, { itemId, startDate, 
     const reservation = await prisma.reservation.create({
       data: { itemId, borrowerId, startDate, endDate },
     });
+    await informOnwerOfNewReservation(item.ownerId, reservation.id);
     return { ok: true, reservation }
   } catch (e) {
     if (e instanceof Error && e.message.includes("23P01")) {
