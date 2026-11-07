@@ -1,7 +1,7 @@
 "use client";
-import { Bell, BellDot } from "lucide-react";
+import { Bell, BellDot, Trash } from "lucide-react";
 import { useEffect, useState } from "react";
-import { getNotfications, markAsReadAction } from "../actions";
+import { deleteNotificationAction, getNotfications, markAsReadAction } from "../actions";
 import { Notification } from "../generated/prisma/client";
 import { NotificationPayloads } from "@/lib/validation/notifications";
 
@@ -43,6 +43,17 @@ export function NotificationInbox() {
     }
   }
 
+  async function handleDelete(notificationId: number) {
+    try {
+      await deleteNotificationAction(notificationId);
+      setNotifications((prev) => 
+        prev.filter((notification) => notification.id !== notificationId)
+      );
+    } catch (error) {
+      console.error("Failed to delete notification:", error);
+    }
+  }
+
   return (
    <div className="fixed bottom-6 right-6 z-50 max-h-[75vh] max-w-[300px] rounded-lg shadow-xl">
     {!isOpen && (
@@ -63,9 +74,12 @@ export function NotificationInbox() {
                   <p>{payload.owner} has requested an early return {payload.itemName}. If possible, please return the item as soon as you can.</p>
                   <p>{payload.message}</p>
                 </div>
-                {!notification.readAt && (
-                  <BellDot size={25} className="min-w-[25px]" />
-                )}
+                <div>
+                  {!notification.readAt && (
+                    <BellDot size={25} className="min-w-[25px]" />
+                  )}
+                  <button onClick={() => handleDelete(notification.id)}><Trash size={25} className="min-w-[25px]" /></button>
+                </div>
               </li>
             )
           }
@@ -78,9 +92,12 @@ export function NotificationInbox() {
                 <p>Reservation on {payload.itemName} has been preempted by {payload.preemptedBy}.</p>
                 <p>{payload.reason}</p>
                 </div>
-                {!notification.readAt && (
-                  <BellDot size={25} className="min-w-[25px]" />
-                )}
+                <div>
+                  {!notification.readAt && (
+                    <BellDot size={25} className="min-w-[25px]" />
+                  )}
+                  <button onClick={() => handleDelete(notification.id)}><Trash size={25} className="min-w-[25px]" /></button>
+                </div>
               </li>
             )
           }
@@ -95,9 +112,12 @@ export function NotificationInbox() {
                 <p>{payload.requester} has requested to reserve {payload.itemName} from {start.toLocaleDateString()} to {end.toLocaleDateString()} and are awaiting your approval.</p>
                 <p>{payload.message}</p>
                 </div>
-                {!notification.readAt && (
-                  <BellDot size={25} className="min-w-[25px]" />
-                )}
+                <div>
+                  {!notification.readAt && (
+                    <BellDot size={25} className="min-w-[25px]" />
+                  )}
+                  <button onClick={() => handleDelete(notification.id)}><Trash size={25} className="min-w-[25px]" /></button>
+                </div>
               </li>
             )
           }
@@ -112,9 +132,12 @@ export function NotificationInbox() {
                 <p>Your reservation on {payload.itemName} from {start.toLocaleDateString()} to {end.toLocaleDateString()} has been approved. Don't forget to pick it up!</p>
                 <p>{payload.message}</p>
                 </div>
-                {!notification.readAt && (
-                  <BellDot size={25} className="min-w-[25px]" />
-                )}
+                <div>
+                  {!notification.readAt && (
+                    <BellDot size={25} className="min-w-[25px]" />
+                  )}
+                  <button onClick={() => handleDelete(notification.id)}><Trash size={25} className="min-w-[25px]" /></button>
+                </div>
               </li>
             )
           }
@@ -127,9 +150,12 @@ export function NotificationInbox() {
                 <p>We're sorry, but your reservation on {payload.itemName} has been denied.</p>
                 <p>{payload.reason}</p>
                 </div>
-                {!notification.readAt && (
-                  <BellDot size={25} className="min-w-[25px]" />
-                )}
+                <div>
+                  {!notification.readAt && (
+                    <BellDot size={25} className="min-w-[25px]" />
+                  )}
+                  <button onClick={() => handleDelete(notification.id)}><Trash size={25} className="min-w-[25px]" /></button>
+                </div>
               </li>
             )
           }
@@ -144,9 +170,12 @@ export function NotificationInbox() {
                 <p>{payload.originalBorrower}'s reservation on {payload.itemName} from {start.toLocaleDateString()} to {end.toLocaleDateString()} has been cancelled.</p>
                 <p>{payload.reason}</p>
                 </div>
-                {!notification.readAt && (
-                  <BellDot size={25} className="min-w-[25px]" />
-                )}
+                <div>
+                  {!notification.readAt && (
+                    <BellDot size={25} className="min-w-[25px]" />
+                  )}
+                  <button onClick={() => handleDelete(notification.id)}><Trash size={25} className="min-w-[25px]" /></button>
+                </div>
               </li>
             )
           }

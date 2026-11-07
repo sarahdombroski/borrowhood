@@ -1,8 +1,7 @@
 "use server";
 
-import { getNotificaitonsForUser, getUnreadCount } from "@/lib/notify";
+import { deleteNotification, getNotificaitonsForUser, getUnreadCount } from "@/lib/notify";
 import { getCurrentUser } from "@/lib/session";
-import { Notification } from "./generated/prisma/client";
 import { prisma } from "@/lib/prisma";
 
 export async function getNotfications() {
@@ -30,4 +29,10 @@ export async function markAsReadAction(notificationIds: number[]) {
       readAt: new Date()
     }
   });
+}
+
+export async function deleteNotificationAction(notificationId: number) {
+  const user = await getCurrentUser();
+  if (!user) throw new Error("Unauthorized");
+  await deleteNotification(user.id, notificationId);
 }
