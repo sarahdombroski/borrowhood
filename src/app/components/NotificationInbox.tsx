@@ -1,24 +1,47 @@
 "use client";
 import { Bell, BellDot } from "lucide-react";
 import { useEffect, useState } from "react";
-import { getNotfications, getUnreadAction } from "../actions";
+import { getNotfications, markAsReadAction } from "../actions";
 import { Notification } from "../generated/prisma/client";
 import { NotificationPayloads } from "@/lib/validation/notifications";
 
 export function NotificationInbox() {
   const [isOpen, setIsOpen] = useState(false);
   const [notifications, setNotifications] = useState<Notification[]>([]);
-  const [unreadCount, setUnreadCount] = useState(0);
   
+  const unreadCount = notifications.filter(
+    (notification) => !notification.readAt
+  ).length;
+
   useEffect(() => {
     async function loadNotifications() {
       const data = await getNotfications();
       setNotifications(data);
-      const unread = await getUnreadAction();
-      setUnreadCount(unread);
     }
     loadNotifications();
   }, []);
+
+  async function closeInbox() {
+    setIsOpen(false);
+    const unreadIds = notifications
+      .filter((notification) => !notification.readAt)
+      .map((notification) => notification.id);
+    if (unreadIds.length === 0) return;
+
+    try {
+      await markAsReadAction(unreadIds);
+      const now = new Date();
+      setNotifications((prev) =>
+        prev.map((notification) => 
+          unreadIds.includes(notification.id)
+            ? {...notification, readAt: now }
+            : notification
+        )
+      );
+    } catch (error) {
+      console.error("Failed to mark notifications as read:", error);
+    }
+  }
 
   return (
    <div className="fixed bottom-6 right-6 z-50 max-h-[75vh] max-w-[300px] rounded-lg shadow-xl">
@@ -128,7 +151,7 @@ export function NotificationInbox() {
             )
           }
         })}
-        <li className="text-right pr-2"><button onClick={() => setIsOpen(false)}>Close</button></li>
+        <li className="text-right pr-2"><button onClick={closeInbox}>Close</button></li>
       </ul>
     )}
    </div> 

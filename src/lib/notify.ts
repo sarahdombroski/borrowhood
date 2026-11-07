@@ -60,20 +60,13 @@ export async function getNotificaitonsForUser(userId: string) {
 }
 
 export async function getUnreadCount(userId: string) {
-  return await prisma.notification.count({
+  const notifs = await prisma.notification.findMany({
     where: { 
       recipientId: userId,
       readAt: null
     }
   });
-}
-
-export async function markAsRead(userId: string, notificationId: number) {
-  const now = new Date();
-  return await prisma.notification.update({
-    where: { id: notificationId, recipientId: userId },
-    data: { readAt: now }
-  });
+  return notifs;
 }
 
 export async function deleteNotification(userId: string, notificationId: number) {
