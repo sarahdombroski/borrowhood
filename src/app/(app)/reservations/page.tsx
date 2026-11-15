@@ -47,16 +47,22 @@ export default async function Reservations() {
                     <DenyReservationButton reservation={r.reservation} borrowerName={r.borrower.name} itemName={r.item?.name} />
                   </div>
                 )}
+                <div>
+                  <p>{r.reservation.startDate.toLocaleDateString()} - {r.reservation.endDate.toLocaleDateString()}</p>
+                </div>
               </li>
           ))}
         </ul>
         <ul className="border rounded p-2">
           <h2 className="text-center">My reservations:</h2>
           {reservedItems.map((r) => (
-              <li key={r.reservation.id}>
+              <li key={r.reservation.id} className="flex justify-between items-center">
                 <Link href={`/reservations/${r.reservation.id}`}>
                   {r.item?.name} - {r.reservation.status}
                 </Link>
+                <div>
+                  <p>{r.reservation.startDate.toLocaleDateString()} - {r.reservation.endDate.toLocaleDateString()}</p>
+                </div>
               </li>
           ))}
         </ul>

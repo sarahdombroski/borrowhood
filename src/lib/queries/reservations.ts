@@ -4,7 +4,8 @@ import { informOfApproved, informOfCancelled, informOfDenied, informOfPreempt, r
 
 export async function getReservationsQuery(userId: string) {
   return await prisma.reservation.findMany({
-    where: { borrowerId: userId }
+    where: { borrowerId: userId },
+    orderBy: { startDate: "asc" }
   });
 }
 
@@ -21,7 +22,8 @@ export async function getOthersReservationsQuery(userId: string) {
         in: itemIds
       }
     },
-    include: { borrower: true }
+    include: { borrower: true },
+    orderBy: { startDate: "asc"}
   });
 }
 
