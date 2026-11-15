@@ -180,6 +180,7 @@ enum Status {
   CANCELLED
   DENIED
   PREEMPTED
+  EXPIRED
 }
 
 enum NotificationType {
