@@ -25,7 +25,8 @@ export const Status = {
   CANCELLED: 'CANCELLED',
   DENIED: 'DENIED',
   PREEMPTED: 'PREEMPTED',
-  EXPIRED: 'EXPIRED'
+  EXPIRED: 'EXPIRED',
+  OWNER_BLACKED_OUT: 'OWNER_BLACKED_OUT'
 } as const
 
 export type Status = (typeof Status)[keyof typeof Status]

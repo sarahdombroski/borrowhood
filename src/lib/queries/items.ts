@@ -143,6 +143,35 @@ export async function reserveItemQuery(borrowerId: string, { itemId, startDate, 
   }
 }
 
+export async function blackOutItemQuery(ownerId: string, { itemId, startDate, endDate }: z.infer<typeof ReserveInput>): Promise<ReserveResult> {
+  const item = await prisma.item.findFirst({
+    where: {
+      id: itemId,
+      ownerId: ownerId
+    }
+  });
+  if (!item) return { ok: false, error: "NOT_FOUND" }
+  if (item.ownerId !== ownerId) return { ok: false, error: "NOT_OWNER" }
+
+  try {
+    const reservation = await prisma.reservation.create({
+      data: { 
+        itemId, 
+        borrowerId: ownerId, 
+        startDate, 
+        endDate,
+        status: "OWNER_BLACKED_OUT" 
+      },
+    });
+    return { ok: true, reservation }
+  } catch (e) {
+    if (e instanceof Error && e.message.includes("23P01")) {
+      return { ok: false, error: "ALREADY_BOOKED" };
+    } 
+    throw e;
+  }
+}
+
 export async function getReservedDaysQuery(itemId: number, userId: string) {
   const item = await getItemByIdQuery(userId, itemId);
   if (!item) return [];

@@ -181,6 +181,7 @@ enum Status {
   DENIED
   PREEMPTED
   EXPIRED
+  OWNER_BLACKED_OUT
 }
 
 enum NotificationType {

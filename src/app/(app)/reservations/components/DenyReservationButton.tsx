@@ -3,6 +3,7 @@
 import { useRef, useTransition } from "react";
 import { declineRequest } from "../actions";
 import { Reservation } from "@/app/generated/prisma/client";
+import { X } from "lucide-react";
 
 export default function DenyReservationButton({ reservation, borrowerName, itemName }: { reservation: Reservation, borrowerName: string, itemName?: string }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -18,8 +19,8 @@ export default function DenyReservationButton({ reservation, borrowerName, itemN
     <>
       <button 
         onClick={() => dialogRef.current?.showModal()}
-        className="rounded-lg border px-4 py-2"
-      >Deny</button>
+        className="rounded-lg border px-3 py-1"
+      ><X /></button>
 
       <dialog 
         ref={dialogRef}

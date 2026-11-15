@@ -35,10 +35,12 @@ export default async function Reservations() {
         <ul className="border rounded p-2 min-h-[50vh]">
           <h2 className="text-center">Reservations on my Items:</h2>
           {othersReservedItems.map((r) => (
-              <li key={r.reservation.id}>
-                <Link href={`/reservations/${r.reservation.id}`}>
-                  {r.item?.name} - {r.reservation.status}
-                </Link>
+              <li key={r.reservation.id} className="flex justify-between items-center">
+                {r.reservation.status !== "OWNER_BLACKED_OUT" && (
+                  <Link href={`/reservations/${r.reservation.id}`}>
+                    {r.item?.name} - {r.reservation.status}
+                  </Link>
+                )}
                 {r.reservation.status === "PENDING" && (
                   <div>
                     <ApproveReservationButton reservation={r.reservation} borrowerName={r.borrower.name} itemName={r.item?.name} />

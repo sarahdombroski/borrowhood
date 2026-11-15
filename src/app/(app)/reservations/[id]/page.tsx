@@ -56,7 +56,9 @@ export default async function ReservationPage({ params }: { params: Promise<{ id
             {reservation.status == "PICKED_UP" && (
               <ReturnedButton reservation={reservation} itemName={item.name} borrowerName={borrower.name} />
             )}
-            <PreemptReservationButton reservationId={reservation.id} itemName={item.name} />
+            {((reservation.status == "APPROVED") || (reservation.status == "PICKED_UP")) && (
+              <PreemptReservationButton reservationId={reservation.id} itemName={item.name} />
+            )}
           </div>
         )}
       </div>

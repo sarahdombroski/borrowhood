@@ -35,7 +35,7 @@ export function ReservePicker({ itemId, booked, isOwner }: { itemId: number; boo
         itemId,
         startDate: start.toISOString(),
         endDate: end.toISOString(),
-      });
+      }, isOwner);
       if (result.ok) {
         setError(null);
         setRange(undefined);
@@ -43,7 +43,6 @@ export function ReservePicker({ itemId, booked, isOwner }: { itemId: number; boo
       }
       setError(result.ok ? null : messages[result.error]);
     });
-
   }
 
   return (
@@ -57,16 +56,19 @@ export function ReservePicker({ itemId, booked, isOwner }: { itemId: number; boo
         modifiers={{ booked: bookedMatchers }}
         modifiersClassNames={{ booked: "line-through opacity-50" }}
       />
+      {range?.from && range?.to && (
+        <p>{range.from.toLocaleDateString()} to {range.to.toLocaleDateString()}</p>
+      )}
+      {error && <p role="alert">{error}</p>}
       {isOwner == false && (
-        <>
-        {range?.from && range?.to && (
-          <p>{range.from.toLocaleDateString()} to {range.to.toLocaleDateString()}</p>
-        )}
-        {error && <p role="alert">{error}</p>}
         <button onClick={submit} disabled={isPending || !range?.from || !range?.to}>
           {isPending ? "Reserving..." : "Reserve"}
         </button>
-        </>
+      )}
+      {isOwner && (
+        <button onClick={submit} disabled={isPending || !range?.from || !range?.to}>
+          {isPending ? "Reserving..." : "Black Out"}
+        </button>
       )}
     </div>
   );
@@ -78,4 +80,5 @@ const messages = {
   OWN_ITEM: "You can't reserve your own item.",
   TOO_LONG: "That's longer than the owner allows.",
   ALREADY_BOOKED: "Someone just booked those dates. Pick another range.",
+  NOT_OWNER: "You do not own this item, so you cannot black it out."
 } as const;

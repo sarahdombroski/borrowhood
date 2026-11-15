@@ -31,6 +31,6 @@ export const ReserveInput = z
 
 export type ReserveResult =
   | { ok: true; reservation: Reservation }
-  | { ok: false; error: "INVALID_INPUT" | "NOT_FOUND" | "OWN_ITEM" | "TOO_LONG" | "ALREADY_BOOKED" };
+  | { ok: false; error: "INVALID_INPUT" | "NOT_FOUND" | "OWN_ITEM" | "TOO_LONG" | "ALREADY_BOOKED" | "NOT_OWNER" };
 
 // photoUploadSchema

@@ -157,7 +157,7 @@ export async function preemptItemQuery(ownerId: string, reservationId: number, p
       borrowerId: ownerId,
       startDate: reservation.startDate,
       endDate: reservation.endDate,
-      status: "APPROVED"
+      status: "OWNER_BLACKED_OUT"
     }
   });
 

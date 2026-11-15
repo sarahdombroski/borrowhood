@@ -1,6 +1,6 @@
 "use server";
 
-import { archiveItemQuery, createItemQuery, getCurrentAvailabilityQuery, getGroupsItemIsSharedWithQuery, getItemByIdQuery, getMyItemsQuery, getNextReservationQuery, getReservedDaysQuery, getVisibleItemsQuery, reserveItemQuery, setItemVisibilityQuery, unarchiveItemQuery, updateItemQuery } from "@/lib/queries/items";
+import { archiveItemQuery, blackOutItemQuery, createItemQuery, getCurrentAvailabilityQuery, getGroupsItemIsSharedWithQuery, getItemByIdQuery, getMyItemsQuery, getNextReservationQuery, getReservedDaysQuery, getVisibleItemsQuery, reserveItemQuery, setItemVisibilityQuery, unarchiveItemQuery, updateItemQuery } from "@/lib/queries/items";
 import { requireUser } from "@/lib/session";
 import { createItemSchema, ReserveInput, ReserveResult, updateItemSchema } from "@/lib/validation/items";
 import { revalidatePath } from "next/cache";
@@ -69,11 +69,15 @@ export async function unArchiveItem(itemId: number) {
   redirect('/items');
 }
 
-export async function reserveItem(input: unknown): Promise<ReserveResult> {
+export async function reserveItem(input: unknown, isOwner: boolean): Promise<ReserveResult> {
   const user = await requireUser();
   const parsed = ReserveInput.safeParse(input);
   if (!parsed.success) return { ok: false, error: "INVALID_INPUT" }
-  return await reserveItemQuery(user.id, parsed.data);
+  if (isOwner) {
+    return await blackOutItemQuery(user.id, parsed.data);
+  } else {
+    return await reserveItemQuery(user.id, parsed.data);
+  }
 }
 
 export async function getReservedDays(itemId: number) {
