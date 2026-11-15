@@ -40,5 +40,22 @@ export type NotificationPayloads = {
     originalBorrower: string;
     reason: string | null;
   }
+
+  RESERVATION_EXPIRED: {
+    itemName: string,
+    originalStart: string,
+    originalEnd: string
+  }
+
+  PICKUP_REMINDER: {
+    itemName: string,
+    originalStart: string,
+    originalEnd: string,
+  }
+
+  OVERDUE_NUDGE: {
+    itemName: string,
+    originalEnd: string,
+  }
 }
 

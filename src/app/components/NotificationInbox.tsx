@@ -179,6 +179,64 @@ export function NotificationInbox() {
               </li>
             )
           }
+          if (notification.type === "RESERVATION_EXPIRED") {
+            const payload = notification.payload as NotificationPayloads["RESERVATION_EXPIRED"];
+            const start = new Date(payload.originalStart)
+            const end = new Date(payload.originalEnd)
+            return (
+              <li key={notification.id} className="border text-sm flex">
+                <div>
+                <p>{notification.createdAt.toLocaleDateString('en-US')}</p>
+                <p>Your reservation on {payload.itemName} from {start.toLocaleDateString()} to {end.toLocaleDateString()} has expired.</p>
+                <p>Try reaching out to the owner or submit the request again.</p>
+                </div>
+                <div>
+                  {!notification.readAt && (
+                    <BellDot size={25} className="min-w-[25px]" />
+                  )}
+                  <button onClick={() => handleDelete(notification.id)}><Trash size={25} className="min-w-[25px]" /></button>
+                </div>
+              </li>
+            )
+          }
+          if (notification.type === "PICKUP_REMINDER") {
+            const payload = notification.payload as NotificationPayloads["PICKUP_REMINDER"];
+            const start = new Date(payload.originalStart)
+            const end = new Date(payload.originalEnd)
+            return (
+              <li key={notification.id} className="border text-sm flex">
+                <div>
+                <p>{notification.createdAt.toLocaleDateString('en-US')}</p>
+                <p>Your reservation on {payload.itemName} begins at {start.toLocaleDateString()}. Don't forget to pick it up!</p>
+                <p>The reservation ends on {end.toLocaleDateString()}.</p>
+                </div>
+                <div>
+                  {!notification.readAt && (
+                    <BellDot size={25} className="min-w-[25px]" />
+                  )}
+                  <button onClick={() => handleDelete(notification.id)}><Trash size={25} className="min-w-[25px]" /></button>
+                </div>
+              </li>
+            )
+          }
+          if (notification.type === "OVERDUE_NUDGE") {
+            const payload = notification.payload as NotificationPayloads["OVERDUE_NUDGE"];
+            const end = new Date(payload.originalEnd)
+            return (
+              <li key={notification.id} className="border text-sm flex">
+                <div>
+                <p>{notification.createdAt.toLocaleDateString('en-US')}</p>
+                <p>Your reservation on {payload.itemName} ended on {end.toLocaleDateString()}. Please return it to it's owner.</p>
+                </div>
+                <div>
+                  {!notification.readAt && (
+                    <BellDot size={25} className="min-w-[25px]" />
+                  )}
+                  <button onClick={() => handleDelete(notification.id)}><Trash size={25} className="min-w-[25px]" /></button>
+                </div>
+              </li>
+            )
+          }
         })}
         <li className="text-right pr-2"><button onClick={closeInbox}>Close</button></li>
       </ul>

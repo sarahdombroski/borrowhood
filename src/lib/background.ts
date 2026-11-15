@@ -89,7 +89,7 @@ async function createOverdueNudges(now: Date) {
         itemName: r.item.name,
         originalEnd: r.endDate.toISOString(),
       },
-      idempotencyKey: `pickup-reminder:${r.id}`,
+      idempotencyKey: `overdue-nudge:${r.id}`,
     }))
   );
   await dispatchPending();
