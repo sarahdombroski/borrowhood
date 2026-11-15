@@ -4,6 +4,8 @@ import { getReservationById, getUserById } from "../actions";
 import { getItemById } from "../../items/actions";
 import CancelReservationButton from "../components/CancelReservationButton";
 import PreemptReservationButton from "../components/PreemptReservationButton";
+import PickedUpButton from "../components/PickedUpButton";
+import ReturnedButton from "../components/ReturnedButton";
 
 export default async function ReservationPage({ params }: { params: Promise<{ id: string }> }) {
   const user = await requireUser();
@@ -35,6 +37,7 @@ export default async function ReservationPage({ params }: { params: Promise<{ id
         </div>
         <div className="border rounded m-2 p-2">
           <h2 className="text-center">Reservation Information:</h2>
+          <p>Status: {reservation.status}</p>
           <p>Reserved date: {reservation.startDate.toLocaleDateString()} - {reservation.endDate.toLocaleDateString()}</p>
           <p>Reserved by: {borrower.name}</p>
           <p>Contact: {borrower.email}</p>
@@ -46,7 +49,15 @@ export default async function ReservationPage({ params }: { params: Promise<{ id
           <CancelReservationButton reservationId={reservation.id} itemName={item.name} />
         )}
         {user.id == item.ownerId && (
-          <PreemptReservationButton reservationId={reservation.id} itemName={item.name} />
+          <div>
+            {reservation.status == "APPROVED" && (
+              <PickedUpButton reservation={reservation} itemName={item.name} borrowerName={borrower.name} />
+            )}
+            {reservation.status == "PICKED_UP" && (
+              <ReturnedButton reservation={reservation} itemName={item.name} borrowerName={borrower.name} />
+            )}
+            <PreemptReservationButton reservationId={reservation.id} itemName={item.name} />
+          </div>
         )}
       </div>
     </>

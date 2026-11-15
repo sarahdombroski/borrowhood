@@ -44,12 +44,14 @@ export async function declineRequest(requestId: number) {
 
 export async function markPickedUp(requestId: number) {
   const owner = await requireUser();
-  return await markPickedUpQuery(requestId, owner.id);
+  await markPickedUpQuery(requestId, owner.id);
+  redirect(`/reservations`);
 }
 
 export async function markReturned(requestId: number) {
   const owner = await requireUser();
-  return await markReturnedQuery(requestId, owner.id);
+  await markReturnedQuery(requestId, owner.id);
+  redirect(`/reservations`);
 }
 
 export async function preemptItem(reservationId: number, preemptionReason: string) {
