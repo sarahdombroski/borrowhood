@@ -35,7 +35,7 @@ export function ReservePicker({ itemId, booked, isOwner }: { itemId: number; boo
         itemId,
         startDate: start.toISOString(),
         endDate: end.toISOString(),
-      }, isOwner);
+      });
       if (result.ok) {
         setError(null);
         setRange(undefined);

@@ -69,9 +69,11 @@ export async function unArchiveItem(itemId: number) {
   redirect('/items');
 }
 
-export async function reserveItem(input: unknown, isOwner: boolean): Promise<ReserveResult> {
+export async function reserveItem(input: unknown): Promise<ReserveResult> {
   const user = await requireUser();
   const parsed = ReserveInput.safeParse(input);
+  const item = await getItemById(Number(parsed.data?.itemId));
+  const isOwner = item?.ownerId === user.id;
   if (!parsed.success) return { ok: false, error: "INVALID_INPUT" }
   if (isOwner) {
     return await blackOutItemQuery(user.id, parsed.data);
