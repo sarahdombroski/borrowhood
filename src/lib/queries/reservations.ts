@@ -1,5 +1,5 @@
 import "server-only";
-import { prisma } from "../prisma";
+import { prisma, requireVisibleReservation } from "../prisma";
 import { informOfApproved, informOfCancelled, informOfDenied, informOfPreempt, requestPreempt } from "../notify";
 
 export async function getReservationsQuery(userId: string) {
@@ -33,7 +33,8 @@ export async function getUserByIdQuery(userId: string) {
   });
 }
 
-export async function getReservationByIdQuery(reservationId: number) {
+export async function getReservationByIdQuery(userId: string, reservationId: number) {
+  await requireVisibleReservation(userId, reservationId);
   return await prisma.reservation.findFirst({
     where: {
       id: reservationId
@@ -41,7 +42,7 @@ export async function getReservationByIdQuery(reservationId: number) {
     include: {
       borrower: true
     }
-  })
+  });
 }
 
 export async function cancelReservationQuery(userId: string, reservationId: number) {

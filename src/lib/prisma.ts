@@ -60,3 +60,15 @@ export async function requireAdmin(userId: string, groupId: number) {
   if (membership.role !== "ADMIN") throw new NotFoundError();
   return membership;
 }
+
+export async function requireVisibleReservation(userId: string, reservationId: number) {
+  const reservation = await prisma.reservation.findFirst({
+    where: { id: reservationId },
+    include: { item: true }
+  });
+  if(!reservation) throw new NotFoundError();
+  if(reservation.borrowerId === userId || reservation.item.ownerId === userId) {
+    return reservation;
+  }
+  throw new NotFoundError();
+}

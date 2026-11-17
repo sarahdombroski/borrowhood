@@ -21,7 +21,7 @@ export async function getUserById(userId: string) {
 
 export async function getReservationById(reservationId: number) {
   const user = await requireUser();
-  return await getReservationByIdQuery(reservationId);
+  return await getReservationByIdQuery(user.id, reservationId);
 }
 
 export async function cancelReservation(reservationId: number) {
