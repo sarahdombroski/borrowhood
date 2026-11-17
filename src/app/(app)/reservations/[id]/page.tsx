@@ -1,11 +1,12 @@
 import { notFound } from "next/navigation";
 import { requireUser } from "@/lib/session";
-import { getReservationById, getUserById } from "../actions";
+import { getReservationById } from "../actions";
 import { getItemById } from "../../items/actions";
 import CancelReservationButton from "../components/CancelReservationButton";
 import PreemptReservationButton from "../components/PreemptReservationButton";
 import PickedUpButton from "../components/PickedUpButton";
 import ReturnedButton from "../components/ReturnedButton";
+import { requireVisibleReservation } from "@/lib/prisma";
 
 export default async function ReservationPage({ params }: { params: Promise<{ id: string }> }) {
   const user = await requireUser();
@@ -13,16 +14,13 @@ export default async function ReservationPage({ params }: { params: Promise<{ id
   const reservationId = Number(id);
   if (!Number.isInteger(reservationId)) notFound();
 
+  await requireVisibleReservation(user.id, reservationId);
+  
   const reservation = await getReservationById(reservationId);
   if (!reservation) notFound();
 
   const item = await getItemById(reservation.itemId);
   if (!item) notFound();
-
-  const borrower = await getUserById(reservation.borrowerId);
-  if (!borrower) notFound();
-
-  if (user.id !== borrower.id && user.id !== item.ownerId) notFound();
 
   return (
     <>
@@ -39,8 +37,8 @@ export default async function ReservationPage({ params }: { params: Promise<{ id
           <h2 className="text-center">Reservation Information:</h2>
           <p>Status: {reservation.status}</p>
           <p>Reserved date: {reservation.startDate.toLocaleDateString()} - {reservation.endDate.toLocaleDateString()}</p>
-          <p>Reserved by: {borrower.name}</p>
-          <p>Contact: {borrower.email}</p>
+          <p>Reserved by: {reservation.borrower.name}</p>
+          <p>Contact: {reservation.borrower.email}</p>
           <p>Reservation created at: {reservation.createdAt.toLocaleDateString()}</p>
         </div>
       </div>
@@ -51,10 +49,10 @@ export default async function ReservationPage({ params }: { params: Promise<{ id
         {user.id == item.ownerId && (
           <div>
             {reservation.status == "APPROVED" && (
-              <PickedUpButton reservation={reservation} itemName={item.name} borrowerName={borrower.name} />
+              <PickedUpButton reservation={reservation} itemName={item.name} borrowerName={reservation.borrower.name} />
             )}
             {reservation.status == "PICKED_UP" && (
-              <ReturnedButton reservation={reservation} itemName={item.name} borrowerName={borrower.name} />
+              <ReturnedButton reservation={reservation} itemName={item.name} borrowerName={reservation.borrower.name} />
             )}
             {((reservation.status == "APPROVED") || (reservation.status == "PICKED_UP")) && (
               <PreemptReservationButton reservationId={reservation.id} itemName={item.name} />
