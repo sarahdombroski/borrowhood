@@ -22,7 +22,14 @@ export async function getOthersReservationsQuery(userId: string) {
         in: itemIds
       }
     },
-    include: { borrower: true },
+    include: { 
+      borrower: {
+        select: {
+          id: true,
+          name: true,
+          email: true
+        }
+    }},
     orderBy: { startDate: "asc"}
   });
 }
@@ -33,9 +40,14 @@ export async function getReservationByIdQuery(userId: string, reservationId: num
     where: {
       id: reservationId
     },
-    include: {
-      borrower: true
-    }
+    include: { 
+      borrower: {
+        select: {
+          id: true,
+          name: true,
+          email: true
+        }
+    }}
   });
 }
 

@@ -5,7 +5,15 @@ import { randomInt } from 'crypto';
 export async function getMyGroupsQuery(userId: string) {
   const memberships = await prisma.membership.findMany({
     where: { userId: userId },
-    include: { group: true },
+    include: { 
+      group: {
+        select: {
+          id: true,
+          name: true,
+          description: true,
+          createdAt: true
+        }
+    }},
     orderBy: { joinedAt: "desc" }
   });
  return memberships.map((m) => ({
@@ -88,7 +96,7 @@ export async function joinGroupByCode(userId: string, code: number) {
         userId: userId
     }})
   });
-  return group;
+  return group.id;
 }
 
 export async function getGroupMemberCountQuery(userId: string, groupId: number) {

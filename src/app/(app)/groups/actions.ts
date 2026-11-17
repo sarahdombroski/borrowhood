@@ -35,9 +35,9 @@ export async function joinGroup(formData: FormData) {
     throw new Error("Group join code must be 8 numbers");
   }
 
-  const group = await joinGroupByCode(user.id, code);
-  if (!group) return;
-  redirect(`/groups/${group.id}`);
+  const groupId = await joinGroupByCode(user.id, code);
+  if (!groupId) return;
+  redirect(`/groups/${groupId}`);
 }
 
 export async function leaveGroup(groupId: number) {
