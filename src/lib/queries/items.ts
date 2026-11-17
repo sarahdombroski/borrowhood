@@ -1,6 +1,6 @@
 import "server-only";
 import { ForbiddenError, NotFoundError } from "../errors";
-import { prisma, visibleToUser } from "../prisma";
+import { prisma, requireItemOwner, requireVisibleItem, visibleToUser } from "../prisma";
 import { CreateItemInput, ReserveInput, ReserveResult, UpdateItemInput } from "../validation/items";
 import { z } from "zod";
 import { informOnwerOfNewReservation } from "../notify";
@@ -86,7 +86,8 @@ export async function setItemVisibilityQuery(userId: string, itemId: number, gro
   });
 }
 
-export async function getGroupsItemIsSharedWithQuery(itemId: number) {
+export async function getGroupsItemIsSharedWithQuery(userId: string, itemId: number) {
+  await requireItemOwner(userId, itemId)
   const sharedGroups = await prisma.itemVisibility.findMany({
     where: { itemId: itemId },
     select: { groupId: true }
@@ -187,7 +188,9 @@ export async function getReservedDaysQuery(itemId: number, userId: string) {
   });
 }
 
-export async function getCurrentAvailabilityQuery(itemId: number) {
+export async function getCurrentAvailabilityQuery(userId: string, itemId: number) {
+  await requireVisibleItem(userId, itemId);
+
   const startOfToday = new Date();
   startOfToday.setHours(0, 0, 0, 0);
 
@@ -207,7 +210,8 @@ export async function getCurrentAvailabilityQuery(itemId: number) {
   });
 }
 
-export async function getNextReservationQuery(itemId: number) {
+export async function getNextReservationQuery(userId: string, itemId: number) {
+  await requireVisibleItem(userId, itemId);
   const now = new Date();
 
   const reservation = await prisma.reservation.findFirst({

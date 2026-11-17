@@ -54,7 +54,7 @@ export async function setItemVisibility(itemId: number, formData: FormData) {
 
 export async function getGroupsItemIsSharedWith(itemId: number) {
   const user = await requireUser();
-  return await getGroupsItemIsSharedWithQuery(itemId);
+  return await getGroupsItemIsSharedWithQuery(user.id, itemId);
 }
 
 export async function archiveItem(itemId: number) {
@@ -87,12 +87,12 @@ export async function getReservedDays(itemId: number) {
 
 export async function getCurrentAvailability(itemId: number) {
   const user = await requireUser();
-  return await getCurrentAvailabilityQuery(itemId);
+  return await getCurrentAvailabilityQuery(user.id, itemId);
 }
 
 export async function getNextReservation(itemId: number) {
   const user = await requireUser();
-  return await getNextReservationQuery(itemId);
+  return await getNextReservationQuery(user.id, itemId);
 }
 
 // requestPhotoUploadAction(itemId)
