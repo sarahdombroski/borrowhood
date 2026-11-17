@@ -24,7 +24,7 @@ export async function getMyGroups() {
 
 export async function getGroupById(groupId: number) {
   const user = await requireUser();
-  return await getGroupByIdQuery(groupId);
+  return await getGroupByIdQuery(user.id, groupId);
 }
 
 export async function joinGroup(formData: FormData) {

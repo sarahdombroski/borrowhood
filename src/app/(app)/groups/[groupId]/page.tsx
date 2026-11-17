@@ -1,33 +1,30 @@
-import { prisma } from "@/lib/prisma";
+import { requireMember } from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/session";
 import { notFound } from "next/navigation";
 import { getVisibleItems } from "../../items/actions";
 import Link from "next/link";
 import LeaveGroupButton from "../components/LeaveGroupButton";
-import { getGroupMembers } from "../actions";
+import { getGroupById, getGroupMembers } from "../actions";
+import { NotFoundError } from "@/lib/errors";
 
 export default async function GroupPage({ params }: { params: Promise<{ groupId: string }> }) {
-  const { groupId } = await params;
+  const { groupId: rawGroupId } = await params;
+  const groupId = Number(rawGroupId);
   const user = await getCurrentUser();
   if (!user) notFound();
   
-  const membership = await prisma.membership.findFirst({
-    where: { userId: user.id, groupId: Number(groupId) },
-    include: { group: true }
-  });
-  if (!membership) notFound();
-  const group = await prisma.group.findFirst({
-    where: { id: Number(groupId) }
-  });
-  const items = await getVisibleItems(Number(groupId));
-  const members = await getGroupMembers(Number(groupId));
+  const group = await getGroupById(groupId);
+  if (!group) throw new NotFoundError();
+  const membership = await requireMember(user.id, groupId);
+  const items = await getVisibleItems(groupId);
+  const members = await getGroupMembers(groupId);
 
   return (
     <>
-      <h1 className="text-center">{membership.group.name}</h1>
+      <h1 className="text-center">{group.name}</h1>
       <div className="flex justify-evenly">
         <p>Your role: {membership.role}</p>
-        <LeaveGroupButton groupId={membership.group.id} groupName={membership.group.name} isIcon={false} />
+        <LeaveGroupButton groupId={group.id} groupName={group.name} isIcon={false} />
       </div>
       {membership.role == "ADMIN" &&
         <p className="text-center">Join code: {group?.joinCode}</p>

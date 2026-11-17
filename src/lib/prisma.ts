@@ -31,9 +31,9 @@ export function visibleToUser(userId: string): Prisma.ItemWhereInput {
   };
 }
 
-export async function requireMember(userId: string, groupId: number) {
-  const membership = await prisma.membership.findUnique({
-    where: { userId_groupId: { userId, groupId }}
+export async function requireMember(userId: string, groupId: number) {  
+  const membership = await prisma.membership.findFirst({
+    where: { userId: userId, groupId: groupId }
   });
   if (!membership) throw new NotFoundError();
   return membership;

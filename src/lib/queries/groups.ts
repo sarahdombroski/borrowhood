@@ -1,5 +1,5 @@
 import "server-only";
-import { prisma } from "../prisma";
+import { prisma, requireMember } from "../prisma";
 import { randomInt } from 'crypto';
 
 export async function getMyGroupsQuery(userId: string) {
@@ -15,10 +15,20 @@ export async function getMyGroupsQuery(userId: string) {
  }));
 }
 
-export async function getGroupByIdQuery(groupId: number) {
-  return prisma.group.findFirst({
-    where: { id: groupId }
+export async function getGroupByIdQuery(userId: string, groupId: number) {
+  const membership = await requireMember(userId, groupId);
+  const isAdmin = membership.role === "ADMIN";
+  const group = await prisma.group.findFirst({
+    where: { id: groupId },
+    select: {
+      id: true,
+      name: true,
+      description: true,
+      createdAt: true,
+      joinCode: isAdmin
+    }
   });
+  return group;
 }
 
 export async function getMembership(userId: string, groupId: number) {
@@ -82,26 +92,26 @@ export async function joinGroupByCode(userId: string, code: number) {
 }
 
 export async function getGroupMemberCountQuery(userId: string, groupId: number) {
-  const inGroup = await prisma.membership.findFirst({
-    where: { userId: userId}
-  });
-  if (!inGroup) throw new Error("User is not in the group");
-
+  await requireMember(userId, groupId);
   return await prisma.membership.count({
     where: { groupId: groupId }
   });
 }
 
 export async function getGroupMemberQuery(groupId: number, userId: string) {
-  const inGroup = await prisma.membership.findFirst({
-    where: { userId: userId}
-  });
-  if (!inGroup) throw new Error("User is not in the group");
-  
-  return await prisma.membership.findMany({
+  await requireMember(userId, groupId);
+  const memberships =  await prisma.membership.findMany({
     where: { groupId: groupId },
-    include: { user: true }
+    include: { 
+      user: {
+        select: {
+          id: true,
+          name: true,
+          email: true
+        }
+    } }
   });
+  return memberships;
 }
 
 function generateJoinCode() {
