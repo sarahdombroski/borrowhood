@@ -18,12 +18,6 @@ export async function createNotifications(
 }
 
 export async function notify(notification: Notification): Promise<void> {
-  console.log(
-    `[STUB] Would notify user ${notification.recipientId}:`,
-    notification.type,
-    notification.payload
-  );
-
   await prisma.notification.update({
     where: { id: notification.id },
     data: { status: "SENT", sentAt: new Date() },
