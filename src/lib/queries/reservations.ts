@@ -137,7 +137,7 @@ export async function markReturnedQuery(requestId: number, ownerId: string) {
 
 export async function preemptItemQuery(ownerId: string, reservationId: number, preemptionReason: string) {
   const reservation = await prisma.reservation.findFirst({
-    where: { id: reservationId },
+    where: { id: reservationId, status: { in: ["APPROVED", "PICKED_UP"] } },
     include: { item: true }
   });
   if (!reservation) return;
@@ -146,7 +146,7 @@ export async function preemptItemQuery(ownerId: string, reservationId: number, p
   const now = new Date();
   const diffInMs = Math.abs(reservation.startDate.getTime() - now.getTime());
   const fortyEightHoursInMs = 48 * 60 * 60 * 1000;
-  if (diffInMs < fortyEightHoursInMs) {
+  if (diffInMs < fortyEightHoursInMs || reservation.status === "PICKED_UP") {
     await requestPreempt(ownerId, reservationId);
     return;
   }
