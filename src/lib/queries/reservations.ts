@@ -61,9 +61,8 @@ export async function cancelReservationQuery(userId: string, reservationId: numb
     await tx.reservation.delete({
       where: { id: reservationId, borrowerId: userId },
     });
+    await informOfCancelled(reservation.item.ownerId, reservationId);
   });
-
-  await informOfCancelled(reservation.item.ownerId, reservationId);
 }
 
 export async function approveRequestQuery(requestId: number, ownerId: string) {
@@ -76,11 +75,12 @@ export async function approveRequestQuery(requestId: number, ownerId: string) {
   });
   if (!item || item.ownerId !== ownerId) throw new Error("There was a problem grabbing the item.");
   
-  await informOfApproved(ownerId, reservation.id);
-
-  return await prisma.reservation.update({
-    where: { id: requestId, status: "PENDING" },
-    data: { status: "APPROVED" }
+  await prisma.$transaction(async (tx) => {
+    await informOfApproved(ownerId, reservation.id);
+    await tx.reservation.update({
+      where: { id: requestId, status: "PENDING" },
+      data: { status: "APPROVED" }
+    });
   });
 }
 
@@ -94,11 +94,12 @@ export async function declineRequestQuery(requestId: number, ownerId: string) {
   });
   if (!item || item.ownerId !== ownerId) throw new Error("There was a problem grabbing the item.");
   
-  await informOfDenied(ownerId, reservation.id)
-
-  return await prisma.reservation.update({
-    where: { id: requestId, status: "PENDING" },
-    data: { status: "DENIED" }
+  await prisma.$transaction(async (tx) => {
+    await informOfDenied(ownerId, reservation.id)
+    await tx.reservation.update({
+      where: { id: requestId, status: "PENDING" },
+      data: { status: "DENIED" }
+    });
   });
 }
 
