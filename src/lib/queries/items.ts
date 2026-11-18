@@ -59,7 +59,13 @@ export async function createItemQuery(userId: string, data: CreateItemInput) {
 export async function updateItemQuery(userId: string, itemId: number, data: UpdateItemInput, expectedUpdatedAt: Date) {
   const { count } = await prisma.item.updateMany({
     where: { id: itemId, ownerId: userId, updatedAt: expectedUpdatedAt },
-    data: { name: data.name },
+   data: {
+      ...(data.name !== undefined && { name: data.name }),
+      ...(data.description !== undefined && { description: data.description }),
+      ...(data.conditionNotes !== undefined && { conditionNotes: data.conditionNotes }),
+      ...(data.category !== undefined && { category: data.category }),
+      ...(data.replacementValue !== undefined && { replacementValue: data.replacementValue }),
+    },
   });
   if (count === 0) throw new NotFoundError();
   return getItemByIdQuery(userId, itemId);
