@@ -6,10 +6,11 @@ import Link from "next/link";
 import LeaveGroupButton from "../components/LeaveGroupButton";
 import { getGroupById, getGroupMembers } from "../actions";
 import { NotFoundError } from "@/lib/errors";
+import { idSchema } from "@/lib/validation/schemas";
 
 export default async function GroupPage({ params }: { params: Promise<{ groupId: string }> }) {
   const { groupId: rawGroupId } = await params;
-  const groupId = Number(rawGroupId);
+  const groupId = idSchema.parse(rawGroupId);
   const user = await getCurrentUser();
   if (!user) notFound();
   
