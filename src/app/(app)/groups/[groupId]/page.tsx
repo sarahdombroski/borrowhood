@@ -16,7 +16,7 @@ export default async function GroupPage({ params }: { params: Promise<{ groupId:
   const group = await getGroupById(groupId);
   if (!group) throw new NotFoundError();
   const membership = await requireMember(user.id, groupId);
-  const items = await getVisibleItems(groupId);
+  const items = await getVisibleItems(group.id);
   const members = await getGroupMembers(groupId);
 
   return (

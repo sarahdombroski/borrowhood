@@ -16,7 +16,7 @@ export async function getMyItems() {
   return await getMyItemsQuery(user.id);
 }
 
-export async function getVisibleItems(groupId?: number) {
+export async function getVisibleItems(groupId: number) {
   const user = await requireUser();
   return await getVisibleItemsQuery(user.id, groupId);
 }

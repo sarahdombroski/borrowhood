@@ -1,6 +1,6 @@
 import "server-only";
 import { ForbiddenError, NotFoundError } from "../errors";
-import { prisma, requireItemOwner, requireVisibleItem, visibleToUser } from "../prisma";
+import { prisma, requireItemOwner, requireMember, requireVisibleItem, visibleToUser } from "../prisma";
 import { CreateItemInput, ReserveInput, ReserveResult, UpdateItemInput } from "../validation/items";
 import { z } from "zod";
 import { informOnwerOfNewReservation } from "../notify";
@@ -17,7 +17,9 @@ export async function getMyItemsQuery(userId: string) {
   });
 }
 
-export async function getVisibleItemsQuery(userId: string, groupId?: number) {
+export async function getVisibleItemsQuery(userId: string, groupId: number) {
+  const membership = requireMember(userId, groupId);
+  if(!membership) throw new Error("No group membership found");
   return prisma.item.findMany({
     where: {
       isArchived: false,
