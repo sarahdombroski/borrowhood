@@ -3,12 +3,14 @@
 import { archiveItemQuery, blackOutItemQuery, createItemQuery, getCurrentAvailabilityQuery, getGroupsItemIsSharedWithQuery, getItemByIdQuery, getMyItemsQuery, getNextReservationQuery, getReservedDaysQuery, getVisibleItemsQuery, reserveItemQuery, setItemVisibilityQuery, unarchiveItemQuery, updateItemQuery } from "@/lib/queries/items";
 import { requireUser } from "@/lib/session";
 import { createItemSchema, ReserveInput, ReserveResult, updateItemSchema } from "@/lib/validation/items";
+import { idSchema, idsSchema } from "@/lib/validation/schemas";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function getItemById(itemId: number) {
+  const id = idSchema.parse(itemId);
   const user = await requireUser();
-  return await getItemByIdQuery(user.id, itemId)
+  return await getItemByIdQuery(user.id, id)
 }
 
 export async function getMyItems() {
@@ -17,8 +19,9 @@ export async function getMyItems() {
 }
 
 export async function getVisibleItems(groupId: number) {
+  const id = idSchema.parse(groupId);
   const user = await requireUser();
-  return await getVisibleItemsQuery(user.id, groupId);
+  return await getVisibleItemsQuery(user.id, id);
 }
 
 export async function createItem(formData: FormData) {
@@ -41,40 +44,45 @@ export async function updateItem(itemId: number, formData: FormData) {
 }
 
 export async function setItemVisibility(itemId: number, formData: FormData) {
+  const id = idSchema.parse(itemId);
   const user = await requireUser();
 
-  const groupIds = formData.getAll("groupIds").map(Number);
+  const formIds = formData.getAll("groupIds").map(Number);
+  const groupIds = idsSchema.parse(formIds);
   if (groupIds.some((id) => !Number.isInteger(id))) {
     throw new Error("Invalid group selection");
   }
-  await setItemVisibilityQuery(user.id, itemId, groupIds);
-  revalidatePath(`/items/${itemId}`);
+  await setItemVisibilityQuery(user.id, id, groupIds);
+  revalidatePath(`/items/${id}`);
   revalidatePath("/items");
 }
 
 export async function getGroupsItemIsSharedWith(itemId: number) {
+  const id = idSchema.parse(itemId);
   const user = await requireUser();
-  return await getGroupsItemIsSharedWithQuery(user.id, itemId);
+  return await getGroupsItemIsSharedWithQuery(user.id, id);
 }
 
 export async function archiveItem(itemId: number) {
+  const id = idSchema.parse(itemId);
   const user = await requireUser();
-  await archiveItemQuery(user.id, itemId);
+  await archiveItemQuery(user.id, id);
   redirect('/items');
 }
 
 export async function unArchiveItem(itemId: number) {
+  const id = idSchema.parse(itemId);
   const user = await requireUser();
-  await unarchiveItemQuery(user.id, itemId);
+  await unarchiveItemQuery(user.id, id);
   redirect('/items');
 }
 
 export async function reserveItem(input: unknown): Promise<ReserveResult> {
   const user = await requireUser();
   const parsed = ReserveInput.safeParse(input);
+  if (!parsed.success) return { ok: false, error: "INVALID_INPUT" }
   const item = await getItemById(Number(parsed.data?.itemId));
   const isOwner = item?.ownerId === user.id;
-  if (!parsed.success) return { ok: false, error: "INVALID_INPUT" }
   if (isOwner) {
     return await blackOutItemQuery(user.id, parsed.data);
   } else {
@@ -83,18 +91,21 @@ export async function reserveItem(input: unknown): Promise<ReserveResult> {
 }
 
 export async function getReservedDays(itemId: number) {
+  const id = idSchema.parse(itemId);
   const user = await requireUser();
-  return await getReservedDaysQuery(itemId, user.id);
+  return await getReservedDaysQuery(id, user.id);
 }
 
 export async function getCurrentAvailability(itemId: number) {
+  const id = idSchema.parse(itemId);
   const user = await requireUser();
-  return await getCurrentAvailabilityQuery(user.id, itemId);
+  return await getCurrentAvailabilityQuery(user.id, id);
 }
 
 export async function getNextReservation(itemId: number) {
+  const id = idSchema.parse(itemId);
   const user = await requireUser();
-  return await getNextReservationQuery(user.id, itemId);
+  return await getNextReservationQuery(user.id, id);
 }
 
 // requestPhotoUploadAction(itemId)

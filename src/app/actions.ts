@@ -3,6 +3,7 @@
 import { deleteNotification, getNotificaitonsForUser, getUnreadCount } from "@/lib/notify";
 import { getCurrentUser } from "@/lib/session";
 import { prisma } from "@/lib/prisma";
+import { idSchema, idsSchema } from "@/lib/validation/schemas";
 
 export async function getNotfications() {
   const user = await getCurrentUser();
@@ -19,9 +20,11 @@ export async function getUnreadAction() {
 export async function markAsReadAction(notificationIds: number[]) {
   const user = await getCurrentUser();
   if (!user) throw new Error("Unauthorized");
+  const ids = idsSchema.parse(notificationIds);
+
   await prisma.notification.updateMany({
     where: {
-      id: { in: notificationIds },
+      id: { in: ids },
       recipientId: user.id,
       readAt: null
     },
@@ -34,5 +37,6 @@ export async function markAsReadAction(notificationIds: number[]) {
 export async function deleteNotificationAction(notificationId: number) {
   const user = await getCurrentUser();
   if (!user) throw new Error("Unauthorized");
-  await deleteNotification(user.id, notificationId);
+  const id = idSchema.parse(notificationId);
+  await deleteNotification(user.id, id);
 }

@@ -18,7 +18,7 @@ export async function getMyItemsQuery(userId: string) {
 }
 
 export async function getVisibleItemsQuery(userId: string, groupId: number) {
-  const membership = requireMember(userId, groupId);
+  const membership = await requireMember(userId, groupId);
   if(!membership) throw new Error("No group membership found");
   return prisma.item.findMany({
     where: {

@@ -2,6 +2,7 @@
 
 import { approveRequestQuery, cancelReservationQuery, declineRequestQuery, getOthersReservationsQuery, getReservationByIdQuery, getReservationsQuery, markPickedUpQuery, markReturnedQuery, preemptItemQuery } from "@/lib/queries/reservations";
 import { requireUser } from "@/lib/session";
+import { idSchema, preemptReasonSchema } from "@/lib/validation/schemas";
 import { redirect } from "next/navigation";
 
 export async function getReservations() {
@@ -15,42 +16,50 @@ export async function getOthersReservations() {
 }
 
 export async function getReservationById(reservationId: number) {
+  const id = idSchema.parse(reservationId);
   const user = await requireUser();
-  return await getReservationByIdQuery(user.id, reservationId);
+  return await getReservationByIdQuery(user.id, id);
 }
 
 export async function cancelReservation(reservationId: number) {
+  const id = idSchema.parse(reservationId);
   const user = await requireUser();
-  await cancelReservationQuery(user.id, reservationId);
+  await cancelReservationQuery(user.id, id);
   redirect('/reservations');
 }
 
-export async function approveRequest(requestId: number) {
+export async function approveRequest(reservationId: number) {
+  const id = idSchema.parse(reservationId);
   const owner = await requireUser();
-  await approveRequestQuery(requestId, owner.id);
+  await approveRequestQuery(id, owner.id);
   redirect(`/reservations`);
 }
 
-export async function declineRequest(requestId: number) {
+export async function declineRequest(reservationId: number) {
+  const id = idSchema.parse(reservationId);
   const owner = await requireUser();
-  await declineRequestQuery(requestId, owner.id);
+  await declineRequestQuery(id, owner.id);
   redirect(`/reservations`);
 }
 
-export async function markPickedUp(requestId: number) {
+export async function markPickedUp(reservationId: number) {
+  const id = idSchema.parse(reservationId);
   const owner = await requireUser();
-  await markPickedUpQuery(requestId, owner.id);
+  await markPickedUpQuery(id, owner.id);
   redirect(`/reservations`);
 }
 
-export async function markReturned(requestId: number) {
+export async function markReturned(reservationId: number) {
+  const id = idSchema.parse(reservationId);
   const owner = await requireUser();
-  await markReturnedQuery(requestId, owner.id);
+  await markReturnedQuery(id, owner.id);
   redirect(`/reservations`);
 }
 
 export async function preemptItem(reservationId: number, preemptionReason: string) {
+  const id = idSchema.parse(reservationId);
+  const reason = preemptReasonSchema.parse(preemptionReason);
   const owner = await requireUser();
-  await preemptItemQuery(owner.id, reservationId, preemptionReason);
+  await preemptItemQuery(owner.id, id, reason);
   redirect(`/reservations`);
 }
