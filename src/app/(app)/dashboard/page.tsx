@@ -15,7 +15,8 @@ export default async function Dashboard() {
   );
   async function getItemAvaliability(item: Item) {
     const availability = await getCurrentAvailability(item.id);
-    const status = availability ? availability.status ?? availability : "AVAILABLE";
+    let status = availability ? availability.status ?? availability : "AVAILABLE";
+    if (status === "OWNER_BLACKED_OUT") status = "BLACKED OUT";
     return {item, status};
   }
 
@@ -33,15 +34,19 @@ export default async function Dashboard() {
     <main>
       <h1 className="text-center">Welcome {user.name}!</h1>
 
-      <div className="grid grid-cols-3 gap-6">
-        <div className="col-span-2 grid grid-cols-6 gap-6 ml-6">
+      <div className="lg:grid grid-cols-3 gap-6">
+        <div className="col-span-2 lg:grid grid-cols-6 gap-6 ml-6 mr-6 lg:mr-0">
           <div className="border rounded col-span-4 col-start-1 min-h-[25vh]">
             <h2 className="text-center">New Requests</h2>
             <ul>
               {reservationsAndNames.map((reservation) => (
                 <li key={reservation.reservation.id} className="grid grid-cols-2 justify-items-center">
                   <p>{reservation.item?.name}</p>
-                  <p>{reservation.reservation.status}</p>
+                  {reservation.reservation.status !== "OWNER_BLACKED_OUT" ? (
+                    <p>{reservation.reservation.status}</p>
+                  ) : (
+                    <p>BLACKED OUT</p>
+                  )}
                 </li>
               ))}
             </ul>
@@ -60,7 +65,7 @@ export default async function Dashboard() {
           </div>
         </div>
 
-      <div className="border rounded mr-6 max-w-[25vw]">
+      <div className="ml-6 border rounded mr-6 lg:max-w-[25vw] lg:ml-0">
         <h2 className="text-center">Items</h2>
         <ul>
           {itemsInformation.map((item) => (
