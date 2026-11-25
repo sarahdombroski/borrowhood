@@ -26,18 +26,22 @@ export default async function Groups() {
       <h2 className="text-center">My groups:</h2>
       <ul className="border rounded p-3 min-h-[50vh]">
         {memberships.map((m) => (
-          <li key={m.group.id} className="grid grid-cols-[2fr_1fr_1fr_auto] gap-4 py-2">
-            <Link href={`/groups/${m.group.id}`}> 
-              <p>{m.group.name}</p>
-            </Link>
-            <p>{m.role}</p>
-            <div className="flex gap-1">
-              <UsersRound size={24} />
-              <p>{getGroupMemberCount(m.group.id)} Members</p>
+          <li key={m.group.id} className="md:grid md:grid-cols-[1fr_1fr] gap-4 py-2">
+            <div className="flex justify-between lg:grid md: grid-cols-[1fr_1fr]">
+              <Link href={`/groups/${m.group.id}`}> 
+                <p className="text-center md:text-left">{m.group.name}</p>
+              </Link>
+              <p>{m.role}</p>
             </div>
-            <div className="flex gap-2">
-              <Link href={`/groups/${m.group.id}`}><House size={24} /></Link>
-              <LeaveGroupButton groupId={m.group.id} groupName={m.group.name} isIcon={true} />
+            <div className="flex justify-between">
+              <div className="flex gap-1">
+                <UsersRound size={24} />
+                <p>{getGroupMemberCount(m.group.id)} Members</p>
+              </div>
+              <div className="flex gap-2">
+                <Link href={`/groups/${m.group.id}`}><House size={24} /></Link>
+                <LeaveGroupButton groupId={m.group.id} groupName={m.group.name} isIcon={true} />
+              </div>
             </div>
           </li>
         ))}

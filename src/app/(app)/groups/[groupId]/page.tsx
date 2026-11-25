@@ -30,21 +30,23 @@ export default async function GroupPage({ params }: { params: Promise<{ groupId:
       {membership.role == "ADMIN" &&
         <p className="text-center">Join code: {group?.joinCode}</p>
       }
-      <div className="grid grid-cols-[1fr_1fr] items-center gap-4 py-2 m-2">
-        <ul className="border rounded p-3 min-h-[50vh]">
+      <div className="md:grid grid-cols-[1fr_1fr] items-center gap-4 py-2 m-2">
+        <ul className="border rounded p-3 min-h-[50vh] mb-3 md:mb-0">
           <h2 className="text-center">Members</h2>
           {members.map((member) => (
-            <li key={member.id} className="grid grid-cols-[2fr_1fr_auto] items_center">
-              <p>{member.user.name}</p>
-              <p>{member.role}</p>
-              <p>{member.user.email}</p>
+            <li key={member.id} className="md:grid grid-cols-[1fr_1fr] items_center">
+              <div className="flex justify-between">
+                <p>{member.user.name}</p>
+                <p>{member.role}</p>
+              </div>
+              <p className="text-right">{member.user.email}</p>
             </li>
           ))}
         </ul>
         <ul className="border rounded p-3 min-h-[50vh]">
           <h2 className="text-center">Items</h2>
           {items.map((item) => (
-            <li key={item.id} className="grid grid-cols-[1fr_1fr]">
+            <li key={item.id} className="grid grid-cols-[1fr_auto]">
               <p>{item.name}</p>
               <Link href={`../items/${item.id}/reserve?groupId=${groupId}`}>Reserve</Link>
               </li>
