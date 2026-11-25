@@ -5,7 +5,7 @@ import { ReservePicker } from "@/app/components/ReservePicker";
 import { getReservedDays } from "../../actions";
 import Link from "next/link";
 import { ArrowBigLeft } from "lucide-react";
-import { idSchema } from "@/lib/validation/schemas";
+import { idParamSchema } from "@/lib/validation/schemas";
 
 export default async function ReserveItem({ 
   params, 
@@ -17,8 +17,8 @@ export default async function ReserveItem({
   const user = await requireUser();
   const { id } = await params;
   const { gId } = await searchParams;
-  const itemId = idSchema.parse(id);
-  const groupId = idSchema.parse(gId);
+  const itemId = Number(idParamSchema.parse(id));
+  const groupId = Number(idParamSchema.parse(gId));
   if (!Number.isInteger(itemId)) notFound();
 
   const item = await getItemByIdQuery(user.id, itemId);

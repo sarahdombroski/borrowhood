@@ -7,12 +7,12 @@ import { getCurrentAvailability, getGroupsItemIsSharedWith, getReservedDays } fr
 import DeleteItemButton from "../components/DeleteItemButton";
 import { CheckCheck } from "lucide-react";
 import { ReservePicker } from "@/app/components/ReservePicker";
-import { idSchema } from "@/lib/validation/schemas";
+import { idParamSchema } from "@/lib/validation/schemas";
 
 export default async function ItemPage({ params }: { params: Promise<{ id: string }> }) {
   const user = await requireUser();
   const { id } = await params;
-  const itemId = idSchema.parse(id);
+  const itemId = Number(idParamSchema.parse(id));
   if (!Number.isInteger(itemId)) notFound();
 
   const item = await getItemByIdQuery(user.id, itemId);

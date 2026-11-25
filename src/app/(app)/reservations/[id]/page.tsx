@@ -7,12 +7,12 @@ import PreemptReservationButton from "../components/PreemptReservationButton";
 import PickedUpButton from "../components/PickedUpButton";
 import ReturnedButton from "../components/ReturnedButton";
 import { requireVisibleReservation } from "@/lib/prisma";
-import { idSchema } from "@/lib/validation/schemas";
+import { idParamSchema, idSchema } from "@/lib/validation/schemas";
 
 export default async function ReservationPage({ params }: { params: Promise<{ id: string }> }) {
   const user = await requireUser();
   const { id } = await params;
-  const reservationId = idSchema.parse(id);
+  const reservationId = Number(idParamSchema.parse(id));
   if (!Number.isInteger(reservationId)) notFound();
 
   await requireVisibleReservation(user.id, reservationId);

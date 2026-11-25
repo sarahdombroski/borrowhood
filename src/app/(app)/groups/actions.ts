@@ -1,22 +1,28 @@
 "use server";
 
+import { ActionResult, toActionError } from "@/lib/errors";
 import { prisma } from "@/lib/prisma";
 import { canRemoveOwnerFromGroup, createGroupQuery, getGroupByIdQuery, getGroupMemberCountQuery, getGroupMemberQuery, getMyGroupsQuery, joinGroupByCode, leaveGroupQuery } from "@/lib/queries/groups";
 import { requireUser } from "@/lib/session";
 import { idSchema, joinCodeSchema, nameSchema } from "@/lib/validation/schemas";
 import { redirect } from "next/navigation";
 
-export async function createGroup(formData: FormData) {
-  const user = await requireUser();
+export async function createGroup(formData: FormData): Promise<ActionResult<{ id: number }>> {
+  try {
+    const user = await requireUser();
+    const parsed = nameSchema.safeParse(formData.get("name"));
 
-  const name = String(formData.get("name") ?? "").trim();
-  if (name.length < 1 || name.length > 60) {
-    throw new Error("Group name must be 1-60 characters");
+    if (!parsed.success) {
+      return toActionError(parsed.error);
+    }
+    const group = await createGroupQuery(user.id, parsed.data);
+    return {
+      ok: true,
+      data: { id: group.id }
+    };
+  } catch (error) {
+    return toActionError(error);
   }
-  const validName = nameSchema.parse(name);
-
-  const group = await createGroupQuery(user.id, validName);
-  redirect(`/groups/${group.id}`);
 }
 
 export async function getMyGroups() {

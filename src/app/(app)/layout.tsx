@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import SignOutButton from "../components/SignOutButton";
 import { NotificationInbox } from "../components/NotificationInbox";
+import ToastProvider from "../components/ToastProvider";
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
     const user = await getCurrentUser();
@@ -22,6 +23,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
                 <SignOutButton />
             </nav>
             <main>
+                <ToastProvider />
                 {children}
                 <NotificationInbox />
             </main>
