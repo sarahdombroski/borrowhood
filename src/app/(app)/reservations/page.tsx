@@ -31,37 +31,35 @@ export default async function Reservations() {
   return (
     <main>
       <h1 className="text-center">Reservations</h1>
-      <div className="grid grid-cols-[1fr_1fr] items_center gap-4 py-2 m-2">
-        <ul className="border rounded p-2 min-h-[50vh]">
+      <div className="md:grid grid-cols-[1fr_1fr] items_center gap-4 py-2 m-2">
+        <ul className="border rounded p-2 min-h-[50vh] mb-3 md:mb-0">
           <h2 className="text-center">Reservations on my Items:</h2>
           {othersReservedItems.map((r) => (
-              <li key={r.reservation.id} className="flex justify-between items-center">
-                {r.reservation.status !== "OWNER_BLACKED_OUT" && (
-                  <Link href={`/reservations/${r.reservation.id}`}>
-                    {r.item?.name} - {r.reservation.status}
-                  </Link>
-                )}
-                {r.reservation.status === "PENDING" && (
-                  <div>
-                    <ApproveReservationButton reservation={r.reservation} borrowerName={r.borrower.name} itemName={r.item?.name} />
-                    <DenyReservationButton reservation={r.reservation} borrowerName={r.borrower.name} itemName={r.item?.name} />
-                  </div>
-                )}
-                <div>
-                  <p>{r.reservation.startDate.toLocaleDateString()} - {r.reservation.endDate.toLocaleDateString()}</p>
+            <li key={r.reservation.id} className="md:flex justify-between items-center">
+              <Link href={`/reservations/${r.reservation.id}`}>
+                {r.item?.name} - {r.reservation.status}
+              </Link>
+              {r.reservation.status === "PENDING" && (
+                <div className="flex justify-end">
+                  <ApproveReservationButton reservation={r.reservation} borrowerName={r.borrower.name} itemName={r.item?.name} />
+                  <DenyReservationButton reservation={r.reservation} borrowerName={r.borrower.name} itemName={r.item?.name} />
                 </div>
-              </li>
+              )}
+              <div className="text-right">
+                <p>{r.reservation.startDate.toLocaleDateString()} - {r.reservation.endDate.toLocaleDateString()}</p>
+              </div>
+            </li>
           ))}
         </ul>
         <ul className="border rounded p-2">
           <h2 className="text-center">My reservations:</h2>
           {reservedItems.map((r) => (
-              <li key={r.reservation.id} className="flex justify-between items-center">
+              <li key={r.reservation.id} className="md:flex justify-between items-center">
                 <Link href={`/reservations/${r.reservation.id}`}>
                   {r.item?.name} - {r.reservation.status}
                 </Link>
                 <div>
-                  <p>{r.reservation.startDate.toLocaleDateString()} - {r.reservation.endDate.toLocaleDateString()}</p>
+                  <p className="text-right">{r.reservation.startDate.toLocaleDateString()} - {r.reservation.endDate.toLocaleDateString()}</p>
                 </div>
               </li>
           ))}

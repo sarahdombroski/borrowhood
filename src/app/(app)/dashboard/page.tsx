@@ -35,8 +35,8 @@ export default async function Dashboard() {
       <h1 className="text-center">Welcome {user.name}!</h1>
 
       <div className="lg:grid grid-cols-3 gap-6">
-        <div className="col-span-2 lg:grid grid-cols-6 gap-6 ml-6 mr-6 lg:mr-0">
-          <div className="border rounded col-span-4 col-start-1 min-h-[25vh]">
+        <div className="col-span-2 md:grid grid-cols-6 gap-6 ml-6 mr-6 lg:mr-0 mb-3 mb:mb-0">
+          <div className="border rounded col-span-4 col-start-1 min-h-[25vh] mb-3 md:mb-0">
             <h2 className="text-center">New Requests</h2>
             <ul>
               {reservationsAndNames.map((reservation) => (
@@ -65,7 +65,7 @@ export default async function Dashboard() {
           </div>
         </div>
 
-      <div className="ml-6 border rounded mr-6 lg:max-w-[25vw] lg:ml-0">
+      <div className="ml-6 border rounded mr-6 lg:max-w-[25vw] md:ml-0">
         <h2 className="text-center">Items</h2>
         <ul>
           {itemsInformation.map((item) => (

@@ -26,7 +26,7 @@ export default async function ReservationPage({ params }: { params: Promise<{ id
   return (
     <>
       <h1 className="text-center">{item.name}</h1>
-      <div className="grid grid-cols-[1fr_1fr]">
+      <div className="md:grid grid-cols-[1fr_1fr]">
         <div className="border rounded m-2 p-2 min-h-[50vh]">
           <h2 className="text-center">Item information:</h2>
           <p>Description: {item.description}</p>

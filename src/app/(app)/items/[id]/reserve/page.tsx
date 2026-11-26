@@ -18,7 +18,10 @@ export default async function ReserveItem({
   const { id } = await params;
   const { gId } = await searchParams;
   const itemId = Number(idParamSchema.parse(id));
-  const groupId = Number(idParamSchema.parse(gId));
+  let groupId = undefined;
+  if (gId) {
+    groupId = Number(idParamSchema.parse(gId));
+  }
   if (!Number.isInteger(itemId)) notFound();
 
   const item = await getItemByIdQuery(user.id, itemId);
@@ -30,7 +33,9 @@ export default async function ReserveItem({
   return (
     <>
       <h1 className="text-center">Reserve: {item.name}</h1>
-      <Link href={`/groups/${groupId}`} className="flex justify-center"><ArrowBigLeft />Back to group</Link>
+      {groupId !== undefined && (
+        <Link href={`/groups/${groupId}`} className="flex justify-center"><ArrowBigLeft />Back to group</Link>
+      )}
       <div className="m-4">
         <p>Description: {item.description}</p>
         <p>Category: {item.category}</p>

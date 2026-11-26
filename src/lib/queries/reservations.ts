@@ -20,6 +20,9 @@ export async function getOthersReservationsQuery(userId: string) {
     where: {
       itemId: {
         in: itemIds
+      },
+      status: {
+        not: "OWNER_BLACKED_OUT"
       }
     },
     include: { 
