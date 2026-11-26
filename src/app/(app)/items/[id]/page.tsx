@@ -45,14 +45,16 @@ export default async function ItemPage({ params }: { params: Promise<{ id: strin
 
       <DeleteItemButton itemId={item.id} itemName={item.name} />
 
-      <div className="grid grid-cols-[1fr_1fr] gap-4 py-2">
+      <div className="md:grid grid-cols-[1fr_1fr] gap-4 py-2">
         <div className="border rounded m-2 p-2">
           <h2 className="text-center">Groups</h2>
-          <ShareItemButton
-            itemId={item.id}
-            itemName={item.name}
-            groups={shareableGroups}
-          />
+          <div className="flex justify-center">
+            <ShareItemButton
+              itemId={item.id}
+              itemName={item.name}
+              groups={shareableGroups}
+            />
+          </div>
           <ul>
             {groups.map((group) => (
               <li key={group.id} className="flex gap-1">

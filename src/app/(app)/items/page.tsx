@@ -27,15 +27,21 @@ export default async function Items() {
 
       <ul className="border rounded m-3 p-3 min-h-[50vh]">
         {itemsInformation.map((info) => (
-          <li key={info.item.id} className="grid grid-cols-[2fr_1fr_auto] items_center gap-4 py-2">
-            <Link href={`/items/${info.item.id}`}>{info.item.name}</Link>
-            <p>{info.currentAvailability}</p>
-            {String(info.nextReservation) !== "undefined to undefined" ? (
-              <p>{String(info.nextReservation)}</p>
-            ) : (
-              <p>No reservations</p>
-            )
-            }
+          <li key={info.item.id} className="md:grid md:grid-cols-[2fr_1fr_auto] items_center gap-4 py-2">
+            <div className="flex justify-between">
+              <Link href={`/items/${info.item.id}`}>{info.item.name}</Link>
+              {info.currentAvailability === "OWNER_BLACKED_OUT" ? (
+                <p>BLACKED OUT</p>
+              ) : (
+                <p>{info.currentAvailability}</p>
+              )}
+              {String(info.nextReservation) === "undefined to undefined" && (
+                <p className="text-right">No reservations</p>
+              )}
+            </div>
+            {String(info.nextReservation) !== "undefined to undefined" && (
+              <p className="text-right">{String(info.nextReservation)}</p>
+            )}
           </li>
         ))}
       </ul>
